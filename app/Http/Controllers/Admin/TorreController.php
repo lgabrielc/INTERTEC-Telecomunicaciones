@@ -39,7 +39,15 @@ class TorreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       $Torre= new Torre();
+
+       $Torre->nombreTorre = $request->nombreTorre;
+       $Torre->direccion = $request->direccion;
+       $Torre->dueñoLocal = $request->dueñoLocal;
+       $Torre->telefono = $request->telefono;
+       $Torre->pago = $request->pago;
+       $Torre->save();
+       return redirect()->route('torre.index');
     }
 
     /**
