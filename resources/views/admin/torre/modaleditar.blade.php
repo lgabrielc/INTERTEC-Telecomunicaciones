@@ -1,14 +1,14 @@
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="ModalEditar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Agregar Nueva Torre</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Editar Torre</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
         <div class="modal-body">
-            <form action={{ route('torre.store') }} method="POST">
+            <form action={{ route('torre.store') }} method="POST" class="form-edit">
                 @csrf
                 <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Nombre:</label>

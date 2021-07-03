@@ -9,7 +9,7 @@
 @section('content')
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalCrear">Crear Nuevo</button>
   <!-- Modal -->
-@include('admin.torre.modalcrear')
+@include('admin.servidor.modalcrear')
 <p>Bienvenido a la gestión de Torres</p>
     <div class="card">
         <div class="card-body">
@@ -18,32 +18,28 @@
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nombre</th>
-                    <th scope="col">Direccion</th>
-                    <th scope="col">Dueño del Local</th>
-                    <th scope="col">Telefono</th>
-                    <th scope="col">Pago</th>
+                    <th scope="col">Ip de Entrada</th>
+                    <th scope="col">Ip de Salida</th>
                     <th scope="col">Editar</th>
                     <th scope="col">Eliminar</th>
                   </tr>
                 </thead>
-                <tbody class="body-table">                 
-                @foreach ($torres as $torre)
-                  <tr class="idraw">
-                    <td>{{$torre->id}}</td>
-                    <td>{{$torre->nombreTorre}}</td>
-                    <td>{{$torre->direccion}}</td>
-                    <td>{{$torre->dueñoLocal}}</td>
-                    <td>{{$torre->telefono}}</td>
-                    <td>{{$torre->pago}}</td>
-                    <td><button type="button" class="btn btn-info modal-editar" data-toggle="modal" data-target="#ModalEditar" data-action="editar">Editar</button></td>
-                    <td><button class="btn btn-danger" data-action="eliminar">Eliminar</button></td>
-                  </tr>           
-                  @endforeach
+                <tbody>     
+                  @foreach ($servidores as $servidor)
+                  <tr>
+                    <td>{{$servidor->id}}</td>
+                    <td>{{$servidor->nombreServidor}}</td>
+                    <td>{{$servidor->ipEntrada}}</td>
+                    <td>{{$servidor->ipSalida}}</td>   
+                    <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#ModalEditar">Editar</button></td>
+                    <td><button class="btn btn-danger">Eliminar</button></td>
+                  </tr>    
+                  @endforeach       
                 </tbody>
               </table>
         </div>
     </div>
-@include('admin.torre.modaleditar')
+    @include('admin.servidor.modaleditar')
 @stop
 
 @section('css')
@@ -64,29 +60,25 @@
     <script> console.log('Hi!'); </script>
     <script>
         $(document).ready( function () {
+
+      
         $('#myTable').DataTable({
             responsive:true,
             autoWidth:false
         });
-         }); 
+    } );
     </script>
     <script>
-        const body_table = document.querySelector('.body-table');
-        const formulario = document.querySelector('.form-edit');
-
-        body_table.addEventListener( 'click', e => {
-
-          const button = e.target;
-
-          if( button.dataset.action == 'editar' ){
-            const padre = button.parentNode.parentNode;
-            const datos = [ ...padre.querySelectorAll('td')].slice( 1, -2 );
-            datos.forEach( (el, index) =>{
-              formulario[index + 1].value = el.innerText;
-            })
-          }
-        })
-
+     $("table tbody tr").click(function() {
+      var nombreServidor = $(this).find("td:eq(1)").text();
+      var ipEntrada = $(this).find("td:eq(2)").text();
+      var ipSalida = $(this).find("td:eq(3)").text();
+      document.getElementById("nombreServidor").value = nombreServidor;  
+      document.getElementById("ipEntrada").value = ipEntrada;  
+      document.getElementById("ipSalida").value = ipSalida;  
+      });
+      
     </script>
+
     
 @stop

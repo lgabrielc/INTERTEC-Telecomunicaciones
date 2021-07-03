@@ -1,14 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
+use App\Models\Servidor;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Torre;
 
-use function GuzzleHttp\Promise\all;
-
-class TorreController extends Controller
+class ServidorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +14,8 @@ class TorreController extends Controller
      */
     public function index()
     {
-        $torres= Torre::all();
-        return view('admin.torre.index')->with('torres',$torres);
+        $servidores= Servidor::all();
+        return view('admin.servidor.index')->with('servidores',$servidores);
     }
 
     /**
@@ -39,15 +36,12 @@ class TorreController extends Controller
      */
     public function store(Request $request)
     {
-       $Torre= new Torre();
-
-       $Torre->nombreTorre = $request->nombreTorre;
-       $Torre->direccion = $request->direccion;
-       $Torre->dueñoLocal = $request->dueñoLocal;
-       $Torre->telefono = $request->telefono;
-       $Torre->pago = $request->pago;
-       $Torre->save();
-       return redirect()->route('torre.index');
+        $Servidor= new Servidor();
+        $Servidor->nombreServidor = $request->nombreServidor;
+        $Servidor->ipEntrada = $request->ipEntrada;
+        $Servidor->ipSalida = $request->ipSalida;
+        $Servidor->save();
+        return redirect()->route('servidor.index');
     }
 
     /**

@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Antena extends Model
+class Servidor extends Model
 {
-    public $table = "antena";
+    public $table= "servidor";
     use HasFactory;
 }

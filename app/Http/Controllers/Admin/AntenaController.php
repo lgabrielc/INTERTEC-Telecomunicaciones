@@ -15,7 +15,8 @@ class AntenaController extends Controller
      */
     public function index()
     {
-        return view('admin.antena.index');
+        $antenas= Antena::all();
+        return view('admin.antena.index')->with('antena',$antenas);
     }
 
     /**
