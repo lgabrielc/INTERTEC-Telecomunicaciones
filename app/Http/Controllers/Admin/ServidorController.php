@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Servidor;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ServidorController extends Controller
 {
@@ -14,7 +15,10 @@ class ServidorController extends Controller
      */
     public function index()
     {
-        $servidores= Servidor::all();
+       // $users = DB::table('users')->get();
+        $servidores= DB::table('servidor')->get();
+      //  $servidoresORD=$servidores->sortKeysDesc();
+        //$servidores= Servidor::all()->orderBy('id','DESC');
         return view('admin.servidor.index')->with('servidores',$servidores);
     }
 
@@ -36,8 +40,15 @@ class ServidorController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre'=>'required',
+            'ipEntrada'=> 'required',
+            'ipSalida' => 'required'
+
+        ]); 
+
         $Servidor= new Servidor();
-        $Servidor->nombreServidor = $request->nombreServidor;
+        $Servidor->nombre = $request->nombre;
         $Servidor->ipEntrada = $request->ipEntrada;
         $Servidor->ipSalida = $request->ipSalida;
         $Servidor->save();
@@ -61,9 +72,9 @@ class ServidorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        
     }
 
     /**
@@ -73,18 +84,29 @@ class ServidorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Servidor $servidor)
     {
-        //
+        $request->validate([
+            'nombre'=>'required',
+            'ipEntrada'=> 'required',
+            'ipSalida' => 'required'
+        ]);
+        $servidor->update($request->all());
+        return redirect()->route('servidor.index');
     }
-
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Servidor $servidor)
+    {
+        $servidor->delete();
+        return redirect()->route('servidor.index');
+    }
+
+    public function actualizar(Request $request)
     {
         //
     }

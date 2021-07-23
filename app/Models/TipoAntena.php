@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class TipoAntena extends Model
 {
-    public $table = 'TipoAntena';
+    protected $fillable = [
+        'tipoAntena'
+     ];
+    public $table = 'tipoantena';
     use HasFactory;
+    
+    //Relaccion uno a muchos
+    public function antenas(){
+        return $this->hasMany('App\Models\Antena');
+    }    
 }

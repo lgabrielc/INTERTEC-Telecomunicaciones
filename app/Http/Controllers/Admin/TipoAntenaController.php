@@ -16,7 +16,7 @@ class TipoAntenaController extends Controller
     public function index()
     {
         $tipoAntenas= tipoAntena::all();
-        return view('admin.')
+        return view('admin.tipoantena.index')->with('tipoAntenas',$tipoAntenas);
     }
 
     /**
@@ -37,7 +37,14 @@ class TipoAntenaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'tipoAntena'=>'required'
+        ]); 
+
+        $TipoAntena= new TipoAntena();
+        $TipoAntena->tipoAntena = $request->tipoAntena;
+        $TipoAntena->save();
+        return redirect()->route('tipoantena.index');
     }
 
     /**
@@ -71,7 +78,13 @@ class TipoAntenaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'tipoAntena'=>'required'
+        ]);
+        $tipodeAntena = TipoAntena::find($id);
+        $tipodeAntena->tipoAntena = $request->get('tipoAntena');
+        $tipodeAntena->update();
+        return redirect()->route('tipoantena.index');
     }
 
     /**

@@ -7,6 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Servidor extends Model
 {
-    public $table= "servidor";
+    protected $fillable = [
+        'nombre',
+        'ipEntrada',
+        'ipSalida'
+     ];
+    public $table = 'servidores';
     use HasFactory;
+    //Relaccion uno a muchos
+    public function antenas(){
+        return $this->hasMany('App\Models\Antena');
+    }
 }

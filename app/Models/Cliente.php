@@ -5,27 +5,31 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Torre extends Model
+class Cliente extends Model
 {
-    public $table = "torres";
     use HasFactory;
     protected $fillable = [
         'nombre',
-        'dueño',
-        'mensualidad',
+        'apellido',
+        'dni',
+        'correo'
      ];
-    //Relaccion uno a muchos
-    public function antenas(){
-        return $this->hasMany('App\Models\Antena');
+    public $table = 'clientes';
+    //Relacion uno a uno con servicio
+    public function servicio() {
+        return $this->hasOne('App\Models\Servicio');
     }
-
-
+    //Relacion uno a muchos con Pagos
+    public function pagos(){
+        return $this->hasMany('App\Models\Pago');
+    }
     //Relacion 1 a 1 polimorfica con direccion
     public function direccion(){
         return $this->morphOne('App\Models\Direccion','direcciones');
     }
+
     //Relacion uno a muchos polimorfica con telefono
     public function telefono(){
         return $this->morphMany('App\Models\Telefono','telefono');
-    }    
+    }
 }

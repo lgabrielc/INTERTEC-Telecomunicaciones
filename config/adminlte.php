@@ -270,6 +270,11 @@ return [
             'icon' => 'fas fa-satellite-dish',
         ],
         [
+            'text' => 'Tipo de Antena',
+            'url'  => 'admin/tipoantena',
+            'icon' => 'fas fa-satellite-dish',
+        ],
+        [
             'text' => 'Clientes',
             'url'  => 'admin/cliente',
             'icon' => 'fas fa-user-tag',

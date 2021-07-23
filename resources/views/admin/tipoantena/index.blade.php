@@ -3,43 +3,41 @@
 @section('title', 'Administración')
 
 @section('content_header')
-    <h1>Panel de Administración de Torres</h1>
+    <h1>Panel de Administración de Tipos de Antena</h1>
 @stop
 
 @section('content')
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalCrear">Crear Nuevo</button>
-  <!-- Modal -->
-@include('admin.servidor.modalcrear')
-<p>Bienvenido a la gestión de Torres</p>
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ModalCrear">Crear Nuevo</button>
+    <!-- Modal -->
+    @include('admin.tipoantena.modalcrear')
+    <p>Bienvenido a la gestión de Tipo de Torres</p>
     <div class="card">
         <div class="card-body">
             <table id="myTable" class="table table-striped dt-responsive nowrap" style="width:100%">
                 <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Ip de Entrada</th>
-                    <th scope="col">Ip de Salida</th>
-                    <th scope="col">Editar</th>
-                    <th scope="col">Eliminar</th>
-                  </tr>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tipo de Antena</th>
+                        <th scope="col">Editar</th>
+                        <th width="280px" scope="col">Acciones</th>
+                    </tr>
                 </thead>
-                <tbody>     
-                  @foreach ($servidores as $servidor)
-                  <tr>
-                    <td>{{$servidor->id}}</td>
-                    <td>{{$servidor->nombreServidor}}</td>
-                    <td>{{$servidor->ipEntrada}}</td>
-                    <td>{{$servidor->ipSalida}}</td>   
-                    <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#ModalEditar">Editar</button></td>
-                    <td><button class="btn btn-danger">Eliminar</button></td>
-                  </tr>    
-                  @endforeach       
+                <tbody>
+                    @foreach ($tipoAntenas as $tipodeAntena)
+                        <tr>
+                            <td>{{ $tipodeAntena->id }}</td>
+                            <td>{{ $tipodeAntena->tipoAntena }}</td>
+                            <td>
+                                <a href="" class="btn btn-info" data-toggle="modal"
+                                data-target="#ModalEditar{{ $tipodeAntena->id }}">Editar</a>
+                                @include('admin.tipoantena.modaleditar')
+                            <td><button class="btn btn-danger">Eliminar</button></td>
+                        </tr>
+                    @endforeach
                 </tbody>
-              </table>
+            </table>
         </div>
     </div>
-    @include('admin.servidor.modaleditar')
 @stop
 
 @section('css')
@@ -57,28 +55,16 @@
     <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap5.min.js"></script>
     <script src="//cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-    <script> console.log('Hi!'); </script>
     <script>
-        $(document).ready( function () {
-
-      
-        $('#myTable').DataTable({
-            responsive:true,
-            autoWidth:false
+        console.log('Hi!');
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable({
+                "order": [[ 0, "desc" ]],
+                responsive: true,
+                autoWidth: false
+            });
         });
-    } );
     </script>
-    <script>
-     $("table tbody tr").click(function() {
-      var nombreServidor = $(this).find("td:eq(1)").text();
-      var ipEntrada = $(this).find("td:eq(2)").text();
-      var ipSalida = $(this).find("td:eq(3)").text();
-      document.getElementById("nombreServidor").value = nombreServidor;  
-      document.getElementById("ipEntrada").value = ipEntrada;  
-      document.getElementById("ipSalida").value = ipSalida;  
-      });
-      
-    </script>
-
-    
 @stop

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTorreTable extends Migration
+class CreateTorresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateTorreTable extends Migration
      */
     public function up()
     {
-        Schema::create('torre', function (Blueprint $table) {
+        Schema::create('torres', function (Blueprint $table) {
             $table->id();
-            $table->string('nombreTorre');
-            $table->string('direccion');
-            $table->string('dueñoLocal');
-            $table->string('telefono');
-            $table->float('pago');
+            $table->string('nombre');
+            $table->string('dueño');
+            $table->float('mensualidad');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateTorreTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('torre');
+        Schema::dropIfExists('torres');
     }
 }

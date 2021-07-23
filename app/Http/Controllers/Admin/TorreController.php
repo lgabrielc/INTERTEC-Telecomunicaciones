@@ -56,9 +56,9 @@ class TorreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Torre $torre)
     {
-        //
+        return view('admin.torre.index',compact('torre'));
     }
 
     /**

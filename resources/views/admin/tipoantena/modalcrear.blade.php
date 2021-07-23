@@ -8,20 +8,15 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action={{ route('servidor.store') }} method="POST">
+                <form action={{ route('tipoantena.store') }} method="POST">
                     @csrf
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Nombre del Servidor:</label>
-                        <input type="text" class="form-control" name="nombre" required>
+                        <label for="recipient-name" class="col-form-label">Nombre del Tipo de Antena:</label>
+                        <input type="text" class="form-control" name="tipoAntena" required>
                     </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Ip de Entrada:</label>
-                        <input type="text" class="form-control" name="ipEntrada" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Ip de Entrada:</label>
-                        <input type="text" class="form-control" name="ipSalida" required>
-                    </div>
+                    @error('tipoAntena')
+                        <p>{{$message}}</p>
+                    @enderror
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
