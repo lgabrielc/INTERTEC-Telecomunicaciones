@@ -14,11 +14,10 @@ class CreateDireccionesTable extends Migration
     public function up()
     {
         Schema::create('direcciones', function (Blueprint $table) {
-
+            $table->id();
             $table->string('direccion');
-            $table->unsignedBigInteger('direcciones_id');
-            $table->string('direcciones_type');
-            $table->primary(['direcciones_id','direcciones_type']);
+            $table->unsignedBigInteger('direccion_id');
+            $table->string('direccion_type');
             $table->timestamps();
         });
     }

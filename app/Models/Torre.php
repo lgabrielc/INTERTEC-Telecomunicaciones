@@ -22,7 +22,7 @@ class Torre extends Model
 
     //Relacion 1 a 1 polimorfica con direccion
     public function direccion(){
-        return $this->morphOne('App\Models\Direccion','direcciones');
+        return $this->morphMany('App\Models\Direccion','direccion');
     }
     //Relacion uno a muchos polimorfica con telefono
     public function telefono(){

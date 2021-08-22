@@ -10,13 +10,13 @@ class Direccion extends Model
     use HasFactory;
     protected $fillable = [
         'direccion',
-        'direcciones_id',
-        'direcciones_type',
+        'direccion_id',
+        'direccion_type',
      ];
     public $table = 'direcciones';
 
     //relacion 1 a 1 polimorfica
-    public function direcciones(){
+    public function direccion(){
         return $this->morphTo();
     }
 }

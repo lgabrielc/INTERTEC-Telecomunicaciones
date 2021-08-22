@@ -15,7 +15,7 @@ class CreateTipoantenaTable extends Migration
     {
         Schema::create('tipoantena', function (Blueprint $table) {
             $table->id();
-            $table->string('tipoAntena');
+            $table->string('nombre');
             $table->timestamps();
         });
     }

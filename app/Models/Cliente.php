@@ -27,7 +27,6 @@ class Cliente extends Model
     public function direccion(){
         return $this->morphOne('App\Models\Direccion','direcciones');
     }
-
     //Relacion uno a muchos polimorfica con telefono
     public function telefono(){
         return $this->morphMany('App\Models\Telefono','telefono');

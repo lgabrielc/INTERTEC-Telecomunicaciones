@@ -15,7 +15,7 @@ class CreateServidoresTable extends Migration
     {
         Schema::create('servidores', function (Blueprint $table) {
             $table->id();
-            $table->string('nombreServidor');
+            $table->string('nombre');
             $table->string('ipEntrada');
             $table->string('ipSalida');
             $table->timestamps();

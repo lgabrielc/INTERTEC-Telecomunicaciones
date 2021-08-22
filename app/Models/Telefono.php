@@ -9,8 +9,8 @@ class Telefono extends Model
 {
     protected $fillable = [
         'numero',
-        'telefonos_id',
-        'telefonos_type'
+        'telefono_id',
+        'telefono_type'
      ];
     use HasFactory;
 
