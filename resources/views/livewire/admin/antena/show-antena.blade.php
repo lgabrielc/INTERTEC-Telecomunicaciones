@@ -8,11 +8,10 @@
                             class="bg-gradient-to-tr from-pink-500 to-pink-700 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
                             <span class="material-icons text-white text-3xl leading-none">trending_up</span>
                         </div>
-                        <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2  undefined">
-                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1 text-right">Gestionar Tipo de Antena
-                            </h5>
-                            <span class="">
-                                @include('livewire.admin.antena.modalcreartipoantena')
+                        <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2 text-right undefined">
+                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">Numero de Antenas</h5>
+                            <span class="text-3xl text-gray-900">
+                                {{ $totalcontar }}
                             </span>
                         </div>
                     </div>
@@ -29,10 +28,12 @@
                             class="bg-gradient-to-tr from-pink-500 to-pink-700 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
                             <span class="material-icons text-white text-3xl leading-none">trending_up</span>
                         </div>
-                        <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2 text-right undefined">
-                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">Numero de Antenas</h5>
-                            <span class="text-3xl text-gray-900">
-                                {{ $totalcontar }}
+                        <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2  undefined">
+                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1 text-right">Gestionar Tipo
+                                de Antena
+                            </h5>
+                            <span class="">
+                                @include('livewire.admin.antena.modalcreartipoantena')
                             </span>
                         </div>
                     </div>

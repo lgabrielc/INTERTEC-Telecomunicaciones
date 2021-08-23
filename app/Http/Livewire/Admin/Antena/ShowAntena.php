@@ -130,7 +130,7 @@ class ShowAntena extends Component
     public function savetipoantena()
     {
         $this->validate([
-            'crearnuevotipoantena' => 'required|min:5|max:30',
+            'crearnuevotipoantena' => 'required|min:3|max:30',
         ]);
         $newTipoAntena = TipoAntena::create([
             'nombre' => $this->crearnuevotipoantena,
@@ -138,6 +138,8 @@ class ShowAntena extends Component
         
         $this->tipoantenas = TipoAntena::all();
         $this->totalcontar = Antena::count();
+        
+        $this->reset(['crearnuevotipoantena']);
         $this->emit('cerrarModalCrearTipoAntena');
         $this->emit('alert', 'El Tipo de Antena se creo satisfactoriamente');
     }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire\Admin\Cliente;
 
+use App\Models\Antena;
 use App\Models\Cliente;
 use App\Models\Estado;
+use App\Models\Plan;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,12 +16,20 @@ class ShowCliente extends Component
     use WithPagination;
     public $sort = 'id';
     public $direction = 'desc';
-    public $search, $totalcontar, $totalestados;
+    public $tiposervicio;
+    public $search, $totalcontar, $totalestados, $totalplanes, $totalantenas;
+    //Editar Cliente
     public $EditarCliente, $EditarNombre, $EditarID, $EditarApellido, $EditarDNI, $EditarCorreo;
+    //Agregar Servicio
+    public $AgregarServicio, $IDClienteServicio, $NombreClienteServicio, $ApellidoClienteServicio;
+    public $fechainicio,$fechavencimiento,$fechacorte,$condicionantena,$mac,$ip,$frecuencia,$antenarelacionada;
+    public $gponrelacionado,$clientegpon, $estado, $plannuevo;
+    //Datos Cliente
     public $nombre, $apellido, $dni, $correo;
-    public $fechainicio;
-    public $fechavencimiento;
-    public $fechacorte;
+    //Agregar Plan
+    public $NombrePlan, $VelocidadDescarga, $VelocidadSubida, $PrecioPlan;
+    public $isDisabled = true;
+    public $agregarplan;
     public $cant = '5';
     public $open = false;
 
@@ -30,13 +40,17 @@ class ShowCliente extends Component
         'correo' => 'required|email|min:3|max:30',
     ];
 
+
+
     public function mount()
     {
         $this->totalcontar = Cliente::count();
         $this->fechainicio = date('Y-m-d');
-        $this->fechavencimiento = date("Y-m-d",strtotime($this->fechainicio."+ 1 month"));
-        $this->fechacorte = date("Y-m-d",strtotime($this->fechavencimiento."+ 3 days"));
+        $this->fechavencimiento = date("Y-m-d", strtotime($this->fechainicio . "+ 1 month"));
+        $this->fechacorte = date("Y-m-d", strtotime($this->fechavencimiento . "+ 3 days"));
+        $this->totalplanes = Plan::all();
         $this->totalestados = Estado::all();
+        $this->totalantenas = Antena::all();
     }
     public function order($sort)
     {
@@ -59,9 +73,79 @@ class ShowCliente extends Component
         $this->EditarDNI = $this->EditarCliente->dni;
         $this->EditarCorreo = $this->EditarCliente->correo;
     }
+    public function saveplan()
+    {
+        $this->validate([
+            'NombrePlan' => 'required|min:5|max:50',
+            'VelocidadDescarga' => 'required|min:3|max:15',
+            'VelocidadSubida' => 'required|min:3|max:15',
+            'PrecioPlan' => 'required|numeric',
+        ]);
+
+        $NuevoPlan = Plan::create([
+            'nombre' => $this->NombrePlan,
+            'descarga' => $this->VelocidadDescarga,
+            'subida' => $this->VelocidadSubida,
+            'precio' => $this->PrecioPlan,
+        ]);
+
+        $this->totalplanes = Plan::all();
+        $this->totalcontar = Cliente::count();
+        $this->reset(['NombrePlan', 'VelocidadDescarga', 'VelocidadSubida', 'PrecioPlan']);
+        $this->emit('cerrarModalCrearPlan');
+        $this->emit('alert', 'El Plan se creo satisfactoriamente');
+    }
+    public function saveservicioantena()
+    {
+        $this->validate([
+            'fechainicio' => 'required|date_format:Y-m-d',
+            'fechavencimiento' => 'required|date_format:Y-m-d|after:fechainicio',
+            'fechacorte' => 'required|date_format:Y-m-d|after:fechavencimiento',
+            'tiposervicio' => 'required',
+            'condicionantena' => 'required',
+            'mac' => 'required|size:17',
+            'ip' => 'required|ipv4',
+            'frecuencia' => 'required|min:4|max:9',
+            'antenarelacionada' => 'required',
+            'gponrelacionado' => 'nullable',
+            'clientegpon' => 'nullable',
+            'gponrelacionado' => 'nullable',
+            'estado' => 'required',
+            'plannuevo' => 'required',
+        ]);
+    }
+    public function saveserviciofibra()
+    {
+        $this->validate([
+            'fechainicio' => 'required|date_format:Y-m-d',
+            'fechavencimiento' => 'required|date_format:Y-m-d|after:fechainicio',
+            'fechacorte' => 'required|date_format:Y-m-d|after:fechavencimiento',
+            'tiposervicio' => 'required',
+            'condicionantena' => 'nullable',
+            'mac' => 'nullable',
+            'ip' => 'nullable',
+            'frecuencia' => 'nullable',
+            'antenarelacionada' => 'nullable',
+            'gponrelacionado' => 'required',
+            'clientegpon' => 'required|numeric',
+            'gponrelacionado' => 'required',
+            'estado' => 'required',
+            'plannuevo' => 'required',
+        ]);
+
+
+
+    }
     public function agregarservicio(Cliente $cliente)
     {
-        $this->EditarCliente = $cliente;
+        $this->AgregarServicio = $cliente;
+        $this->IDClienteServicio = $this->AgregarServicio->id;
+        $this->NombreClienteServicio = $this->AgregarServicio->nombre;
+        $this->ApellidoClienteServicio = $this->AgregarServicio->apellido;
+        $this->reset('fechainicio', 'fechavencimiento', 'fechacorte');
+        $this->fechainicio = date('Y-m-d');
+        $this->fechavencimiento = date("Y-m-d", strtotime($this->fechainicio . "+ 1 month"));
+        $this->fechacorte = date("Y-m-d", strtotime($this->fechavencimiento . "+ 3 days"));
     }
     public function verservicio(Cliente $cliente)
     {
@@ -117,6 +201,16 @@ class ShowCliente extends Component
     //     $this->emit('cerrarModalCrearTipoAntena');
     //     $this->emit('alert', 'El Tipo de Antena se creo satisfactoriamente');
     // }
+    public function actualizarfechas($value)
+    {
+        // $this->fechainicio = date('Y-m-d');
+        $this->fechavencimiento = date("Y-m-d", strtotime($value . "+ 1 month"));
+        $this->fechacorte = date("Y-m-d", strtotime($this->fechavencimiento . "+ 3 days"));
+    }
+    public function actualizarfechas2($value)
+    {
+        $this->fechacorte = date("Y-m-d", strtotime($value . "+ 3 days"));
+    }
     public function render()
     {
         $clientes = Cliente::where('nombre', 'like', '%' . $this->search . '%')

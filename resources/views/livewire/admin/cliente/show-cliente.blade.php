@@ -21,7 +21,29 @@
                             total</span></div>
                 </div>
             </div>
+            <div class="px-4 mb-4">
+                <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
+                    <div class="flex flex-wrap border-b border-gray-200 undefined">
+                        <div
+                            class="bg-gradient-to-tr from-pink-500 to-pink-700 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
+                            <span class="material-icons text-white text-3xl leading-none">trending_up</span>
+                        </div>
+                        <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2  undefined">
+                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1 text-right">Gestionar Nuevo Plan de Internet
+                            </h5>
+                            <span class="">
+                                @include('livewire.admin.cliente.modalcrearplan')
+                            </span>
+                        </div>
+                    </div>
+                    <div class="text-sm text-gray-700 pt-4 flex items-center undefined"><span
+                            class="material-icons text-green-500 text-base leading-none">arrow_upward</span><span
+                            class="text-green-500 ml-1 mr-2"></span><span class="font-light whitespace-nowrap">En
+                            total</span></div>
+                </div>
+            </div>
         </div>
+
     </div>
     {{-- TABLA SEARCH Y TABLA PARA MOSTRAR LOS DATOOS --}}
     <div class=" max-w-7x1 mx-auto px-4 sm:px-6 lg:px-8 ">
@@ -226,6 +248,9 @@
     <script>
         window.livewire.on('cerrarModalCrear', () => {
             $('#exampleModal').modal('hide');
+        });
+        window.livewire.on('cerrarModalCrearPlan', () => {
+            $('#modalcreartipoantena').modal('hide');
         });
         window.livewire.on('cerrarModalCrearTipoAntena', () => {
             $('#modalcreartipoantena').modal('hide');

@@ -18,18 +18,26 @@ class Servicio extends Model
         'frecuencia',
         'estado_id',
         'cliente_id',
-        'antena_id'
-     ];
+        'antena_id',
+        'plan_id',
+    ];
     public $table = 'servicios';
     //Relacion uno a uno con cliente 
-    public function cliente(){
-        return $this->belongsTo('App\Models\Cliente','cliente_id','id');
+    public function cliente()
+    {
+        return $this->belongsTo('App\Models\Cliente', 'cliente_id', 'id');
     }
-    public function antena(){
-        return $this->belongsTo('App\Models\Antena','antena_id','id');
-    }    
+    public function antena()
+    {
+        return $this->belongsTo('App\Models\Antena', 'antena_id', 'id');
+    }
     //Relacion uno a muchos (inversa)
-    public function estado(){
+    public function estado()
+    {
         return $this->belongsTo('App\Models\Estado');
+    }
+    public function plan()
+    {
+        return $this->belongsTo('App\Models\Plan');
     }
 }
