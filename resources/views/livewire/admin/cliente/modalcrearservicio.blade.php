@@ -171,7 +171,7 @@
                                 wire:model.defer='plannuevo'>
                                 <option value="">--Escoja un plan--</option>
                                 @foreach ($totalplanes as $plan)
-                                    <option value="{{ $plan->id }}">{{ $plan->nombre }}</option>
+                                    <option value="{{ $plan->id }}">{{ $plan->nombre }}&nbsp{{$plan->descarga}} </option>
                                 @endforeach
                             </select>
                             @error('plannuevo') <span class="text-danger error">{{ $message }}</span>@enderror
