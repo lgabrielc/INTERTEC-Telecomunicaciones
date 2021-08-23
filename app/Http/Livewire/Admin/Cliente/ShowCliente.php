@@ -6,6 +6,7 @@ use App\Models\Antena;
 use App\Models\Cliente;
 use App\Models\Estado;
 use App\Models\Plan;
+use App\Models\Servicio;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -22,8 +23,8 @@ class ShowCliente extends Component
     public $EditarCliente, $EditarNombre, $EditarID, $EditarApellido, $EditarDNI, $EditarCorreo;
     //Agregar Servicio
     public $AgregarServicio, $IDClienteServicio, $NombreClienteServicio, $ApellidoClienteServicio;
-    public $fechainicio,$fechavencimiento,$fechacorte,$condicionantena,$mac,$ip,$frecuencia,$antenarelacionada;
-    public $gponrelacionado,$clientegpon, $estado, $plannuevo;
+    public $fechainicio, $fechavencimiento, $fechacorte, $condicionantena, $mac, $ip, $frecuencia, $antenarelacionada;
+    public $gponrelacionado, $clientegpon, $estado, $plannuevo;
     //Datos Cliente
     public $nombre, $apellido, $dni, $correo;
     //Agregar Plan
@@ -95,6 +96,14 @@ class ShowCliente extends Component
         $this->emit('cerrarModalCrearPlan');
         $this->emit('alert', 'El Plan se creo satisfactoriamente');
     }
+    public function resetearcampos($value)
+    {
+        if ($value == 'Antena') {
+            $this->reset('gponrelacionado', 'clientegpon', 'gponrelacionado');
+        } elseif ($value == 'Fibra') {
+            $this->reset('condicionantena', 'mac', 'ip', 'frecuencia', 'antenarelacionada');
+        }
+    }
     public function saveservicioantena()
     {
         $this->validate([
@@ -107,12 +116,29 @@ class ShowCliente extends Component
             'ip' => 'required|ipv4',
             'frecuencia' => 'required|min:4|max:9',
             'antenarelacionada' => 'required',
-            'gponrelacionado' => 'nullable',
             'clientegpon' => 'nullable',
             'gponrelacionado' => 'nullable',
             'estado' => 'required',
             'plannuevo' => 'required',
         ]);
+
+        $nuevoServicio = Servicio::create([
+            'fechaInicio' => $this->fechaInicio,
+            'fechaVencimiento' => $this->fechavencimiento,
+            'fechaCorte' => $this->fechacorte,
+            'tiposervicio' => $this->tiposervicio,
+            'condicionAntena' => $this->condicionantena,
+            'mac' => $this->mac,
+            'ip' => $this->ip,
+            'frecuencia' => $this->frecuencia,
+            'antena_id ' => $this->antenarelacionada,
+            'clientegpon' => $this->clientegpon,
+            'gponrelacionado' => $this->gponrelacionado,
+            'estado_id' => $this->estado,
+            'plan_id' => $this->plannuevo,
+            'cliente_id' => $this->IDClienteServicio,
+        ]);
+
     }
     public function saveserviciofibra()
     {
@@ -133,8 +159,22 @@ class ShowCliente extends Component
             'plannuevo' => 'required',
         ]);
 
-
-
+        $nuevoServicio = Servicio::create([
+            'fechaInicio' => $this->fechaInicio,
+            'fechaVencimiento' => $this->fechavencimiento,
+            'fechaCorte' => $this->fechacorte,
+            'tiposervicio' => $this->tiposervicio,
+            'condicionAntena' => $this->condicionantena,
+            'mac' => $this->mac,
+            'ip' => $this->ip,
+            'frecuencia' => $this->frecuencia,
+            'antena_id ' => $this->antenarelacionada,
+            'clientegpon' => $this->clientegpon,
+            'gponrelacionado' => $this->gponrelacionado,
+            'estado_id' => $this->estado,
+            'plan_id' => $this->plannuevo,
+            'cliente_id' => $this->IDClienteServicio,
+        ]);
     }
     public function agregarservicio(Cliente $cliente)
     {

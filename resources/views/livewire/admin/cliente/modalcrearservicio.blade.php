@@ -52,7 +52,7 @@
                         <div class="form-group">
                             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Tipo de Servicio:</label>
                             <select name="" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                                wire:model='tiposervicio'>
+                                wire:model='tiposervicio' wire:change="resetearcampos($event.target.value)">
                                 <option value="">-Escoja el Tipo de Servicio-</option>
                                 <option value="Antena">Antena</option>
                                 <option value="Fibra">Fibra Optica</option>
