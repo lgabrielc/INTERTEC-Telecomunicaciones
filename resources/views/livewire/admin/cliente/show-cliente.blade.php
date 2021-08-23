@@ -174,10 +174,10 @@
                                                     <td
                                                         class="py-1 border-b border-gray-200 bg-white text-sm text-center">
                                                         @if ($cliente->servicio)
-                                                            <button wire:click="edit({{ $cliente->id }})"
+                                                            <button wire:click="verservicio({{ $cliente->id }})"
                                                                 type="button"
                                                                 class="btn btn-warning rounded-pill mx-1 my-1"
-                                                                data-toggle="modal" data-target="#updateModal">
+                                                                data-toggle="modal" data-target="#modalverservicio">
                                                                 Ver Servicio
                                                             </button>
                                                         @else
@@ -222,6 +222,7 @@
     </div>
     @include('livewire.admin.cliente.modaleditar')
     @include('livewire.admin.cliente.modalcrearservicio')
+    @include('livewire.admin.cliente.modalverservicio')
     <script>
         livewire.on('deletthis', deletID => {
             Swal.fire({
@@ -250,7 +251,10 @@
             $('#exampleModal').modal('hide');
         });
         window.livewire.on('cerrarModalCrearPlan', () => {
-            $('#modalcreartipoantena').modal('hide');
+            $('#modalcrearplan').modal('hide');
+        });
+        window.livewire.on('cerrarModalCrearServicio', () => {
+            $('#modalcrearservicio').modal('hide');
         });
         window.livewire.on('cerrarModalCrearTipoAntena', () => {
             $('#modalcreartipoantena').modal('hide');

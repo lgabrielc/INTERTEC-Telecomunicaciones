@@ -1,10 +1,10 @@
 <!-- Modal -->
-<div wire:ignore.self class="modal fade" id="modalcrearservicio" tabindex="-1" role="dialog"
+<div wire:ignore.self class="modal fade" id="modalverservicio" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Crear Nuevo Servicio</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Información del Servicio</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true close-btn">×</span>
                 </button>
@@ -22,18 +22,16 @@
                         <div class="">
                             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Fecha de Inicio:</label>
                             <input type="date" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                                wire:model="fechaInicio" wire:change="actualizarfechas($event.target.value)"
-                                value="{{ date('Y-m-d') }}">
-                            @error('fechaInicio') <span class="text-danger error">{{ $message }}</span>@enderror
+                                wire:model.defer="fechaInicioV" value="{{$fechaInicioV}}">
+                            @error('fechaInicioV') <span class="text-danger error">{{ $message }}</span>@enderror
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Fecha de Vencimiento:</label>
                             <input type="date" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                                value="{{ date('Y-m-d', strtotime(date('Y-m-d') . '+ 1 month')) }}"
-                                wire:model='fechaVencimiento' wire:change='actualizarfechas2($event.target.value)'>
-                            @error('fechaVencimiento')
+                                wire:model.defer='fechaVencimientoV'>
+                            @error('fechaVencimientoV')
                             <span class="text-danger error">{{ $message }}</span>@enderror
                         </div>
                     </div>
@@ -43,21 +41,8 @@
                         <div class="">
                             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Fecha de Corte:</label>
                             <input type="date" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                                wire:model="fechaCorte">
-                            @error('fechaCorte') <span class="text-danger error">{{ $message }}</span>@enderror
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Tipo de Servicio:</label>
-                            <select name="" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                                wire:model='tiposervicio' wire:change="resetearcampos($event.target.value)">
-                                <option value="">-Escoja el Tipo de Servicio-</option>
-                                <option value="Antena">Antena</option>
-                                <option value="Fibra">Fibra Optica</option>
-                            </select>
-                            @error('EditarMac') <span class="text-danger error">{{ $message }}</span>@enderror
+                                wire:model.defer="fechaCorteV">
+                            @error('fechaCorteV') <span class="text-danger error">{{ $message }}</span>@enderror
                         </div>
                     </div>
                 </div>

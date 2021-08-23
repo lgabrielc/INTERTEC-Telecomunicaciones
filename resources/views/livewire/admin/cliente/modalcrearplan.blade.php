@@ -1,11 +1,11 @@
 <div class="text-right">
     <button type="button" class="btn btn-success rounded-pill text-right" data-toggle="modal"
-        data-target="#modalcreartipoantena">
+        data-target="#modalcrearplan">
         Crear Nuevo
     </button>
 </div>
 <!-- Modal -->
-<div wire:ignore.self class="modal fade" id="modalcreartipoantena" tabindex="-1" role="dialog"
+<div wire:ignore.self class="modal fade" id="modalcrearplan" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

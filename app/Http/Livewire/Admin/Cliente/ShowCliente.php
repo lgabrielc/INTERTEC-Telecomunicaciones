@@ -17,13 +17,14 @@ class ShowCliente extends Component
     use WithPagination;
     public $sort = 'id';
     public $direction = 'desc';
-    public $tiposervicio;
+    public $tiposervicio,$VerServicio;
     public $search, $totalcontar, $totalestados, $totalplanes, $totalantenas;
     //Editar Cliente
     public $EditarCliente, $EditarNombre, $EditarID, $EditarApellido, $EditarDNI, $EditarCorreo;
     //Agregar Servicio
     public $AgregarServicio, $IDClienteServicio, $NombreClienteServicio, $ApellidoClienteServicio;
-    public $fechainicio, $fechavencimiento, $fechacorte, $condicionantena, $mac, $ip, $frecuencia, $antenarelacionada;
+    public $fechaInicio, $fechaVencimiento, $fechaCorte, $condicionantena, $mac, $ip, $frecuencia, $antenarelacionada;
+    public $fechaInicioV, $fechaVencimientoV, $fechaCorteV;
     public $gponrelacionado, $clientegpon, $estado, $plannuevo;
     //Datos Cliente
     public $nombre, $apellido, $dni, $correo;
@@ -46,9 +47,9 @@ class ShowCliente extends Component
     public function mount()
     {
         $this->totalcontar = Cliente::count();
-        $this->fechainicio = date('Y-m-d');
-        $this->fechavencimiento = date("Y-m-d", strtotime($this->fechainicio . "+ 1 month"));
-        $this->fechacorte = date("Y-m-d", strtotime($this->fechavencimiento . "+ 3 days"));
+        $this->fechaInicio = date('Y-m-d');
+        $this->fechaVencimiento = date("Y-m-d", strtotime($this->fechaInicio . "+ 1 month"));
+        $this->fechaCorte = date("Y-m-d", strtotime($this->fechaVencimiento . "+ 3 days"));
         $this->totalplanes = Plan::all();
         $this->totalestados = Estado::all();
         $this->totalantenas = Antena::all();
@@ -107,9 +108,9 @@ class ShowCliente extends Component
     public function saveservicioantena()
     {
         $this->validate([
-            'fechainicio' => 'required|date_format:Y-m-d',
-            'fechavencimiento' => 'required|date_format:Y-m-d|after:fechainicio',
-            'fechacorte' => 'required|date_format:Y-m-d|after:fechavencimiento',
+            'fechaInicio' => 'required|date_format:Y-m-d',
+            'fechaVencimiento' => 'required|date_format:Y-m-d|after:fechaInicio',
+            'fechaCorte' => 'required|date_format:Y-m-d|after:fechaVencimiento',
             'tiposervicio' => 'required',
             'condicionantena' => 'required',
             'mac' => 'required|size:17',
@@ -124,8 +125,8 @@ class ShowCliente extends Component
 
         $nuevoServicio = Servicio::create([
             'fechaInicio' => $this->fechaInicio,
-            'fechaVencimiento' => $this->fechavencimiento,
-            'fechaCorte' => $this->fechacorte,
+            'fechaVencimiento' => $this->fechaVencimiento,
+            'fechaCorte' => $this->fechaCorte,
             'tiposervicio' => $this->tiposervicio,
             'condicionAntena' => $this->condicionantena,
             'mac' => $this->mac,
@@ -138,14 +139,16 @@ class ShowCliente extends Component
             'plan_id' => $this->plannuevo,
             'cliente_id' => $this->IDClienteServicio,
         ]);
-
+        $this->reset(['tiposervicio', 'condicionantena', 'mac', 'ip','frecuencia']);
+        $this->emit('cerrarModalCrearServicio');
+        $this->emit('alert', 'El Servicio se añadio satisfactoriamente');
     }
     public function saveserviciofibra()
     {
         $this->validate([
-            'fechainicio' => 'required|date_format:Y-m-d',
-            'fechavencimiento' => 'required|date_format:Y-m-d|after:fechainicio',
-            'fechacorte' => 'required|date_format:Y-m-d|after:fechavencimiento',
+            'fechaInicio' => 'required|date_format:Y-m-d',
+            'fechaVencimiento' => 'required|date_format:Y-m-d|after:fechaInicio',
+            'fechaCorte' => 'required|date_format:Y-m-d|after:fechaVencimiento',
             'tiposervicio' => 'required',
             'condicionantena' => 'nullable',
             'mac' => 'nullable',
@@ -161,8 +164,8 @@ class ShowCliente extends Component
 
         $nuevoServicio = Servicio::create([
             'fechaInicio' => $this->fechaInicio,
-            'fechaVencimiento' => $this->fechavencimiento,
-            'fechaCorte' => $this->fechacorte,
+            'fechaVencimiento' => $this->fechaVencimiento,
+            'fechaCorte' => $this->fechaCorte,
             'tiposervicio' => $this->tiposervicio,
             'condicionAntena' => $this->condicionantena,
             'mac' => $this->mac,
@@ -182,14 +185,20 @@ class ShowCliente extends Component
         $this->IDClienteServicio = $this->AgregarServicio->id;
         $this->NombreClienteServicio = $this->AgregarServicio->nombre;
         $this->ApellidoClienteServicio = $this->AgregarServicio->apellido;
-        $this->reset('fechainicio', 'fechavencimiento', 'fechacorte');
-        $this->fechainicio = date('Y-m-d');
-        $this->fechavencimiento = date("Y-m-d", strtotime($this->fechainicio . "+ 1 month"));
-        $this->fechacorte = date("Y-m-d", strtotime($this->fechavencimiento . "+ 3 days"));
+        $this->reset('fechaInicio', 'fechaVencimiento', 'fechaCorte');
+        $this->fechaInicio = date('Y-m-d');
+        $this->fechaVencimiento = date("Y-m-d", strtotime($this->fechaInicio . "+ 1 month"));
+        $this->fechaCorte = date("Y-m-d", strtotime($this->fechaVencimiento . "+ 3 days"));
     }
     public function verservicio(Cliente $cliente)
     {
-        $this->EditarCliente = $cliente;
+        $this->VerServicio = $cliente;
+        $this->NombreClienteServicio = $this->VerServicio->nombre;
+        $this->ApellidoClienteServicio = $this->VerServicio->apellido;
+        $this->fechaInicioV = $this->VerServicio->servicio->fechaInicio;
+        $this->fechaVencimientoV = $this->VerServicio->servicio->fechaVencimiento;
+        $this->fechaCorteV = $this->VerServicio->servicio->fechaCorte;
+        $this->tiposervicio = $this->VerServicio->servicio->tiposervicio;
     }
     public function update()
     {
@@ -244,8 +253,8 @@ class ShowCliente extends Component
     public function actualizarfechas($value)
     {
         // $this->fechainicio = date('Y-m-d');
-        $this->fechavencimiento = date("Y-m-d", strtotime($value . "+ 1 month"));
-        $this->fechacorte = date("Y-m-d", strtotime($this->fechavencimiento . "+ 3 days"));
+        $this->fechaVencimiento = date("Y-m-d", strtotime($value . "+ 1 month"));
+        $this->fechaCorte = date("Y-m-d", strtotime($this->fechaVencimiento . "+ 3 days"));
     }
     public function actualizarfechas2($value)
     {
