@@ -26,11 +26,12 @@ class CreateServiciosTable extends Migration
             $table->string('frecuencia')->nullable();
             //Por cambiar
             $table->string('clientegpon')->nullable();
-            $table->string('gponrelacionado')->nullable();
             $table->unsignedBigInteger('estado_id');
             $table->unsignedBigInteger('cliente_id');
             $table->unsignedBigInteger('antena_id')->nullable();
             $table->unsignedBigInteger('plan_id');
+            $table->unsignedBigInteger('nap_id')->nullable();
+            $table->foreign('nap_id')->references('id')->on('naps');
             $table->foreign('estado_id')->references('id')->on('estados');
             $table->foreign('cliente_id')->references('id')->on('clientes');
             $table->foreign('antena_id')->references('id')->on('antenas');

@@ -58,6 +58,7 @@ class ShowServidor extends Component
             'ipEntradaEdit' => 'required|ipv4',
             'ipSalidaEdit' => 'required|ipv4',
         ]);
+        
         if ($this->servidorid) {
             $updServidor = Servidor::find($this->servidorid);
             $updServidor->update([

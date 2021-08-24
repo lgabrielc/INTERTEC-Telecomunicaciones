@@ -18,7 +18,7 @@ class Servicio extends Model
         'ip',
         'frecuencia',
         'clientegpon',
-        'gponrelacionado',
+        'nap_id',
         //Este debería de ser gpon_id pero aún no hay la tabla gpon
         'estado_id',
         'cliente_id',
@@ -43,5 +43,9 @@ class Servicio extends Model
     public function plan()
     {
         return $this->belongsTo('App\Models\Plan');
+    }
+    public function nap()
+    {
+        return $this->belongsTo('App\Models\Nap');
     }
 }

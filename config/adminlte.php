@@ -265,6 +265,33 @@ return [
             'url'  => 'admin/cliente',
             'icon' => 'fas fa-user-tag',
         ],
+        
+        ['header' => 'RECURSOS FIBRA OPTICA'],
+        [
+            'text' => 'Data Center',
+            'url'  => 'admin/datacenter',
+            'icon' => 'fas fa-warehouse',
+        ],
+        [
+            'text' => 'OLT',
+            'url'  => 'admin/olt',
+            'icon' => 'fas fa-digital-tachograph',
+        ],
+        [
+            'text' => 'Tarjeta',
+            'url'  => 'admin/tarjeta',
+            'icon' => 'fas fa-boxes',
+        ],
+        [
+            'text' => 'Gpon',
+            'url'  => 'admin/gpon',
+            'icon' => 'fas fa-calendar-alt',
+        ],
+        [
+            'text' => 'Cajas Nap',
+            'url'  => 'admin/nap',
+            'icon' => 'fas fa-inbox',
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
