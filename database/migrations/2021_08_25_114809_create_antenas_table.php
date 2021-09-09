@@ -24,6 +24,9 @@ class CreateAntenasTable extends Migration
             $table->unsignedBigInteger('torre_id');
             $table->unsignedBigInteger('servidor_id');
             $table->unsignedBigInteger('tipoantena_id');
+
+            $table->unsignedBigInteger('estado_id');
+            $table->foreign('estado_id')->references('id')->on('estados');
             $table->foreign('torre_id')->references('id')->on('torres')->onDelete('cascade');
             $table->foreign('servidor_id')->references('id')->on('servidores')->onDelete('cascade');
             $table->foreign('tipoantena_id')->references('id')->on('tipoantena')->onDelete('cascade');

@@ -38,7 +38,7 @@ class Servicio extends Model
     //Relacion uno a muchos (inversa)
     public function estado()
     {
-        return $this->belongsTo('App\Models\Estado');
+        return $this->belongsTo('App\Models\Estado', 'estado_id', 'id');
     }
     public function plan()
     {
@@ -48,4 +48,5 @@ class Servicio extends Model
     {
         return $this->belongsTo('App\Models\Nap');
     }
+
 }

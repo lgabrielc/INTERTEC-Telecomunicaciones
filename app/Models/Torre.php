@@ -13,12 +13,12 @@ class Torre extends Model
         'nombre',
         'dueño',
         'mensualidad',
+        'estado_id',
      ];
     //Relaccion uno a muchos
     public function antenas(){
         return $this->hasMany('App\Models\Antena');
     }
-
 
     //Relacion 1 a 1 polimorfica con direccion
     public function direccion(){
@@ -28,4 +28,8 @@ class Torre extends Model
     public function telefono(){
         return $this->morphMany('App\Models\Telefono','telefono');
     }    
+    public function estado()
+    {
+        return $this->belongsTo('App\Models\Estado', 'estado_id', 'id');
+    }
 }

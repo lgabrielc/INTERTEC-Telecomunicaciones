@@ -10,7 +10,7 @@
                             <span class="material-icons text-white text-3xl leading-none">trending_up</span>
                         </div>
                         <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2 text-right undefined">
-                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">Numero de Olts</h5>
+                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">Numero de Gpons</h5>
                             <span class="text-3xl text-gray-900">{{ $totalcontar }}</span>
                         </div>
                     </div>
@@ -28,8 +28,8 @@
             <div class="bg-white  rounded-2xl px-10 py-8 shadow-lg hover:shadow-2xl transition duration-500 w-full">
                 <div class="container w-full">
                     <div class=w-full">
-                        <h1 class="text-2xl font-semibold leading-tight mb-2">Gestionar Tarjeta</h1>
-                        @include('livewire.admin.tarjeta.modalcrear')
+                        <h1 class="text-2xl font-semibold leading-tight mb-2">Gestionar Gpon</h1>
+                        @include('livewire.admin.gpon.modalcrear')
                         <div class="my-2 flex sm:flex-row flex-col">
                             <div class="pr-2 flex flex-row mb-1 sm:mb-0 content-center justify-center">
                                 <div class="flex relative content-center ">
@@ -69,103 +69,138 @@
                         </div>
                         <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-1 overflow-x-auto">
                             <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
-                                @if (count($tarjetas))
-                                    <table class="min-w-full leading-normal">
-                                        <thead>
-                                            <tr>
-                                                <th wire:click="order('id')"
-                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                    ID
-                                                    @if ($sort == 'id')
-                                                        @if ($direction == 'asc')
-                                                            {{-- SI ES ASCENDENTE PONER SU ICONO --}}
-                                                            <i class="fas fa-sort-numeric-up float-right"></i>
-                                                            {{-- SI ES DESCENDENTE PONER SU ICONO --}}
-                                                        @else
-                                                            {{-- SI ES DESCENDENTE PONER SU ICONO --}}
-                                                            <i class="fas fa-sort-numeric-up-alt float-right"></i>
-                                                        @endif
-                                                    @else
-                                                        {{-- SI ES CLICKEA POR PRIMERA VEZ EN ID PONER SU ICONO --}}
-                                                        <i class="fas fa-sort float-right mt-1"></i>
-                                                    @endif
-                                                </th>
-                                                <th wire:click="order('nombre')"
-                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                    Nombre
-                                                    <i class="fas fa-sort float-right mt-1"></i>
-                                                </th>
-                                                <th wire:click="order('ipEntrada')"
-                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                    Slots
-                                                    <i class="fas fa-sort float-right mt-1"></i>
-                                                </th>
-                                                <th wire:click="order('ipSalida')"
-                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                    Olt
-                                                    <i class="fas fa-sort float-right mt-1"></i>
-                                                </th>
-                                                <th
-                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                    Acciones
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($tarjetas as $tarjeta)
-                                                <tr class="">
-                                                    <td class="px-5 py-4 border-b border-gray-200 bg-white text-base ">
-                                                        <div class="flex items-center">
-                                                            <div class="ml-3">
-                                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                                    {{ $tarjeta->id }}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">
-                                                        <div class="flex items-center">
-                                                            <div class="ml-3">
-                                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                                    {{ $tarjeta->nombre }}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
+                                @if (count($gpons))
+                                <table class="min-w-full leading-normal">
+                                    <thead>
+                                        <tr>
+                                            <th wire:click="order('id')"
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                ID
+                                                @if ($sort == 'id')
+                                                @if ($direction == 'asc')
+                                                {{-- SI ES ASCENDENTE PONER SU ICONO --}}
+                                                <i class="fas fa-sort-numeric-up float-right"></i>
+                                                {{-- SI ES DESCENDENTE PONER SU ICONO --}}
+                                                @else
+                                                {{-- SI ES DESCENDENTE PONER SU ICONO --}}
+                                                <i class="fas fa-sort-numeric-up-alt float-right"></i>
+                                                @endif
+                                                @else
+                                                {{-- SI ES CLICKEA POR PRIMERA VEZ EN ID PONER SU ICONO --}}
+                                                <i class="fas fa-sort float-right mt-1"></i>
+                                                @endif
+                                            </th>
+                                            <th wire:click="order('nombre')"
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Nombre
+                                                <i class="fas fa-sort float-right mt-1"></i>
+                                            </th>
+                                            <th wire:click="order('slots')"
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Slots
+                                                <i class="fas fa-sort float-right mt-1"></i>
+                                            </th>
+                                            <th wire:click="order('tarjeta_id')"
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Tarjeta
+                                                <i class="fas fa-sort float-right mt-1"></i>
+                                            </th>
+                                            <th
+                                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Olt
+                                            </th>
+                                            <th
+                                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                DataCenter
+                                            </th>
+                                            <th wire:click="order('estado_id')"
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Estado
+                                                <i class="fas fa-sort float-right mt-1"></i>
+                                            </th>
+                                            <th
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Acciones
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($gpons as $gpon)
+                                        <tr class="">
+                                            <td class="
+                                                    px-5 py-4 border-b border-gray-200 bg-white text-base ">
+                                                <div class=" flex items-center">
+                                                    <div class="ml-3">
                                                         <p class="text-gray-900 whitespace-no-wrap">
-                                                            {{ $tarjeta->slots }}</p>
-                                                    </td>
-                                                    <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
-                                                        <p class="text-gray-900 whitespace-no-wrap">
-                                                            {{ $tarjeta->olt->nombre }}
+                                                            {{ $gpon->id }}
                                                         </p>
-                                                    </td>
-                                                    <td
-                                                        class="px-5 py-1 border-b border-gray-200 bg-white text-sm text-center">
-                                                        <button wire:click="edit({{ $tarjeta->id }})" type="button"
-                                                            class="btn btn-info rounded-pill mx-1" data-toggle="modal"
-                                                            data-target="#updateModal">
-                                                            Editar
-                                                        </button>
-                                                        <button wire:click="$emit('deletthis', {{ $tarjeta->id }})"
-                                                            type="button" class="btn btn-danger rounded-pill mx-1">
-                                                            Eliminar
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                    @if ($tarjetas->hasPages())
-                                        <div class="px-6 py-3">
-                                            {{ $tarjetas->links() }}
-                                        </div>
-                                    @endif
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">
+                                                <div class="flex items-center">
+                                                    <div class="ml-3">
+                                                        <p class="text-gray-900 whitespace-no-wrap">
+                                                            {{ $gpon->nombre }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $gpon->slots }}</p>
+                                            </td>
+                                            <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $gpon->tarjeta->nombre }}
+                                                </p>
+                                            </td>
+                                            <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $gpon->tarjeta->olt->nombre }}
+                                                </p>
+                                            </td>
+                                            <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $gpon->tarjeta->olt->datacenter->nombre }}
+                                                </p>
+                                            </td>
+                                            <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $gpon->estado->nombre }}
+                                                </p>
+                                            </td>
+                                            <td class="px-5 py-1 border-b border-gray-200 bg-white text-sm text-center">
+                                                <button wire:click="edit({{ $gpon->id }})" type="button"
+                                                    class="btn btn-info rounded-pill mx-1" data-toggle="modal"
+                                                    data-target="#updateModal">
+                                                    Editar
+                                                </button>
+                                                @if ($gpon->estado->nombre != 'Activo')
+                                                <button wire:click="$emit('cambiarestado', {{ $gpon->id }})"
+                                                    type="button" class="btn btn-danger rounded-pill mt-1">
+                                                    Activar
+                                                </button>
+                                                @else
+                                                <button wire:click="$emit('cambiarestado', {{ $gpon->id }})"
+                                                    type="button" class="btn btn-danger rounded-pill mt-1">
+                                                    Deshabilitar
+                                                </button>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                @if ($gpons->hasPages())
+                                <div class="px-6 py-3">
+                                    {{ $gpons->links() }}
+                                </div>
+                                @endif
                                 @else
-                                    <div class="px-6 py-4">
-                                        No existe ningún registro coincidente
-                                    </div>
+                                <div class="px-6 py-4">
+                                    No existe ningún registro coincidente
+                                </div>
                                 @endif
                             </div>
                         </div>
@@ -175,36 +210,36 @@
             </div>
         </div>
     </div>
-    @include('livewire.admin.tarjeta.modaleditar')
+    @include('livewire.admin.gpon.modaleditar')
     <script>
-        livewire.on('deletthis', deletid => {
-            Swal.fire({
-                title: 'Estás seguro?',
-                text: "¡No podrás revertir esto!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: '¡Sí, bórralo!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    @this.call('delete', deletid)
-                    // Livewire.emitTo('ShowServidor', 'delete', serverid);
-                    Swal.fire(
-                        'Deleted!',
-                        'La Tarjeta ha sido eliminado.',
-                        'success'
-                    )
-                }
-            })
-        });
+        livewire.on('cambiarestado', deletid => {
+        Swal.fire({
+            title: 'Estás seguro?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡Sí, Actualizar!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                @this.call('cambiarestado', deletid)
+                // Livewire.emitTo('ShowServidor', 'delete', serverid);
+                Swal.fire(
+                    'Actualizado!',
+                    'El Gpon ha cambiado su estado con éxito.',
+                    'success'
+                )
+            }
+        })
+    });
     </script>
     <script>
         window.livewire.on('cerrarModalCrear', () => {
-            $('#modalcrear').modal('hide');
-        });
-        window.livewire.on('cerrarModalEditar', () => {
-            $('#updateModal').modal('hide');
-        });
+        $('#modalcrear').modal('hide');
+    });
+    window.livewire.on('cerrarModalEditar', () => {
+        $('#updateModal').modal('hide');
+    });
     </script>
 </div>

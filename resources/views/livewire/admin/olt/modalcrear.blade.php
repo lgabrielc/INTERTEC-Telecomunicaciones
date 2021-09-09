@@ -1,4 +1,5 @@
-<button wire:click='resetcampos' type="button" class="btn btn-success rounded-pill" data-toggle="modal" data-target="#modalcrear">
+<button wire:click='resetcampos' type="button" class="btn btn-success rounded-pill" data-toggle="modal"
+    data-target="#modalcrear">
     Crear Nuevo
 </button>
 
@@ -14,11 +15,32 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div class="form-group">
+                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">DataCenter</label>
+                    <select class="block text-sm py-3 px-4 rounded w-full border outline-none" wire:model="datacenterid"
+                        wire:change='dataoltrelacionado'>
+                        <option value="">-Escoja una DataCenter-</option>
+                        @foreach ($totaldatacenters as $datacenter)
+                            <option value="{{ $datacenter->id }}">{{ $datacenter->nombre }}</option>
+                        @endforeach
+                    </select>
+                    @error('datacenterid') <span class="text-danger error">{{ $message }}</span>@enderror
+                </div>
 
+                @if ($datacenterid)
+                    <div class="form-group">
+                        <label class="block text-sm py-3 px-4 rounded w-full border outline-none">
+                            Olts Registrados:
+                            @foreach ($dataoltrelacionado->olts as $oltocupado)
+                                {{ $oltocupado->nombre }};
+                            @endforeach
+                        </label>
+                    </div>
+                @endif
                 <div class="form-group">
                     <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Nombre</label>
                     <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                        placeholder="Ejm: Olt 2 Villa" wire:model.defer="nombre">
+                        placeholder="Ejm: Olt 2" wire:model.defer="nombre">
                     @error('nombre') <span class="text-danger error">{{ $message }}</span>@enderror
                 </div>
                 <div class="form-group">
@@ -40,15 +62,15 @@
                     @error('modelo') <span class="text-danger error">{{ $message }}</span>@enderror
                 </div>
                 <div class="form-group">
-                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">DataCenter</label>
-                    <select class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                        wire:model.defer="datacenterid">
-                        <option value="">-Escoja una DataCenter-</option>
-                        @foreach ($totaldatacenters as $datacenter)
-                            <option value="{{ $datacenter->id }}">{{ $datacenter->nombre }}</option>
+                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Estado</label>
+                    <select class="block text-sm py-3 px-4 rounded w-full border outline-none" wire:model="estado_id">
+                        @foreach ($estados as $estado)
+                            @if ($estado->nombre == 'Activo' || $estado->nombre == 'Deshabilitado')
+                                <option value="{{ $estado->id }}">{{ $estado->nombre }}</option>
+                            @endif
                         @endforeach
                     </select>
-                    @error('datacenterid') <span class="text-danger error">{{ $message }}</span>@enderror
+                    @error('estado_id') <span class="text-danger error">{{ $message }}</span>@enderror
                 </div>
             </div>
             <div class="modal-footer">

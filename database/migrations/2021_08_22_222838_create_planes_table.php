@@ -19,6 +19,8 @@ class CreatePlanesTable extends Migration
             $table->string('descarga');
             $table->string('subida');
             $table->string('precio');
+            $table->unsignedBigInteger('estado_id');
+            $table->foreign('estado_id')->references('id')->on('estados');
             $table->timestamps();
         });
     }

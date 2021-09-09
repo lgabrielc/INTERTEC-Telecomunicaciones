@@ -34,6 +34,17 @@
                         wire:model.defer="encargado">
                     @error('encargado') <span class="text-danger">{{ $message }}</span>@enderror
                 </div>
+                <div class="form-group">
+                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Estado</label>
+                    <select class="block text-sm py-3 px-4 rounded w-full border outline-none" wire:model="estado_id">
+                        @foreach ($estados as $estado)
+                            @if ($estado->nombre == 'Activo' || $estado->nombre == 'Deshabilitado')
+                                <option value="{{ $estado->id }}">{{ $estado->nombre }}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                    @error('estado_id') <span class="text-danger error">{{ $message }}</span>@enderror
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary close-modal rounded-pill"

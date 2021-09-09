@@ -12,12 +12,18 @@ class Plan extends Model
         'nombre',
         'descarga',
         'subida',
-        'precio'
-     ];
+        'precio',
+        'estado_id',
+    ];
     public $table = 'planes';
 
-        //Relaccion uno a muchos
-        public function servicios(){
-            return $this->hasMany('App\Models\Servicio');
-        }
+    //Relaccion uno a muchos
+    public function servicios()
+    {
+        return $this->hasMany('App\Models\Servicio');
+    }
+    public function estado()
+    {
+        return $this->belongsTo('App\Models\Estado', 'estado_id', 'id');
+    }
 }

@@ -17,6 +17,7 @@ class Antena extends Model
         'torre_id',
         'servidor_id',
         'tipoantena_id',
+        'estado_id',
      ];
     use HasFactory;
     public $table = 'antenas';
@@ -33,6 +34,10 @@ class Antena extends Model
     }
     public function tipoantena(){
         return $this->belongsTo('App\Models\Tipoantena');
+    }
+    public function estado()
+    {
+        return $this->belongsTo('App\Models\Estado', 'estado_id', 'id');
     }
 
 }

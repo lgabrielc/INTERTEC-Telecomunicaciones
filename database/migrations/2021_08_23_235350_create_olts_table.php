@@ -19,8 +19,11 @@ class CreateOltsTable extends Migration
             $table->integer('slots');
             $table->string('modelo');
             $table->string('marca');
-            $table->unsignedBigInteger('datacenter_id');
-            $table->foreign('datacenter_id')->references('id')->on('datacenters');
+            $table->unsignedBigInteger('datacenter_id')->nullable();
+            $table->foreign('datacenter_id')->references('id')->on('datacenters')->delete('cascade');
+            
+            $table->unsignedBigInteger('estado_id');
+            $table->foreign('estado_id')->references('id')->on('estados');
             $table->timestamps();
         });
     }

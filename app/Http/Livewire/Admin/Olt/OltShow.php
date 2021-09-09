@@ -2,14 +2,18 @@
 
 namespace App\Http\Livewire\Admin\Olt;
 
-use App\Models\DataCenter;
+use App\Models\Datacenter;
+use App\Models\Estado;
 use App\Models\Olt;
 use Livewire\Component;
+use Livewire\WithPagination;
+
 
 class OltShow extends Component
 {
-    public $datacenterid, $OltEdit, $oltid, $nombre, $slots, $marca, $modelo;
-    public $search, $totalcontar, $totaldatacenters;
+    use WithPagination;
+    public $datacenterid, $datacenteride, $OltEdit, $oltid, $nombre, $slots, $marca, $modelo;
+    public $search, $totalcontar, $totaldatacenters, $dataoltrelacionado, $estado_id, $estados;
     public $sort = 'id';
     public $direction = 'desc';
     public $cant = '5';
@@ -17,16 +21,21 @@ class OltShow extends Component
     public function mount()
     {
         $this->totalcontar = Olt::count();
-        $this->totaldatacenters = DataCenter::all();
+        $this->totaldatacenters = DataCenter::where('estado_id', "=", '1')->get();
+        $this->estados = Estado::where('nombre', "=", 'Activo')->orwhere('nombre', "=", 'Deshabilitado')->get();
     }
     public function save()
     {
+        if ($this->nombre) {
+            # code...
+        }
         $this->validate([
             'nombre' => 'required|min:3|max:50',
             'slots' => 'required|numeric|min:1|max:7',
             'marca' => 'required|min:3|max:50',
             'modelo' => 'required|min:3|max:50',
             'datacenterid' => 'required',
+            'estado_id' => 'required',
         ]);
 
         $NewOlt = Olt::create([
@@ -35,13 +44,30 @@ class OltShow extends Component
             'marca' => $this->marca,
             'modelo' => $this->modelo,
             'datacenter_id' => $this->datacenterid,
+            'estado_id' => $this->estado_id,
         ]);
         $this->totalcontar = Olt::count();
         $this->reset(['nombre', 'slots', 'marca', 'modelo']);
         $this->emit('cerrarModalCrear');
         $this->emit('alert', 'El Olt se creo satisfactoriamente');
     }
+    public function dataoltrelacionado()
+    {
+        $dataCenter = Datacenter::find($this->datacenterid);
+        $this->dataoltrelacionado = $dataCenter;
+    }
+    public function cambiarestado($id)
+    {
 
+        $actualizarolt = Olt::find($id);
+        if ($actualizarolt->estado_id == '1') {
+            $this->estado_id = '2';
+            $actualizarolt->update(['estado_id' => $this->estado_id]);
+        } else {
+            $this->estado_id = '1';
+            $actualizarolt->update(['estado_id' => $this->estado_id]);
+        }
+    }
     public function edit(Olt $olt)
     {
         $this->OltEdit = $olt;
@@ -50,7 +76,7 @@ class OltShow extends Component
         $this->slots = $this->OltEdit->slots;
         $this->marca = $this->OltEdit->marca;
         $this->modelo = $this->OltEdit->modelo;
-        $this->datacenterid = $this->OltEdit->datacenter->id;
+        $this->datacenteride = $this->OltEdit->datacenter->id;
     }
     public function update()
     {
@@ -59,7 +85,7 @@ class OltShow extends Component
             'slots' => 'required|numeric|min:1|max:7',
             'marca' => 'required|min:3|max:50',
             'modelo' => 'required|min:3|max:50',
-            'datacenterid' => 'required',
+            'datacenteride' => 'required',
         ]);
 
         if ($this->oltid) {
@@ -69,7 +95,7 @@ class OltShow extends Component
                 'slots' => $this->slots,
                 'marca' => $this->marca,
                 'modelo' => $this->modelo,
-                'datacenter_id' => $this->datacenterid,
+                'datacenter_id' => $this->datacenteride,
             ]);
         }
         $this->reset(['nombre', 'slots', 'marca', 'modelo']);
@@ -80,10 +106,24 @@ class OltShow extends Component
     {
         Olt::where('id', $id)->delete();
         $this->totalcontar = Olt::count();
+        $this->reset('search');
     }
     public function resetcampos()
     {
-        $this->reset(['nombre', 'slots', 'marca', 'modelo','datacenterid']);
+        $this->reset(['nombre', 'slots', 'marca', 'modelo', 'datacenterid']);
+        $this->estado_id = '1';
+    }
+    public function order($sort)
+    {
+        if ($sort == $this->sort) {
+            if ($this->direction == 'desc') {
+                $this->direction = 'asc';
+            } else {
+                $this->direction = 'desc';
+            }
+        } else {
+            $this->sort = $sort;
+        }
     }
     public function render()
     {

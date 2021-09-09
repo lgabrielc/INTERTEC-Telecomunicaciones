@@ -12,6 +12,7 @@ class Gpon extends Model
         'nombre',
         'slots',
         'tarjeta_id',
+        'estado_id',
     ];
     public $table = 'gpons';
 
@@ -24,5 +25,9 @@ class Gpon extends Model
     public function naps()
     {
         return $this->hasMany('App\Models\Naps');
+    }
+    public function estado()
+    {
+        return $this->belongsTo('App\Models\Estado', 'estado_id', 'id');
     }
 }

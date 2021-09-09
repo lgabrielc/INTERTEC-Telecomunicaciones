@@ -16,6 +16,8 @@ class CreateTipoantenaTable extends Migration
         Schema::create('tipoantena', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
+            $table->unsignedBigInteger('estado_id');
+            $table->foreign('estado_id')->references('id')->on('estados');
             $table->timestamps();
         });
     }

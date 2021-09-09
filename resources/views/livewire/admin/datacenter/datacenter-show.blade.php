@@ -70,114 +70,142 @@
                         <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-1 overflow-x-auto">
                             <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
                                 @if (count($datacenters))
-                                    <table class="min-w-full leading-normal">
-                                        <thead>
-                                            <tr>
-                                                <th wire:click="order('id')"
-                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                    ID
-                                                    @if ($sort == 'id')
-                                                        @if ($direction == 'asc')
-                                                            {{-- SI ES ASCENDENTE PONER SU ICONO --}}
-                                                            <i class="fas fa-sort-numeric-up float-right"></i>
-                                                            {{-- SI ES DESCENDENTE PONER SU ICONO --}}
-                                                        @else
-                                                            {{-- SI ES DESCENDENTE PONER SU ICONO --}}
-                                                            <i class="fas fa-sort-numeric-up-alt float-right"></i>
-                                                        @endif
-                                                    @else
-                                                        {{-- SI ES CLICKEA POR PRIMERA VEZ EN ID PONER SU ICONO --}}
-                                                        <i class="fas fa-sort float-right mt-1"></i>
-                                                    @endif
-                                                </th>
-                                                <th wire:click="order('nombre')"
-                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                    Nombre
-                                                    <i class="fas fa-sort float-right mt-1"></i>
-                                                </th>
-                                                <th wire:click="order('ipEntrada')"
-                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                    Ubicación
-                                                    <i class="fas fa-sort float-right mt-1"></i>
-                                                </th>
-                                                <th wire:click="order('ipSalida')"
-                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                    Dirección
-                                                    <i class="fas fa-sort float-right mt-1"></i>
-                                                </th>
-                                                <th wire:click="order('ipSalida')"
-                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                    Encargado
-                                                    <i class="fas fa-sort float-right mt-1"></i>
-                                                </th>
-                                                <th
-                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                    Acciones
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($datacenters as $datacenter)
-                                                <tr class="">
-                                                    <td class="px-5 py-4 border-b border-gray-200 bg-white text-base ">
-                                                        <div class="flex items-center">
-                                                            <div class="ml-3">
-                                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                                    {{ $datacenter->id }}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">
-                                                        <div class="flex items-center">
-                                                            <div class="ml-3">
-                                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                                    {{ $datacenter->nombre }}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
+                                <table class="min-w-full leading-normal">
+                                    <thead>
+                                        <tr>
+                                            <th wire:click="order('id')"
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                ID
+                                                @if ($sort == 'id')
+                                                @if ($direction == 'asc')
+                                                {{-- SI ES ASCENDENTE PONER SU ICONO --}}
+                                                <i class="fas fa-sort-numeric-up "></i>
+                                                {{-- SI ES DESCENDENTE PONER SU ICONO --}}
+                                                @else
+                                                {{-- SI ES DESCENDENTE PONER SU ICONO --}}
+                                                <i class="fas fa-sort-numeric-up-alt "></i>
+                                                @endif
+                                                @else
+                                                {{-- SI ES CLICKEA POR PRIMERA VEZ EN ID PONER SU ICONO --}}
+                                                <i class="fas fa-sort  mt-1"></i>
+                                                @endif
+                                            </th>
+                                            <th wire:click="order('nombre')"
+                                                class="cursor-pointer  py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Nombre
+                                                <i class="fas fa-sort  mt-1"></i>
+                                            </th>
+                                            <th wire:click="order('ubicacion')"
+                                                class="cursor-pointer  py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Ubicación
+                                                <i class="fas fa-sort  mt-1"></i>
+                                            </th>
+                                            <th wire:click="order('direccion')"
+                                                class="cursor-pointer  py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Dirección
+                                                <i class="fas fa-sort  mt-1"></i>
+                                            </th>
+                                            <th wire:click="order('encargado')"
+                                                class="cursor-pointer  py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Encargado
+                                                <i class="fas fa-sort  mt-1"></i>
+                                            </th>
+                                            <th wire:click="order('estado_id')"
+                                                class="cursor-pointer  py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Estado
+                                                <i class="fas fa-sort  mt-1"></i>
+                                            </th>
+                                            <th
+                                                class="cursor-pointer  py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Acciones
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($datacenters as $datacenter)
+                                        <tr class="">
+                                            <td class="
+                                                    py-4 border-b border-gray-200 bg-white text-base ">
+                                                <div class="  flex items-center">
+                                                    <div class="ml-3">
                                                         <p class="text-gray-900 whitespace-no-wrap">
-                                                            {{ $datacenter->ubicacion }}</p>
-                                                    </td>
-                                                    <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
-                                                        <p class="text-gray-900 whitespace-no-wrap">
-                                                            {{ $datacenter->direccion }}
+                                                            {{ $datacenter->id }}
                                                         </p>
-                                                    </td>
-                                                    <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class=" py-4 border-b border-gray-200 bg-white text-base">
+                                                <div class="flex items-center">
+                                                    <div class="ml-3">
                                                         <p class="text-gray-900 whitespace-no-wrap">
-                                                            {{ $datacenter->encargado }}
+                                                            {{ $datacenter->nombre }}
                                                         </p>
-                                                    </td>
-                                                    <td
-                                                        class="px-5 py-1 border-b border-gray-200 bg-white text-sm text-center">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class=" py-1 border-b border-gray-200 bg-white text-base">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $datacenter->ubicacion }}</p>
+                                            </td>
+                                            <td class=" py-1 border-b border-gray-200 bg-white text-base">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $datacenter->direccion }}
+                                                </p>
+                                            </td>
+                                            <td class=" py-1 border-b border-gray-200 bg-white text-base">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $datacenter->encargado }}
+                                                </p>
+                                            </td>
+                                            <td class=" py-1 border-b border-gray-200 bg-white text-base">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $datacenter->estado->nombre }}
+                                                </p>
+                                            </td>
+                                            <td
+                                                class="px-3 py-1 border-b border-gray-200 bg-white text-sm text-center  mx-3">
 
-                                                        <button wire:click="edit({{ $datacenter->id }})" type="button"
-                                                            class="btn btn-info rounded-pill mx-1" data-toggle="modal"
-                                                            data-target="#updateModal">
-                                                            Editar
-                                                        </button>
-                                                        <button
-                                                            wire:click="$emit('deletthis', {{ $datacenter->id }})"
-                                                            type="button" class="btn btn-danger rounded-pill mx-1">
-                                                            Eliminar
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                    @if ($datacenters->hasPages())
-                                        <div class="px-6 py-3">
-                                            {{ $datacenters->links() }}
-                                        </div>
-                                    @endif
+                                                <button wire:click="edit({{ $datacenter->id }})" type="button"
+                                                    class="btn btn-info rounded-pill mx-1" data-toggle="modal"
+                                                    data-target="#updateModal">
+                                                    Editar
+                                                </button>
+
+                                                @if ($datacenter->olts)
+                                                @if ($datacenter->estado->nombre != 'Activo')
+                                                <button wire:click="$emit('deletthis', {{ $datacenter->id }})"
+                                                    type="button" class="btn btn-danger rounded-pill mt-1">
+                                                    Activar
+                                                </button>
+                                                @else
+                                                <button wire:click="$emit('deletthis', {{ $datacenter->id }})"
+                                                    type="button" class="btn btn-danger rounded-pill mt-1">
+                                                    Deshabilitar
+                                                </button>
+
+                                                @endif
+                                                @else
+
+                                                <button wire:click="$emit('deletthis', {{ $datacenter->id }})"
+                                                    type="button" class="btn btn-danger rounded-pill mt-1">
+                                                    Eliminar
+                                                </button>
+                                                @endif
+
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                @if ($datacenters->hasPages())
+                                <div class="px-6 py-3">
+                                    {{ $datacenters->links() }}
+                                </div>
+                                @endif
                                 @else
-                                    <div class="px-6 py-4">
-                                        No existe ningún registro coincidente
-                                    </div>
+                                <div class="px-6 py-4">
+                                    No existe ningún registro coincidente
+                                </div>
                                 @endif
                             </div>
                         </div>
@@ -189,34 +217,34 @@
     </div>
     @include('livewire.admin.datacenter.modaleditar')
     <script>
-        livewire.on('deletthis', deletid => {
-            Swal.fire({
-                title: 'Estás seguro?',
-                text: "¡No podrás revertir esto!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: '¡Sí, bórralo!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    @this.call('delete', deletid)
-                    // Livewire.emitTo('ShowServidor', 'delete', serverid);
-                    Swal.fire(
-                        'Deleted!',
-                        'El DataCenter ha sido eliminado.',
-                        'success'
-                    )
-                }
-            })
-        });
+        livewire.on('deletthis', activarid => {
+        Swal.fire({
+            title: 'Estás seguro?',
+            text: "¡Cambiaras el estado esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡Sí, Cambialo!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                @this.call('cambiarestado', activarid)
+                // Livewire.emitTo('ShowServidor', 'delete', serverid);
+                Swal.fire(
+                    'Listo!',
+                    'El estado del DataCenter se actualizo.',
+                    'success'
+                )
+            }
+        })
+    });
     </script>
     <script>
         window.livewire.on('cerrarModalCrearDataCenter', () => {
-            $('#modalcrear').modal('hide');
-        });
-        window.livewire.on('cerrarModalEditarDataCenter', () => {
-            $('#updateModal').modal('hide');
-        });
+        $('#modalcrear').modal('hide');
+    });
+    window.livewire.on('cerrarModalEditarDataCenter', () => {
+        $('#updateModal').modal('hide');
+    });
     </script>
 </div>

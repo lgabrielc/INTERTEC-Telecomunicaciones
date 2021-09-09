@@ -17,8 +17,11 @@ class CreateTarjetasTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->integer('slots');
-            $table->unsignedBigInteger('olt_id');
-            $table->foreign('olt_id')->references('id')->on('olts');
+            $table->unsignedBigInteger('olt_id')->nullable();
+            $table->foreign('olt_id')->references('id')->on('olts')->delete('cascade');
+            
+            $table->unsignedBigInteger('estado_id');
+            $table->foreign('estado_id')->references('id')->on('estados');
             $table->timestamps();
         });
     }

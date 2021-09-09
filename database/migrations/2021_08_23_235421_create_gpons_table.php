@@ -17,8 +17,11 @@ class CreateGponsTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->integer('slots')->nullable();
-            $table->unsignedBigInteger('tarjeta_id');
-            $table->foreign('tarjeta_id')->references('id')->on('tarjetas');
+            $table->unsignedBigInteger('tarjeta_id')->nullable();
+            $table->foreign('tarjeta_id')->references('id')->on('tarjetas')->delete('cascade');
+            
+            $table->unsignedBigInteger('estado_id');
+            $table->foreign('estado_id')->references('id')->on('estados');
             $table->timestamps();
         });
     }

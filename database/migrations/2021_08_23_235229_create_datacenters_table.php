@@ -19,6 +19,8 @@ class CreateDatacentersTable extends Migration
             $table->string('ubicacion');
             $table->string('direccion');
             $table->string('encargado')->nullable();
+            $table->unsignedBigInteger('estado_id');
+            $table->foreign('estado_id')->references('id')->on('estados');
             $table->timestamps();
         });
     }

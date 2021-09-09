@@ -95,24 +95,29 @@
                                                     Nombre
                                                     <i class="fas fa-sort float-right mt-1"></i>
                                                 </th>
-                                                <th wire:click="order('ipEntrada')"
+                                                <th wire:click="order('slots')"
                                                     class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                     Slots
                                                     <i class="fas fa-sort float-right mt-1"></i>
                                                 </th>
-                                                <th wire:click="order('ipEntrada')"
+                                                <th wire:click="order('modelo')"
                                                     class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                     Modelo
                                                     <i class="fas fa-sort float-right mt-1"></i>
                                                 </th>
-                                                <th wire:click="order('ipEntrada')"
+                                                <th wire:click="order('marca')"
                                                     class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                     Marca
                                                     <i class="fas fa-sort float-right mt-1"></i>
                                                 </th>
-                                                <th wire:click="order('ipSalida')"
+                                                <th wire:click="order('datacenter_id')"
                                                     class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                     DataCenter
+                                                    <i class="fas fa-sort float-right mt-1"></i>
+                                                </th>
+                                                <th wire:click="order('estado_id')"
+                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                    Estado
                                                     <i class="fas fa-sort float-right mt-1"></i>
                                                 </th>
                                                 <th
@@ -123,7 +128,7 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($olts as $olt)
-                                                <tr class="">
+                                                <tr class="___class_+?51___">
                                                     <td class="px-5 py-4 border-b border-gray-200 bg-white text-base ">
                                                         <div class="flex items-center">
                                                             <div class="ml-3">
@@ -159,6 +164,11 @@
                                                             {{ $olt->datacenter->nombre }}
                                                         </p>
                                                     </td>
+                                                    <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
+                                                        <p class="text-gray-900 whitespace-no-wrap">
+                                                            {{ $olt->estado->nombre }}
+                                                        </p>
+                                                    </td>
                                                     <td
                                                         class="px-5 py-1 border-b border-gray-200 bg-white text-sm text-center">
 
@@ -167,11 +177,19 @@
                                                             data-target="#updateModal">
                                                             Editar
                                                         </button>
-                                                        <button
-                                                            wire:click="$emit('deletthis', {{ $olt->id }})"
-                                                            type="button" class="btn btn-danger rounded-pill mx-1">
-                                                            Eliminar
-                                                        </button>
+                                                        @if ($olt->estado->nombre != 'Activo')
+                                                            <button
+                                                                wire:click="$emit('deletthis', {{ $olt->id }})"
+                                                                type="button" class="btn btn-danger rounded-pill mt-1">
+                                                                Activar
+                                                            </button>
+                                                        @else
+                                                            <button
+                                                                wire:click="$emit('deletthis', {{ $olt->id }})"
+                                                                type="button" class="btn btn-danger rounded-pill mt-1">
+                                                                Deshabilitar
+                                                            </button>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -200,19 +218,19 @@
         livewire.on('deletthis', deletid => {
             Swal.fire({
                 title: 'Estás seguro?',
-                text: "¡No podrás revertir esto!",
+                text: "¡Cambiaras el estado esto!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: '¡Sí, bórralo!'
+                confirmButtonText: '¡Sí, Cambialo!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    @this.call('delete', deletid)
+                    @this.call('cambiarestado', deletid)
                     // Livewire.emitTo('ShowServidor', 'delete', serverid);
                     Swal.fire(
                         'Deleted!',
-                        'La Tarjeta ha sido eliminado.',
+                        'El estado del OLT ha sido actualizo.',
                         'success'
                     )
                 }

@@ -18,6 +18,8 @@ class CreateServidoresTable extends Migration
             $table->string('nombre');
             $table->string('ipEntrada');
             $table->string('ipSalida');
+            $table->unsignedBigInteger('estado_id');
+            $table->foreign('estado_id')->references('id')->on('estados');
             $table->timestamps();
         });
     }

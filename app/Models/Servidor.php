@@ -10,12 +10,18 @@ class Servidor extends Model
     protected $fillable = [
         'nombre',
         'ipEntrada',
-        'ipSalida'
-     ];
+        'ipSalida',
+        'estado_id',
+    ];
     public $table = 'servidores';
     use HasFactory;
     //Relaccion uno a muchos
-    public function antenas(){
+    public function antenas()
+    {
         return $this->hasMany('App\Models\Antena');
+    }
+    public function estado()
+    {
+        return $this->belongsTo('App\Models\Estado', 'estado_id', 'id');
     }
 }

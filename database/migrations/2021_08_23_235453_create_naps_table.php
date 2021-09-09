@@ -17,8 +17,11 @@ class CreateNapsTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->integer('slots')->nullable();
-            $table->unsignedBigInteger('gpon_id');
-            $table->foreign('gpon_id')->references('id')->on('gpons');
+            $table->unsignedBigInteger('gpon_id')->nullable();
+            $table->foreign('gpon_id')->references('id')->on('gpons')->delete('cascade');
+            
+            $table->unsignedBigInteger('estado_id');
+            $table->foreign('estado_id')->references('id')->on('estados');
             $table->timestamps();
         });
     }

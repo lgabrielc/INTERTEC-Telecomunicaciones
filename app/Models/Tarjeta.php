@@ -12,6 +12,7 @@ class Tarjeta extends Model
         'nombre',
         'slots',
         'olt_id',
+        'estado_id',
     ];
     public $table = 'tarjetas';
 
@@ -24,5 +25,9 @@ class Tarjeta extends Model
     public function gpons()
     {
         return $this->hasMany('App\Models\Gpon');
+    }
+    public function estado()
+    {
+        return $this->belongsTo('App\Models\Estado', 'estado_id', 'id');
     }
 }

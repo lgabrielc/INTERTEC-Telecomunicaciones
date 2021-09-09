@@ -37,7 +37,7 @@
                 <div class="form-group">
                     <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">DataCenter</label>
                     <select class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                        wire:model.defer="datacenterid">
+                        wire:model="datacenteride">
                         @foreach ($totaldatacenters as $datacenter)
                             <option value="{{ $datacenter->id }}">{{ $datacenter->nombre }}</option>
                         @endforeach
