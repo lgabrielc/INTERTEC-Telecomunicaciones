@@ -24,7 +24,7 @@ class Gpon extends Model
     //Tiene muchas cajas naps relación uno a muchos inversa
     public function naps()
     {
-        return $this->hasMany('App\Models\Naps');
+        return $this->hasMany('App\Models\Nap');
     }
     public function estado()
     {

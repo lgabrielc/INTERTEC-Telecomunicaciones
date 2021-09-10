@@ -21,7 +21,6 @@ class Nap extends Model
     {
         return $this->belongsTo('App\Models\Gpon');
     }
-
     public function servicios()
     {
         return $this->hasMany('App\Models\Servicio');

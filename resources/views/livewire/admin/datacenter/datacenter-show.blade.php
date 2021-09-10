@@ -125,7 +125,7 @@
                                         @foreach ($datacenters as $datacenter)
                                         <tr class="">
                                             <td class="
-                                                    py-4 border-b border-gray-200 bg-white text-base ">
+                                            px-5 py-4 border-b border-gray-200 bg-white text-base ">
                                                 <div class="  flex items-center">
                                                     <div class="ml-3">
                                                         <p class="text-gray-900 whitespace-no-wrap">
