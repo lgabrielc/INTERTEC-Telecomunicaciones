@@ -4,9 +4,13 @@ namespace App\Http\Livewire\Admin\Cliente;
 
 use App\Models\Antena;
 use App\Models\Cliente;
+use App\Models\Datacenter;
 use App\Models\Estado;
+use App\Models\Gpon;
+use App\Models\Olt;
 use App\Models\Plan;
 use App\Models\Servicio;
+use App\Models\Tarjeta;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -17,15 +21,16 @@ class ShowCliente extends Component
     use WithPagination;
     public $sort = 'id';
     public $direction = 'desc';
-    public $tiposervicio,$VerServicio;
-    public $search, $totalcontar, $totalestados, $totalplanes, $totalantenas;
+    public $tiposervicio, $VerServicio;
+    public $search, $totalcontar, $totalestados, $totalplanes, $totalantenas, $totaldatacenters;
     //Editar Cliente
     public $EditarCliente, $EditarNombre, $EditarID, $EditarApellido, $EditarDNI, $EditarCorreo;
     //Agregar Servicio
     public $AgregarServicio, $IDClienteServicio, $NombreClienteServicio, $ApellidoClienteServicio;
     public $fechaInicio, $fechaVencimiento, $fechaCorte, $condicionantena, $mac, $ip, $frecuencia, $antenarelacionada;
     public $fechaInicioV, $fechaVencimientoV, $fechaCorteV;
-    public $gponrelacionado, $clientegpon, $estado, $plannuevo;
+    public $gponrelacionado, $clientegpon, $estado, $plannuevo, $olttarjetarelacionado, $tarjetagponrelacionado,$gponnaprelacionado;
+    public $datacenterid, $datacenterselect, $oltid, $tarjetaid,$gponid,$napid;
     //Datos Cliente
     public $nombre, $apellido, $dni, $correo;
     //Agregar Plan
@@ -41,8 +46,37 @@ class ShowCliente extends Component
         'dni' => 'required|size:8',
         'correo' => 'required|email|min:3|max:30',
     ];
-
-
+    public function gponnaprelacion()
+    {
+        if (isset($this->gponidnuevo)) {
+            $this->gponid = $this->gponidnuevo;
+        }
+        if (is_numeric($this->gponid)) {
+            $this->gponnaprelacionado = Gpon::find($this->gponid);
+        }
+    }
+    public function tarjetagponrelacion()
+    {
+        if (isset($this->tarjetaidnuevo)) {
+            $this->tarjetaide = $this->tarjetaidnuevo;
+            $this->tarjetaid = $this->tarjetaidnuevo;
+            // $this->reset('gponidnuevo', 'gponid');
+        }
+        if (is_numeric($this->tarjetaid)) {
+            $this->tarjetagponrelacionado = Tarjeta::find($this->tarjetaid);
+            // $this->reset('gponidnuevo', 'gponid');
+        }
+    }
+    public function olttarjetarelacion()
+    {
+        if (isset($this->oltidnuevo)) {
+            $this->oltid = $this->oltidnuevo;
+        }
+        if (is_numeric($this->oltid)) {
+            $this->olttarjetarelacionado = Olt::find($this->oltid);
+            $this->reset('tarjetaid');
+        }
+    }
 
     public function mount()
     {
@@ -53,6 +87,7 @@ class ShowCliente extends Component
         $this->totalplanes = Plan::all();
         $this->totalestados = Estado::all();
         $this->totalantenas = Antena::all();
+        $this->totaldatacenters = DataCenter::where('estado_id', "=", '1')->get();
     }
     public function order($sort)
     {
@@ -83,12 +118,13 @@ class ShowCliente extends Component
             'VelocidadSubida' => 'required|min:3|max:15',
             'PrecioPlan' => 'required|numeric',
         ]);
-
+        $estado = 1;
         $NuevoPlan = Plan::create([
             'nombre' => $this->NombrePlan,
             'descarga' => $this->VelocidadDescarga,
             'subida' => $this->VelocidadSubida,
             'precio' => $this->PrecioPlan,
+            'estado_id' => $estado,
         ]);
 
         $this->totalplanes = Plan::all();
@@ -139,7 +175,7 @@ class ShowCliente extends Component
             'plan_id' => $this->plannuevo,
             'cliente_id' => $this->IDClienteServicio,
         ]);
-        $this->reset(['tiposervicio', 'condicionantena', 'mac', 'ip','frecuencia']);
+        $this->reset(['tiposervicio', 'condicionantena', 'mac', 'ip', 'frecuencia']);
         $this->emit('cerrarModalCrearServicio');
         $this->emit('alert', 'El Servicio se añadio satisfactoriamente');
     }
@@ -259,6 +295,18 @@ class ShowCliente extends Component
     public function actualizarfechas2($value)
     {
         $this->fechacorte = date("Y-m-d", strtotime($value . "+ 3 days"));
+    }
+    public function generarolts()
+    {
+        if (isset($this->datacenteride)) {
+            $this->datacenterid = $this->datacenteride;
+        }
+        if (is_numeric($this->datacenterid)) {
+            $this->datacenterselect = Datacenter::find($this->datacenterid);
+            // $this->reset('tarjetaid', 'oltid', 'olttarjetarelacionado', 'tarjetagponrelacionado', 'oltidnuevo', 'tarjetaidnuevo');
+        } else {
+            // $this->reset('oltid', 'tarjetaid', 'datacenterid', 'olttarjetarelacionado', 'tarjetagponrelacionado');
+        }
     }
     public function render()
     {

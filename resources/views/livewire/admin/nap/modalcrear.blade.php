@@ -69,14 +69,19 @@
                         </div>
                     @endif
                      @if (is_numeric($tarjetaid) && is_numeric($oltid) && is_numeric($datacenterid) && is_numeric($gponid))
-                        <div class="form-group">
-                            <label class="block text-sm py-3 px-4 rounded w-full border outline-none">
-                                - Registrados:
-                                @foreach ($gponnaprelacionado->naps as $napocupado)
-                                    {{ $napocupado->nombre }};
-                                @endforeach
-                            </label>
-                        </div>
+                        
+                     <div class="form-group">
+                        <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Caja Nap</label>
+                        <select class="block text-sm py-3 px-4 rounded w-full border outline-none"
+                            wire:model="napid" wire:change='gponnaprelacion'>
+                            <option value="">-Escoja un Gpon-</option>
+                            @foreach ($gponrelacionado->naps as $nap)
+                                <option value="{{ $nap->id }}">{{ $nap->nombre }}&nbsp,&nbsp
+                                    Slots:{{ $nap->slots }}</option>
+                            @endforeach
+                        </select>
+                        @error('gponid') <span class="text-danger error">{{ $message }}</span>@enderror
+                    </div>
                     @endif 
                 <div class="form-group">
                     <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Nombre</label>
