@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DataCenterController;
 use App\Http\Controllers\Admin\GponController;
 use App\Http\Controllers\Admin\NapController;
 use App\Http\Controllers\Admin\OltController;
+use App\Http\Controllers\Admin\PagoController;
 use App\Http\Controllers\Admin\ServidorController;
 use App\Http\Controllers\Admin\TarjetaController;
 use App\Http\Controllers\Admin\TorreController;
@@ -18,6 +19,8 @@ Route::get('', [HomeController::class, 'index']);
 Route::resource('antena', AntenaController::class);
 
 Route::resource('cliente', ClienteController::class);
+
+Route::resource('pago', PagoController::class);
 
 Route::resource('tipoantena', TipoAntenaController::class);
 

@@ -27,9 +27,11 @@
                                 <option value="Antena">Antena</option>
                                 <option value="Fibra">Fibra Optica</option>
                             </select>
-                            @error('EditarMac') <span class="text-danger error">{{ $message }}</span>@enderror
+                            @error('tiposervicio') <span class="text-danger error">{{ $message }}</span>@enderror
                         </div>
                     </div>
+                    
+                {{-- ES LA 2DA COLUMNA --}}
                     @if ($tiposervicio == 'Fibra')
                     <div class="col-lg-6">
                         <div class="form-group">
@@ -45,6 +47,18 @@
                         </div>
                     </div>
                     @endif
+                    @if ($tiposervicio == 'Antena') 
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Condición de la
+                                Antena:</label>
+                            <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
+                                wire:model.defer="condicionantena" placeholder="Ejm: Alquilada">
+                            @error('condicionantena') <span class="text-danger error">{{ $message }}</span>@enderror
+                        </div>
+                    </div>
+                    @endif
+                    {{-- FIN DE LA 2DA COLUMNA --}}
                 </div>
                 <div class="row">
                     @if (is_numeric($datacenterid))
@@ -109,7 +123,7 @@
                                     Slots:{{ $nap->slots }}</option>
                                 @endforeach
                             </select>
-                            @error('gponid') <span class="text-danger error">{{ $message }}</span>@enderror
+                            @error('napid') <span class="text-danger error">{{ $message }}</span>@enderror
                         </div>
                     </div>
                     @endif
@@ -118,11 +132,15 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Condición de la
-                                Antena:</label>
-                            <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                                wire:model.defer="condicionantena" placeholder="Ejm: Alquilada">
-                            @error('condicionantena') <span class="text-danger error">{{ $message }}</span>@enderror
+                            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Antena:</label>
+                            <select class="block text-sm py-3 px-4 rounded w-full border outline-none"
+                                wire:model="antenaid">
+                                <option value="">-Escoja una Antena-</option>
+                                @foreach ($totalantenas as $antena)
+                                <option value="{{ $antena->id }}">{{ $antena->nombre }}</option>
+                                @endforeach
+                            </select>
+                            @error('antenaid') <span class="text-danger error">{{ $message }}</span>@enderror
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -155,20 +173,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Antena:</label>
-                            <select class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                                wire:model.defer="antenarelacionada">
-                                <option value="">-Escoja una Antena-</option>
-                                @foreach ($totalantenas as $antena)
-                                <option value="{{ $antena->id }}">{{ $antena->nombre }}</option>
-                                @endforeach
-                            </select>
-                            @error('antenarelacionada') <span class="text-danger error">{{ $message }}</span>@enderror
-                        </div>
-                    </div>
+
+                @endif
+                @if (is_numeric($tarjetaid) && is_numeric($oltid) && is_numeric($datacenterid) &&
+                is_numeric($gponid) && is_numeric($napid))
+                <div class="form-group">
+                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Numero del Cliente:</label>
+                    <input type="number" wire:model.defer='clientegpon' class="block text-sm py-3 px-4 rounded w-full border outline-none">
+                    @error('clientegpon') <span class="text-danger error">{{ $message }}</span>@enderror
                 </div>
                 @endif
                 <div class="row">
@@ -176,7 +188,7 @@
                         <div class="form-group">
                             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Estado:</label>
                             <select class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                                wire:model="estado">
+                                wire:model.defer="estado">
                                 <option value="">-Seleccione el estado-</option>
                                 @foreach ($totalestados as $estado)
                                 @if ($estado->nombre == 'Activo')
@@ -211,12 +223,11 @@
                 <button type="button" wire:click.prevent="saveservicioantena" wire:loading.attr="disabled"
                     class="btn btn-danger close-modal rounded-pill">Guardar
                     Cambios</button>
-                @elseif ($tiposervicio == 'Fibra')
+                @elseif ($tiposervicio == 'Fibra' && is_numeric($datacenterid) && is_numeric($oltid) && is_numeric($tarjetaid) && is_numeric($gponid) && is_numeric($napid))
                 <button type="button" wire:click.prevent="saveserviciofibra" wire:loading.attr="disabled"
                     class="btn btn-danger close-modal rounded-pill">Guardar
                     Cambios</button>
                 @endif
-
             </div>
         </div>
     </div>

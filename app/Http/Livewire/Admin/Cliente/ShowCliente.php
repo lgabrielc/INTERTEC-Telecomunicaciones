@@ -21,14 +21,14 @@ class ShowCliente extends Component
     use WithPagination;
     public $sort = 'id';
     public $direction = 'desc';
-    public $tiposervicio, $VerServicio;
+    public $tiposervicio, $VerServicio,$condicionAntena;
     public $search, $totalcontar, $totalestados, $totalplanes, $totalantenas, $totaldatacenters;
     //Editar Cliente
     public $EditarCliente, $EditarNombre, $EditarID, $EditarApellido, $EditarDNI, $EditarCorreo;
     //Agregar Servicio
-    public $AgregarServicio, $IDClienteServicio, $NombreClienteServicio, $ApellidoClienteServicio;
-    public $fechaInicio, $fechaVencimiento, $fechaCorte, $condicionantena, $mac, $ip, $frecuencia, $antenarelacionada;
-    public $fechaInicioV, $fechaVencimientoV, $fechaCorteV;
+    public $AgregarServicio, $planid,$IDClienteServicio, $NombreClienteServicio, $ApellidoClienteServicio,$estado_id;
+    public $fechaInicio, $fechaVencimiento, $fechaCorte, $condicionantena, $mac, $ip, $frecuencia, $antenaid;
+    public $fechaInicioV, $fechaVencimientoV, $fechaCorteV,$nap_id;
     public $gponrelacionado, $clientegpon, $estado, $plannuevo, $olttarjetarelacionado, $tarjetagponrelacionado,$gponnaprelacionado;
     public $datacenterid, $datacenterselect, $oltid, $tarjetaid,$gponid,$napid;
     //Datos Cliente
@@ -44,7 +44,7 @@ class ShowCliente extends Component
         'nombre' => 'required|min:5|max:50',
         'apellido' => 'required|min:3|max:50',
         'dni' => 'required|size:8',
-        'correo' => 'required|email|min:3|max:30',
+        'correo' => 'nullable|email|min:3|max:30',
     ];
     public function gponnaprelacion()
     {
@@ -136,84 +136,63 @@ class ShowCliente extends Component
     public function resetearcampos($value)
     {
         if ($value == 'Antena') {
-            $this->reset('gponrelacionado', 'clientegpon', 'gponrelacionado');
+            $this->reset('gponrelacionado', 'clientegpon', 'gponrelacionado','datacenterid','oltid','tarjetaid','gponid','napid');
         } elseif ($value == 'Fibra') {
-            $this->reset('condicionantena', 'mac', 'ip', 'frecuencia', 'antenarelacionada');
+            $this->reset('condicionantena', 'mac', 'ip', 'frecuencia', 'antenaid');
+        }else{
+            $this->reset('condicionantena', 'mac', 'ip', 'frecuencia', 'antenaid');
+            $this->reset('gponrelacionado', 'clientegpon', 'gponrelacionado','datacenterid','oltid','tarjetaid','gponid','napid');
         }
     }
+    // AGREGAR SERVICIO POR ANTENA
     public function saveservicioantena()
     {
         $this->validate([
-            'fechaInicio' => 'required|date_format:Y-m-d',
-            'fechaVencimiento' => 'required|date_format:Y-m-d|after:fechaInicio',
-            'fechaCorte' => 'required|date_format:Y-m-d|after:fechaVencimiento',
             'tiposervicio' => 'required',
             'condicionantena' => 'required',
+            'antenaid' => 'required|numeric',
             'mac' => 'required|size:17',
             'ip' => 'required|ipv4',
             'frecuencia' => 'required|min:4|max:9',
-            'antenarelacionada' => 'required',
-            'clientegpon' => 'nullable',
-            'gponrelacionado' => 'nullable',
             'estado' => 'required',
             'plannuevo' => 'required',
         ]);
-
         $nuevoServicio = Servicio::create([
-            'fechaInicio' => $this->fechaInicio,
-            'fechaVencimiento' => $this->fechaVencimiento,
-            'fechaCorte' => $this->fechaCorte,
             'tiposervicio' => $this->tiposervicio,
             'condicionAntena' => $this->condicionantena,
+            'antena_id' => $this->antenaid,
             'mac' => $this->mac,
             'ip' => $this->ip,
             'frecuencia' => $this->frecuencia,
-            'antena_id ' => $this->antenarelacionada,
-            'clientegpon' => $this->clientegpon,
-            'gponrelacionado' => $this->gponrelacionado,
             'estado_id' => $this->estado,
             'plan_id' => $this->plannuevo,
             'cliente_id' => $this->IDClienteServicio,
         ]);
-        $this->reset(['tiposervicio', 'condicionantena', 'mac', 'ip', 'frecuencia']);
         $this->emit('cerrarModalCrearServicio');
         $this->emit('alert', 'El Servicio se añadio satisfactoriamente');
     }
+    // AGREGAR SERVICIO POR FIBRA
     public function saveserviciofibra()
     {
         $this->validate([
-            'fechaInicio' => 'required|date_format:Y-m-d',
-            'fechaVencimiento' => 'required|date_format:Y-m-d|after:fechaInicio',
-            'fechaCorte' => 'required|date_format:Y-m-d|after:fechaVencimiento',
             'tiposervicio' => 'required',
-            'condicionantena' => 'nullable',
-            'mac' => 'nullable',
-            'ip' => 'nullable',
-            'frecuencia' => 'nullable',
-            'antenarelacionada' => 'nullable',
-            'gponrelacionado' => 'required',
+            'napid' => 'required|numeric',
             'clientegpon' => 'required|numeric',
-            'gponrelacionado' => 'required',
             'estado' => 'required',
             'plannuevo' => 'required',
+            'IDClienteServicio' => 'required',
         ]);
 
         $nuevoServicio = Servicio::create([
-            'fechaInicio' => $this->fechaInicio,
-            'fechaVencimiento' => $this->fechaVencimiento,
-            'fechaCorte' => $this->fechaCorte,
             'tiposervicio' => $this->tiposervicio,
-            'condicionAntena' => $this->condicionantena,
-            'mac' => $this->mac,
-            'ip' => $this->ip,
-            'frecuencia' => $this->frecuencia,
-            'antena_id ' => $this->antenarelacionada,
-            'clientegpon' => $this->clientegpon,
-            'gponrelacionado' => $this->gponrelacionado,
-            'estado_id' => $this->estado,
-            'plan_id' => $this->plannuevo,
-            'cliente_id' => $this->IDClienteServicio,
+            'clientegpon' => $this->clientegpon, // 
+            'nap_id' => $this->napid, //
+            'estado_id' => $this->estado, //
+            'plan_id' => $this->plannuevo, //
+            'cliente_id' => $this->IDClienteServicio, //
         ]);
+        $this->emit('cerrarModalCrearServicio');
+        $this->emit('alert', 'El Servicio se añadio satisfactoriamente');
     }
     public function agregarservicio(Cliente $cliente)
     {
@@ -221,20 +200,47 @@ class ShowCliente extends Component
         $this->IDClienteServicio = $this->AgregarServicio->id;
         $this->NombreClienteServicio = $this->AgregarServicio->nombre;
         $this->ApellidoClienteServicio = $this->AgregarServicio->apellido;
-        $this->reset('fechaInicio', 'fechaVencimiento', 'fechaCorte');
-        $this->fechaInicio = date('Y-m-d');
-        $this->fechaVencimiento = date("Y-m-d", strtotime($this->fechaInicio . "+ 1 month"));
-        $this->fechaCorte = date("Y-m-d", strtotime($this->fechaVencimiento . "+ 3 days"));
+        $this->reset('tiposervicio','datacenterid','estado','plannuevo');
+        $this->estado='1';
+        // $this->fechaInicio = date('Y-m-d');
+        // $this->fechaVencimiento = date("Y-m-d", strtotime($this->fechaInicio . "+ 1 month"));
+        // $this->fechaCorte = date("Y-m-d", strtotime($this->fechaVencimiento . "+ 3 days"));
     }
-    public function verservicio(Cliente $cliente)
+    public function verservicioantena(Cliente $cliente)
     {
         $this->VerServicio = $cliente;
+        $this->IDClienteServicio = $this->VerServicio->id;
         $this->NombreClienteServicio = $this->VerServicio->nombre;
         $this->ApellidoClienteServicio = $this->VerServicio->apellido;
-        $this->fechaInicioV = $this->VerServicio->servicio->fechaInicio;
-        $this->fechaVencimientoV = $this->VerServicio->servicio->fechaVencimiento;
-        $this->fechaCorteV = $this->VerServicio->servicio->fechaCorte;
         $this->tiposervicio = $this->VerServicio->servicio->tiposervicio;
+        // DE ANTENA
+        $this->condicionAntena = $this->VerServicio->servicio->condicionAntena;
+        $this->mac = $this->VerServicio->servicio->mac;
+        $this->ip = $this->VerServicio->servicio->ip;
+        $this->frecuencia = $this->VerServicio->servicio->frecuencia;
+        $this->antenaid = $this->VerServicio->servicio->antena->nombre;
+        //FIN
+        $this->planid = $this->VerServicio->servicio->plan->nombre;
+        $this->estado_id = $this->VerServicio->servicio->estado->nombre;
+
+    }
+    public function verserviciofibra(Cliente $cliente)
+    {
+        $this->VerServicio = $cliente;
+        $this->IDClienteServicio = $this->VerServicio->id;
+        $this->NombreClienteServicio = $this->VerServicio->nombre;
+        $this->ApellidoClienteServicio = $this->VerServicio->apellido;
+        $this->tiposervicio = $this->VerServicio->servicio->tiposervicio;
+        // DE FIBRA
+        $this->clientegpon = $this->VerServicio->servicio->clientegpon;
+        $this->nap_id = $this->VerServicio->servicio->nap->nombre;
+        $this->gponid = $this->VerServicio->servicio->nap->gpon->nombre;
+        $this->tarjetaid = $this->VerServicio->servicio->nap->gpon->tarjeta->nombre;
+        $this->oltid = $this->VerServicio->servicio->nap->gpon->tarjeta->olt->nombre;
+        $this->datacenterid = $this->VerServicio->servicio->nap->gpon->tarjeta->olt->datacenter->nombre;
+        //FIN
+        $this->planid = $this->VerServicio->servicio->plan->nombre;
+        $this->estado_id = $this->VerServicio->servicio->estado->nombre;
     }
     public function update()
     {

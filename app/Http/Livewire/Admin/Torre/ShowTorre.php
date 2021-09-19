@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Torre;
 
 use App\Models\Direccion;
+use App\Models\Estado;
 use App\Models\Telefono;
 use App\Models\Torre;
 use Livewire\Component;
@@ -12,7 +13,7 @@ class ShowTorre extends Component
 {
 
     use WithPagination;
-    public $search, $totaltorres, $nombre, $dueño, $direccion, $telefono, $mensualidad;
+    public $search, $totaltorres, $nombre, $dueño, $direccion, $telefono, $mensualidad,$totalestados,$estado;
     public $sort = 'id';
     public $direction = 'desc';
     public $torreEdit, $torreID, $nombreEdit, $dueñoEdit, $direccionEdit,$telefonoEdit,$mensualidadEdit;
@@ -26,11 +27,14 @@ class ShowTorre extends Component
         'direccion' => 'required|min:3|max:60',
         'telefono' => 'required|digits_between:7,9|numeric',
         'mensualidad' => 'required|numeric',
+        'estado' => 'required',
     ];
 
     public function mount()
     {
         $this->totaltorres = Torre::count();
+        $this->totalestados = Estado::all();
+
     }
     public function order($sort)
     {
@@ -94,6 +98,7 @@ class ShowTorre extends Component
             'direccion' => $this->direccion,
             'telefono' => $this->telefono,
             'mensualidad' => $this->mensualidad,
+            'estado_id' => $this->estado
         ]);
         $phone = new Telefono();
         $phone->numero = $this->telefono;;

@@ -16,13 +16,13 @@ class NapShow extends Component
 {
     use WithPagination;
     //Propiedades para crear nuevo Nap
-    public $datacenterid, $oltid,$tarjetaid,$nombre,$slots,$estado_id,$gponid;
+    public $datacenterid, $oltid, $tarjetaid, $nombre, $slots, $estado_id, $gponid;
     //Extraer relaciones entre modelos
-    public $datacenterselect,$olttarjetarelacionado,$tarjetagponrelacionado,$gponnaprelacionado;
+    public $datacenterselect, $olttarjetarelacionado, $tarjetagponrelacionado, $gponnaprelacionado;
     //Propiedades para editar una Nap
-    public $napedit,$datacenteride,$oltide,$oltnombre,$gponide,$gponnombre,$oltidnuevo,$tarjetaide,$tarjetanombre,$tarjetaidnuevo,$gponidnuevo;
+    public $napid, $napedit, $datacenteride, $oltide, $oltnombre, $gponide, $gponnombre, $oltidnuevo, $tarjetaide, $tarjetanombre, $tarjetaidnuevo, $gponidnuevo;
     //Método mount
-    public $totalcontar, $totaldatacenters,$estados;
+    public $totalcontar, $totaldatacenters, $estados;
     public $sort = 'id', $direction = 'desc', $cant = '5', $search = '';
     public $objprueba;
     public function mount()
@@ -30,7 +30,6 @@ class NapShow extends Component
         $this->totalcontar = Nap::count();
         $this->totaldatacenters = Datacenter::where('estado_id', "=", '1')->get();
         $this->estados = Estado::where('nombre', "=", 'Activo')->orwhere('nombre', "=", 'Deshabilitado')->get();
-
     }
     public function save()
     {
@@ -60,17 +59,38 @@ class NapShow extends Component
         $this->resetcampos();
         $this->objprueba = Nap::find($nap->id);
         $this->napedit     = $nap;
+        $this->napid     = $this->napedit->id;
         $this->datacenteride = $this->napedit->gpon->tarjeta->olt->datacenter->id;
         $this->oltide       = $this->napedit->gpon->tarjeta->olt->id;
         $this->oltnombre    = $this->napedit->gpon->tarjeta->olt->nombre;
         $this->tarjetaide   = $this->napedit->gpon->tarjeta->id;
         $this->tarjetanombre = $this->napedit->gpon->tarjeta->nombre;
         $this->gponide    = $this->napedit->gpon->id;
-        $this->gponnombre    = $this->napedit->id;
-        $this->gponide    = $this->napedit->gpon->id;
         $this->gponnombre    = $this->napedit->gpon->nombre;
         $this->nombre       = $this->napedit->nombre;
         $this->slots        = $this->napedit->slots;
+    }
+    public function update()
+    {
+        if (is_numeric($this->gponidnuevo)) {
+            $this->gponide = $this->gponidnuevo;
+        }
+        $this->validate([
+            'nombre' => 'required|min:5|max:10',
+            'slots' => 'required|numeric|min:1|max:15',
+            'gponide' => 'required|numeric',
+        ]);
+        if ($this->gponide) {
+            $updNap = Nap::find($this->napid);
+            $updNap->update([
+                'nombre' => $this->nombre,
+                'slots' => $this->slots,
+                'gpon_id' => $this->gponide,
+            ]);
+        }
+        $this->reset('search');
+        $this->emit('cerrarModalEditar');
+        $this->emit('alert', 'La Caja Nap se actualizo satisfactoriamente');
     }
     public function generarolts()
     {
@@ -100,14 +120,13 @@ class NapShow extends Component
         if (is_numeric($this->tarjetaidnuevo)) {
             $this->tarjetaide = $this->tarjetaidnuevo;
             $this->tarjetaid = $this->tarjetaidnuevo;
-            $this->reset('gponidnuevo','gponid');
+            $this->reset('gponidnuevo', 'gponid');
         }
         if (is_numeric($this->tarjetaid)) {
             $this->tarjetagponrelacionado = Tarjeta::find($this->tarjetaid);
-            $this->reset('gponidnuevo','gponid');
+            $this->reset('gponidnuevo', 'gponid');
         }
     }
-
     public function gponnaprelacion()
     {
         if (is_numeric($this->gponidnuevo)) {
@@ -131,8 +150,8 @@ class NapShow extends Component
     }
     public function resetcampos()
     {
-        $this->reset(['nombre', 'slots','datacenterid','oltid','tarjetaid','gponid']);
-        $this->reset(['gponidnuevo','datacenterselect','napedit', 'datacenteride','oltide','oltnombre','gponide','gponnombre','oltidnuevo','tarjetaide','tarjetanombre','tarjetaidnuevo','gponidnuevo']);
+        $this->reset(['nombre', 'slots', 'datacenterid', 'oltid', 'tarjetaid', 'gponid']);
+        $this->reset(['gponidnuevo', 'datacenterselect', 'napedit', 'datacenteride', 'oltide', 'oltnombre', 'gponide', 'gponnombre', 'oltidnuevo', 'tarjetaide', 'tarjetanombre', 'tarjetaidnuevo', 'gponidnuevo']);
         $this->estado_id = "1";
     }
     public function cambiarestado($id)

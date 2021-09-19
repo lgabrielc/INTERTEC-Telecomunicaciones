@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Servidor;
 
 use App\Models\Direccion;
+use App\Models\Estado;
 use App\Models\Servidor;
 use App\Models\Telefono;
 use Livewire\Component;
@@ -12,10 +13,10 @@ class ShowServidor extends Component
 
 {
     use WithPagination;
-    public $search, $totalservidores, $nombre, $ipEntrada, $ipSalida;
+    public $search, $totalservidores, $nombre, $ipEntrada, $ipSalida,$totalestados;
     public $sort = 'id';
     public $direction = 'desc';
-    public $servidorEdit, $nombreEdit, $ipEntradaEdit, $ipSalidaEdit, $servidorid;
+    public $servidorEdit, $nombreEdit, $ipEntradaEdit, $ipSalidaEdit, $servidorid,$estado;
     public $cant = '5';
     public $open = false;
     public $identificador;
@@ -25,11 +26,14 @@ class ShowServidor extends Component
         'nombre' => 'required|min:5|max:30',
         'ipEntrada' => 'required|ipv4',
         'ipSalida' => 'required|ipv4',
+        'estado' => 'required',
     ];
     public function mount()
     {
         $this->identificador = rand();
         $this->totalservidores = Servidor::count();
+        $this->totalestados = Estado::all();
+
     }
     public function order($sort)
     {
@@ -80,6 +84,7 @@ class ShowServidor extends Component
             'nombre' => $this->nombre,
             'ipEntrada' => $this->ipEntrada,
             'ipSalida' => $this->ipSalida,
+            'estado_id' => $this->estado,
         ]);
         $this->totalservidores = Servidor::count();
         $this->identificador = rand();

@@ -82,8 +82,8 @@
                 @if (is_numeric($tarjetaidnuevo) && is_numeric($oltidnuevo))
                 <div class="form-group">
                     <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Gpon</label>
-                    <select class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                        wire:model="gponidnuevo" wire:change='gponnaprelacion'>
+                    <select class="block text-sm py-3 px-4 rounded w-full border outline-none" wire:model="gponidnuevo"
+                        wire:change='gponnaprelacion'>
                         <option value="">-Escoja un Gpon-</option>
                         @foreach ($tarjetagponrelacionado->gpons as $gpon)
                         <option value="{{ $gpon->id }}">{{ $gpon->nombre }}&nbsp,&nbsp
@@ -100,31 +100,32 @@
                         Cajas Nap Registradas:
                         @foreach ($gponnaprelacionado->naps as $nap)
                         {{ $nap->nombre }};
-                @endforeach
-                </label>
-            </div>
-            @endif
+                        @endforeach
+                    </label>
+                </div>
+                @endif
 
-            <div class="form-group">
-                <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Nombre</label>
-                <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                    wire:model.defer="nombre">
-                @error('nombre') <span class="text-danger">{{ $message }}</span>@enderror
+                <div class="form-group">
+                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Nombre</label>
+                    <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
+                        wire:model.defer="nombre">
+                    @error('nombre') <span class="text-danger">{{ $message }}</span>@enderror
+                </div>
+                <div class="form-group">
+                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Slots</label>
+                    <input type="email" class="block text-sm py-3 px-4 rounded w-full border outline-none"
+                        wire:model.defer="slots">
+                    @error('slots') <span class="text-danger">{{ $message }}</span>@enderror
+                </div>
             </div>
-            <div class="form-group">
-                <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Slots</label>
-                <input type="email" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                    wire:model.defer="slots">
-                @error('slots') <span class="text-danger">{{ $message }}</span>@enderror
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary close-modal rounded-pill"
+                    data-dismiss="modal">Cancelar</button>
+                <button type="button" wire:click.prevent="update"
+                    class="btn btn-danger close-modal rounded-pill">Guardar
+                    Cambios
+                </button>
             </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary close-modal rounded-pill"
-                data-dismiss="modal">Cancelar</button>
-            <button type="button" wire:click.prevent="update" class="btn btn-danger close-modal rounded-pill">Guardar
-                Cambios
-            </button>
         </div>
     </div>
-</div>
 </div>

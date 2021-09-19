@@ -73,7 +73,7 @@
                                 wire:model.defer="torre">
                                 <option value="">---Seleccione una opción---</option>
                                 @foreach ($torres as $torre)
-                                    <option value="{{ $torre->id }}">{{ $torre->nombre }}</option>
+                                <option value="{{ $torre->id }}">{{ $torre->nombre }}</option>
                                 @endforeach
                             </select>
                             @error('torre') <span class="text-danger error">{{ $message }}</span>@enderror
@@ -88,7 +88,7 @@
                                 wire:model.defer='servidor'>
                                 <option value="">---Seleccione una opción---</option>
                                 @foreach ($servidores as $servidor)
-                                    <option value="{{ $servidor->id }}">{{ $servidor->nombre }}</option>
+                                <option value="{{ $servidor->id }}">{{ $servidor->nombre }}</option>
                                 @endforeach
                             </select>
                             @error('servidor') <span class="text-danger error">{{ $message }}</span>@enderror
@@ -102,10 +102,29 @@
                                 wire:model.defer='tipoantena'>
                                 <option value="">---Seleccione una opción---</option>
                                 @foreach ($tipoantenas as $tipoantena)
-                                    <option value="{{ $tipoantena->id }}">{{ $tipoantena->nombre }}</option>
+                                <option value="{{ $tipoantena->id }}">{{ $tipoantena->nombre }}</option>
                                 @endforeach
                             </select>
                             @error('tipoantena') <span class="text-danger error">{{ $message }}</span>@enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Estado:</label>
+                            <select class="block text-sm py-3 px-4 rounded w-full border outline-none"
+                                wire:model="estado">
+                                <option value="">-Seleccione el estado-</option>
+                                @foreach ($totalestados as $estado)
+                                @if ($estado->nombre == 'Activo')
+                                <option value="{{ $estado->id }}">{{ $estado->nombre }}</option>
+                                @elseif ($estado->nombre != 'Activo')
+                                <option value="{{ $estado->id }}">{{ $estado->nombre }}</option>
+                                @endif
+                                @endforeach
+                            </select>
+                            @error('estado') <span class="text-danger error">{{ $message }}</span>@enderror
                         </div>
                     </div>
                 </div>

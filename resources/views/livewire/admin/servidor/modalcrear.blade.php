@@ -36,6 +36,21 @@
                         wire:model.defer="ipSalida" placeholder="Ejm: 192.168.1.20">
                     @error('ipSalida') <span class="text-danger error">{{ $message }}</span>@enderror
                 </div>
+                <div class="form-group">
+                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Estado:</label>
+                    <select class="block text-sm py-3 px-4 rounded w-full border outline-none"
+                        wire:model="estado">
+                        <option value="">-Seleccione el estado-</option>
+                        @foreach ($totalestados as $estado)
+                        @if ($estado->nombre == 'Activo')
+                        <option value="{{ $estado->id }}">{{ $estado->nombre }}</option>
+                        @elseif ($estado->nombre != 'Activo')
+                        <option value="{{ $estado->id }}">{{ $estado->nombre }}</option>
+                        @endif
+                        @endforeach
+                    </select>
+                    @error('estado') <span class="text-danger error">{{ $message }}</span>@enderror
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-info close-btn rounded-pill" data-dismiss="modal">Cancelar</button>

@@ -266,6 +266,12 @@ return [
             'icon' => 'fas fa-user-tag',
         ],
         
+        [
+            'text' => 'Pago de Servicio',
+            'url'  => 'admin/pago',
+            'icon' => 'fas fa-hand-holding-usd',
+        ],
+        
         ['header' => 'RECURSOS FIBRA OPTICA'],
         [
             'text' => 'Data Center',

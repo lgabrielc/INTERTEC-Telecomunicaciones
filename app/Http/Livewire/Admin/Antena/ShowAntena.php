@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Antena;
 
 use App\Models\Antena;
+use App\Models\Estado;
 use App\Models\Servidor;
 use App\Models\TipoAntena;
 use App\Models\Torre;
@@ -13,7 +14,7 @@ class ShowAntena extends Component
 {
 
     use WithPagination;
-    public $search, $totalcontar, $nombre, $ip, $mac, $frecuencia, $canal, $marca, $servidor, $torre, $tipoantena;
+    public $estado,$totalestados,$search, $totalcontar, $nombre, $ip, $mac, $frecuencia, $canal, $marca, $servidor, $torre, $tipoantena;
     public $sort = 'id';
     public $direction = 'desc';
     public $EditarAntena, $EditarID, $EditarNombre, $EditarIP, $EditarMac, $EditarFrecuencia, $EditarCanal;
@@ -34,6 +35,7 @@ class ShowAntena extends Component
         'servidor' => 'required',
         'torre' => 'required',
         'tipoantena' => 'required',
+        'estado' => 'required',
     ];
 
     public function mount()
@@ -42,6 +44,8 @@ class ShowAntena extends Component
         $this->servidores = Servidor::all();
         $this->torres = Torre::all();
         $this->tipoantenas = TipoAntena::all();
+        $this->totalestados = Estado::all();
+
     }
     public function order($sort)
     {
@@ -120,6 +124,7 @@ class ShowAntena extends Component
             'torre_id' => $this->torre,
             'servidor_id' => $this->servidor,
             'tipoantena_id' => $this->tipoantena,
+            'estado_id' => $this->estado,
         ]);
         
         $this->totalcontar = Antena::count();
@@ -131,9 +136,11 @@ class ShowAntena extends Component
     {
         $this->validate([
             'crearnuevotipoantena' => 'required|min:3|max:30',
+            'estado' => 'required',
         ]);
         $newTipoAntena = TipoAntena::create([
             'nombre' => $this->crearnuevotipoantena,
+            'estado_id' => $this->estado,
         ]);
         
         $this->tipoantenas = TipoAntena::all();
