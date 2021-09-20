@@ -1,17 +1,17 @@
 <div>
     <div class="container mx-auto">
-        <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 content-center">
+        <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 content-center">
             <div class="px-4 mb-4">
                 <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
                     <div class="flex flex-wrap border-b border-gray-200 undefined">
                         <div
-                            class="bg-gradient-to-tr from-pink-500 to-pink-700 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
+                            class="bg-gradient-to-tr from-green-500 to-green-700 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
                             <span class="material-icons text-white text-3xl leading-none">trending_up</span>
                         </div>
                         <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2 text-right undefined">
-                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">Numero de Clientes Activos</h5>
+                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">N° de Clientes Activos</h5>
                             <span class="text-3xl text-gray-900">
-                                {{ $totalcontar }}
+                                {{ $clientesactivos }}
                             </span>
                         </div>
                     </div>
@@ -25,13 +25,13 @@
                 <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
                     <div class="flex flex-wrap border-b border-gray-200 undefined">
                         <div
-                            class="bg-gradient-to-tr from-pink-500 to-pink-700 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
+                            class="bg-gradient-to-tr from-yellow-500 to-yellow-700 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
                             <span class="material-icons text-white text-3xl leading-none">trending_up</span>
                         </div>
                         <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2 text-right undefined">
-                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">Numero de Clientes Activos</h5>
+                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">N° de Clientes Deuda Vencida</h5>
                             <span class="text-3xl text-gray-900">
-                                {{ $totalcontar }}
+                                {{ $clientesvencidos }}
                             </span>
                         </div>
                     </div>
@@ -45,13 +45,13 @@
                 <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
                     <div class="flex flex-wrap border-b border-gray-200 undefined">
                         <div
-                            class="bg-gradient-to-tr from-pink-500 to-pink-700 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
+                            class="bg-gradient-to-tr from-red-500 to-red-700 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
                             <span class="material-icons text-white text-3xl leading-none">trending_up</span>
                         </div>
                         <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2 text-right undefined">
-                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">Numero de Clientes Activos</h5>
+                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">N° de Clientes Corte sin Ejecutar</h5>
                             <span class="text-3xl text-gray-900">
-                                {{ $totalcontar }}
+                                {{ $clientescortesinejecutar }}
                             </span>
                         </div>
                     </div>
@@ -65,15 +65,13 @@
                 <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
                     <div class="flex flex-wrap border-b border-gray-200 undefined">
                         <div
-                            class="bg-gradient-to-tr from-pink-500 to-pink-700 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
+                            class="bg-gradient-to-tr from-red-500 to-red-700 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
                             <span class="material-icons text-white text-3xl leading-none">trending_up</span>
                         </div>
-                        <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2  undefined">
-                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1 text-right">Gestionar Nuevo
-                                Plan de Internet
-                            </h5>
-                            <span class="">
-                                @include('livewire.admin.cliente.modalcrearplan')
+                        <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2 text-right undefined">
+                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">N° de Clientes Corte Ejecutado</h5>
+                            <span class="text-3xl text-gray-900">
+                                {{ $clientesejecutados }}
                             </span>
                         </div>
                     </div>
@@ -92,8 +90,8 @@
             <div class="bg-white  rounded-2xl px-10 py-8 shadow-lg hover:shadow-2xl transition duration-500 w-full">
                 <div class="container w-full">
                     <div class=w-full">
-                        <h1 class="text-2xl font-semibold leading-tight mb-2">Gestionar Clientes</h1>
-                        @include('livewire.admin.cliente.modalcrear')
+                        <h1 class="text-2xl font-semibold leading-tight mb-2">Gestionar Pagos</h1>
+                        {{-- @include('livewire.admin.cliente.modalcrear') --}}
                         <div class="my-2 flex sm:flex-row flex-col">
                             <div class="pr-2 flex flex-row mb-1 sm:mb-0 content-center justify-center">
                                 <div class="flex relative content-center ">
@@ -208,34 +206,20 @@
                                                     {{ $cliente->correo }}</p>
                                             </td>
                                             <td class="py-1 border-b border-gray-200 bg-white text-sm text-center">
-                                                @if ($cliente->servicio->tiposervicio == 'Antena')
+
+                                                @if (empty($cliente->pagos->first()))
                                                 <button wire:click="verservicioantena({{ $cliente->id }})" type="button"
-                                                    class="btn btn-warning rounded-pill mx-1 my-1" data-toggle="modal"
+                                                    class="btn btn-success rounded-pill mx-1 my-1" data-toggle="modal"
                                                     data-target="#modalverservicioantena">
-                                                    Ver Servicio
-                                                </button>
-                                                @elseif ($cliente->servicio->tiposervicio == 'Fibra')
-                                                <button wire:click="verserviciofibra({{ $cliente->id }})" type="button"
-                                                    class="btn btn-warning rounded-pill mx-1 my-1" data-toggle="modal"
-                                                    data-target="#modalverserviciofibra">
-                                                    Ver Servicio
+                                                    Realizar Primer pago 
                                                 </button>
                                                 @else
                                                 <button wire:click="agregarservicio({{ $cliente->id }})" type="button"
-                                                    class="btn btn-warning rounded-pill mx-1 my-1" data-toggle="modal"
+                                                    class="btn btn-success rounded-pill mx-1 my-1" data-toggle="modal"
                                                     data-target="#modalcrearservicio">
-                                                    Agregar Servicio
+                                                    Realizar Pago
                                                 </button>
                                                 @endif
-                                                <button wire:click="edit({{ $cliente->id }})" type="button"
-                                                    class="btn btn-info rounded-pill mx-1 my-1" data-toggle="modal"
-                                                    data-target="#updateModal">
-                                                    Editar
-                                                </button>
-                                                <button wire:click="$emit('deletthis', {{ $cliente->id }})"
-                                                    type="button" class="btn btn-danger rounded-pill mx-1 my-1">
-                                                    Eliminar
-                                                </button>
                                             </td>
                                         </tr>
                                         @endforeach

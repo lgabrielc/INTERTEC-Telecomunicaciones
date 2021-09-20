@@ -15,14 +15,13 @@
                     <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
                         disabled="{{ $isDisabled }}"
                         value="{{ $NombreClienteServicio }}&nbsp;{{ $ApellidoClienteServicio }}" disabled>
-                    @error('EditarNombre') <span class="text-danger error">{{ $message }}</span>@enderror
                 </div>
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Tipo de Servicio:</label>
                             <select name="" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                                wire:model='tiposervicio' wire:change="resetearcampos($event.target.value)">
+                                wire:model='tiposervicio' >
                                 <option value="">-Escoja el Tipo de Servicio-</option>
                                 <option value="Antena">Antena</option>
                                 <option value="Fibra">Fibra Optica</option>
@@ -30,7 +29,6 @@
                             @error('tiposervicio') <span class="text-danger error">{{ $message }}</span>@enderror
                         </div>
                     </div>
-                    
                 {{-- ES LA 2DA COLUMNA --}}
                     @if ($tiposervicio == 'Fibra')
                     <div class="col-lg-6">
@@ -134,8 +132,8 @@
                         <div class="form-group">
                             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Antena:</label>
                             <select class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                                wire:model="antenaid">
-                                <option value="">-Escoja una Antena-</option>
+                                wire:model.defer="antenaid">
+                                <option value="" select>-Escoja una Antena-</option>
                                 @foreach ($totalantenas as $antena)
                                 <option value="{{ $antena->id }}">{{ $antena->nombre }}</option>
                                 @endforeach
@@ -144,7 +142,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <div class="">
+                        <div class="form-group">
                             <label class=" block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                                 MAC:</label>
                             <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
@@ -222,11 +220,11 @@
                 @if ($tiposervicio == 'Antena')
                 <button type="button" wire:click.prevent="saveservicioantena" wire:loading.attr="disabled"
                     class="btn btn-danger close-modal rounded-pill">Guardar
-                    Cambios</button>
+                    Cambios Antena </button>
                 @elseif ($tiposervicio == 'Fibra' && is_numeric($datacenterid) && is_numeric($oltid) && is_numeric($tarjetaid) && is_numeric($gponid) && is_numeric($napid))
                 <button type="button" wire:click.prevent="saveserviciofibra" wire:loading.attr="disabled"
                     class="btn btn-danger close-modal rounded-pill">Guardar
-                    Cambios</button>
+                    Cambios Fibra</button>
                 @endif
             </div>
         </div>

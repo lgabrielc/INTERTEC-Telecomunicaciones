@@ -21,14 +21,14 @@ class ShowCliente extends Component
     use WithPagination;
     public $sort = 'id';
     public $direction = 'desc';
-    public $tiposervicio, $VerServicio,$condicionAntena;
-    public $search, $totalcontar, $totalestados, $totalplanes, $totalantenas, $totaldatacenters;
+    public $tiposervicio, $VerServicio,$condicionAntena,$oltidnuevo;
+    public $search, $totalcontar, $totalestados, $totalplanes, $totalantenas, $totaldatacenters,$tarjetaidnuevo;
     //Editar Cliente
     public $EditarCliente, $EditarNombre, $EditarID, $EditarApellido, $EditarDNI, $EditarCorreo;
     //Agregar Servicio
     public $AgregarServicio, $planid,$IDClienteServicio, $NombreClienteServicio, $ApellidoClienteServicio,$estado_id;
-    public $fechaInicio, $fechaVencimiento, $fechaCorte, $condicionantena, $mac, $ip, $frecuencia, $antenaid;
-    public $fechaInicioV, $fechaVencimientoV, $fechaCorteV,$nap_id;
+    public $condicionantena, $mac, $ip, $frecuencia, $antenaid;
+    public $nap_id;
     public $gponrelacionado, $clientegpon, $estado, $plannuevo, $olttarjetarelacionado, $tarjetagponrelacionado,$gponnaprelacionado;
     public $datacenterid, $datacenterselect, $oltid, $tarjetaid,$gponid,$napid;
     //Datos Cliente
@@ -39,7 +39,7 @@ class ShowCliente extends Component
     public $agregarplan;
     public $cant = '5';
     public $open = false;
-
+ 
     protected $rules = [
         'nombre' => 'required|min:5|max:50',
         'apellido' => 'required|min:3|max:50',
@@ -81,9 +81,9 @@ class ShowCliente extends Component
     public function mount()
     {
         $this->totalcontar = Cliente::count();
-        $this->fechaInicio = date('Y-m-d');
-        $this->fechaVencimiento = date("Y-m-d", strtotime($this->fechaInicio . "+ 1 month"));
-        $this->fechaCorte = date("Y-m-d", strtotime($this->fechaVencimiento . "+ 3 days"));
+        // $this->fechaInicio = date('Y-m-d');
+        // $this->fechaVencimiento = date("Y-m-d", strtotime($this->fechaInicio . "+ 1 month"));
+        // $this->fechaCorte = date("Y-m-d", strtotime($this->fechaVencimiento . "+ 3 days"));
         $this->totalplanes = Plan::all();
         $this->totalestados = Estado::all();
         $this->totalantenas = Antena::all();
@@ -202,9 +202,7 @@ class ShowCliente extends Component
         $this->ApellidoClienteServicio = $this->AgregarServicio->apellido;
         $this->reset('tiposervicio','datacenterid','estado','plannuevo');
         $this->estado='1';
-        // $this->fechaInicio = date('Y-m-d');
-        // $this->fechaVencimiento = date("Y-m-d", strtotime($this->fechaInicio . "+ 1 month"));
-        // $this->fechaCorte = date("Y-m-d", strtotime($this->fechaVencimiento . "+ 3 days"));
+
     }
     public function verservicioantena(Cliente $cliente)
     {
@@ -278,30 +276,16 @@ class ShowCliente extends Component
         $this->emit('cerrarModalCrear');
         $this->emit('alert', 'El cliente se creo satisfactoriamente');
     }
-    // public function savetipoantena()
+    // public function actualizarfechas($value)
     // {
-    //     $this->validate([
-    //         'crearnuevotipoantena' => 'required|min:5|max:30',
-    //     ]);
-    //     $newTipoAntena = TipoAntena::create([
-    //         'nombre' => $this->crearnuevotipoantena,
-    //     ]);
-
-    //     $this->tipoantenas = TipoAntena::all();
-    //     $this->totalcontar = Antena::count();
-    //     $this->emit('cerrarModalCrearTipoAntena');
-    //     $this->emit('alert', 'El Tipo de Antena se creo satisfactoriamente');
+    //     // $this->fechainicio = date('Y-m-d');
+    //     $this->fechaVencimiento = date("Y-m-d", strtotime($value . "+ 1 month"));
+    //     $this->fechaCorte = date("Y-m-d", strtotime($this->fechaVencimiento . "+ 3 days"));
     // }
-    public function actualizarfechas($value)
-    {
-        // $this->fechainicio = date('Y-m-d');
-        $this->fechaVencimiento = date("Y-m-d", strtotime($value . "+ 1 month"));
-        $this->fechaCorte = date("Y-m-d", strtotime($this->fechaVencimiento . "+ 3 days"));
-    }
-    public function actualizarfechas2($value)
-    {
-        $this->fechacorte = date("Y-m-d", strtotime($value . "+ 3 days"));
-    }
+    // public function actualizarfechas2($value)
+    // {
+    //     $this->fechacorte = date("Y-m-d", strtotime($value . "+ 3 days"));
+    // }
     public function generarolts()
     {
         if (isset($this->datacenteride)) {
@@ -309,9 +293,9 @@ class ShowCliente extends Component
         }
         if (is_numeric($this->datacenterid)) {
             $this->datacenterselect = Datacenter::find($this->datacenterid);
-            // $this->reset('tarjetaid', 'oltid', 'olttarjetarelacionado', 'tarjetagponrelacionado', 'oltidnuevo', 'tarjetaidnuevo');
+            $this->reset('tarjetaid', 'oltid', 'olttarjetarelacionado', 'tarjetagponrelacionado', 'oltidnuevo', 'tarjetaidnuevo');
         } else {
-            // $this->reset('oltid', 'tarjetaid', 'datacenterid', 'olttarjetarelacionado', 'tarjetagponrelacionado');
+            $this->reset('oltid', 'tarjetaid', 'datacenterid', 'olttarjetarelacionado', 'tarjetagponrelacionado');
         }
     }
     public function render()
@@ -323,16 +307,5 @@ class ShowCliente extends Component
             ->orderBy($this->sort, $this->direction)
             ->paginate($this->cant);
         return view('livewire.admin.cliente.show-cliente', compact('clientes'));
-    }
-
-    public function delete($id)
-    {
-        Cliente::where('id', $id)->delete();
-        $this->totalcontar = Cliente::count();
-
-        // $Eliminarphone = Telefono::where('telefono_id', $id)->delete();
-        // $Eliminarphone = Direccion::where('direccion_id', $id)->delete();
-        $this->identificador = rand();
-        // $servidorEliminar->delete();
     }
 }
