@@ -44,12 +44,13 @@ class PagoShow extends Component
     }
     public function render()
     {
-        $clientes = Cliente::where('nombre', 'like', '%' . $this->search . '%')
-            ->orwhere('apellido', 'like', '%' . $this->search . '%')
-            ->orwhere('dni', 'like', '%' . $this->search . '%')
-            ->orwhere('correo', 'like', '%' . $this->search . '%')
-            ->orderBy($this->sort, $this->direction)
-            ->paginate($this->cant);
+        $clientes = Cliente::join("servicios","servicios.cliente_id","=","clientes.id")->select("clientes.nombre","servicios.tiposervicio","servicios.id","clientes.apellido","clientes.dni")->paginate($this->cant);
+        // $clientes = Servicio::where('nombre', 'like', '%' . $this->search . '%')
+        //     ->orwhere('apellido', 'like', '%' . $this->search . '%')
+        //     ->orwhere('dni', 'like', '%' . $this->search . '%')
+        //     ->orwhere('correo', 'like', '%' . $this->search . '%')
+        //     ->orderBy($this->sort, $this->direction)
+        //     ->paginate($this->cant);
         return view('livewire.admin.pago.pago-show', compact('clientes'));
     }
 }

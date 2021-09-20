@@ -74,17 +74,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-info close-btn rounded-pill" data-dismiss="modal">Cancelar</button>
-                @if ($tiposervicio == 'Antena')
-                <button type="button" wire:click.prevent="saveservicioantena" wire:loading.attr="disabled"
-                    class="btn btn-danger close-modal rounded-pill">Guardar
-                    Cambios</button>
-                @elseif ($tiposervicio == 'Fibra')
-                <button type="button" wire:click.prevent="saveserviciofibra" wire:loading.attr="disabled"
-                    class="btn btn-danger close-modal rounded-pill">Guardar
-                    Cambios</button>
-                @endif
-
+                <button type="button" class="btn btn-info close-btn rounded-pill" data-dismiss="modal">Atras</button>
             </div>
         </div>
     </div>

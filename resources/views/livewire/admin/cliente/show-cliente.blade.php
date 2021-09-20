@@ -168,26 +168,27 @@
                                                     {{ $cliente->correo }}</p>
                                             </td>
                                             <td class="py-1 border-b border-gray-200 bg-white text-sm text-center">
-                                             
-                                                 @if ($cliente->servicio['tiposervicio']=='Antena')
-                                                 <button wire:click="verservicioantena({{ $cliente->id }})" type="button"
+                                                @if ($cliente->servicio)
+                                                @if ($cliente->servicio['tiposervicio']=='Antena')
+                                                <button wire:click="verservicioantena({{ $cliente->id }})" type="button"
                                                     class="btn btn-warning rounded-pill mx-1 my-1" data-toggle="modal"
                                                     data-target="#modalverservicioantena">
                                                     Ver Servicio Antena
-                                                </button> 
-                                                  @elseif ($cliente->servicio['tiposervicio']=='Fibra')
-                                                 <button wire:click="verserviciofibra({{ $cliente->id }})" type="button"
+                                                </button>
+                                                @elseif ($cliente->servicio['tiposervicio']=='Fibra')
+                                                <button wire:click="verserviciofibra({{ $cliente->id }})" type="button"
                                                     class="btn btn-warning rounded-pill mx-1 my-1" data-toggle="modal"
                                                     data-target="#modalverserviciofibra">
                                                     Ver Servicio de Fibra
-                                                </button> 
-                                                  @else
-                                                 <button wire:click="agregarservicio({{ $cliente->id }})" type="button"
+                                                </button>
+                                                @endif
+                                                @else
+                                                <button wire:click="agregarservicio({{ $cliente->id }})" type="button"
                                                     class="btn btn-warning rounded-pill mx-1 my-1" data-toggle="modal"
                                                     data-target="#modalcrearservicio">
                                                     Agregar Servicio
-                                                </button> 
-                                                  @endif  
+                                                </button>
+                                                @endif
                                                 <button wire:click="edit({{ $cliente->id }})" type="button"
                                                     class="btn btn-info rounded-pill mx-1 my-1" data-toggle="modal"
                                                     data-target="#updateModal">

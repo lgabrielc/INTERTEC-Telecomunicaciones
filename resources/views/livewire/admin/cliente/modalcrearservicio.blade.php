@@ -21,7 +21,7 @@
                         <div class="form-group">
                             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Tipo de Servicio:</label>
                             <select name="" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                                wire:model='tiposervicio' >
+                                wire:model='tiposervicio' wire:change='cambiartipodeservicio'>
                                 <option value="">-Escoja el Tipo de Servicio-</option>
                                 <option value="Antena">Antena</option>
                                 <option value="Fibra">Fibra Optica</option>
@@ -114,7 +114,7 @@
                         <div class="form-group">
                             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Caja Nap</label>
                             <select class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                                wire:model="napid">
+                                wire:model="napid" wire:change='naprelacion'>
                                 <option value="">-Escoja un Gpon-</option>
                                 @foreach ($gponnaprelacionado->naps as $nap)
                                 <option value="{{ $nap->id }}">{{ $nap->nombre }}&nbsp,&nbsp

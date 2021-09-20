@@ -21,16 +21,16 @@ class ShowCliente extends Component
     use WithPagination;
     public $sort = 'id';
     public $direction = 'desc';
-    public $tiposervicio, $VerServicio,$condicionAntena,$oltidnuevo;
-    public $search, $totalcontar, $totalestados, $totalplanes, $totalantenas, $totaldatacenters,$tarjetaidnuevo;
+    public $tiposervicio, $VerServicio, $condicionAntena;
+    public $search, $totalcontar, $totalestados, $totalplanes, $totalantenas, $totaldatacenters;
     //Editar Cliente
     public $EditarCliente, $EditarNombre, $EditarID, $EditarApellido, $EditarDNI, $EditarCorreo;
     //Agregar Servicio
-    public $AgregarServicio, $planid,$IDClienteServicio, $NombreClienteServicio, $ApellidoClienteServicio,$estado_id;
+    public $AgregarServicio, $planid, $IDClienteServicio, $NombreClienteServicio, $ApellidoClienteServicio, $estado_id;
     public $condicionantena, $mac, $ip, $frecuencia, $antenaid;
     public $nap_id;
-    public $gponrelacionado, $clientegpon, $estado, $plannuevo, $olttarjetarelacionado, $tarjetagponrelacionado,$gponnaprelacionado;
-    public $datacenterid, $datacenterselect, $oltid, $tarjetaid,$gponid,$napid;
+    public $gponrelacionado, $clientegpon, $estado, $plannuevo, $olttarjetarelacionado, $tarjetagponrelacionado, $gponnaprelacionado;
+    public $datacenterid, $datacenterselect, $oltid, $tarjetaid, $gponid, $napid;
     //Datos Cliente
     public $nombre, $apellido, $dni, $correo;
     //Agregar Plan
@@ -39,45 +39,59 @@ class ShowCliente extends Component
     public $agregarplan;
     public $cant = '5';
     public $open = false;
- 
+
     protected $rules = [
         'nombre' => 'required|min:5|max:50',
         'apellido' => 'required|min:3|max:50',
         'dni' => 'required|size:8',
         'correo' => 'nullable|email|min:3|max:30',
     ];
+
+    public function cambiartipodeservicio()
+    {
+        if ($$tiposervicio == 'Antena') {
+            $this->reset('gponrelacionado', 'clientegpon', 'gponrelacionado', 'datacenterid', 'oltid', 'tarjetaid', 'gponid', 'napid','plannuevo');
+        } else {
+            $this->reset('condicionantena', 'mac', 'ip', 'frecuencia', 'antenaid','plannuevo');
+        }
+    }
+
+    public function naprelacion()
+    {
+        if (is_numeric($this->napid)) {
+            $this->reset('clientegpon');
+        } else {
+            $this->reset('clientegpon');
+        }
+    }
+
     public function gponnaprelacion()
     {
-        if (isset($this->gponidnuevo)) {
-            $this->gponid = $this->gponidnuevo;
-        }
         if (is_numeric($this->gponid)) {
             $this->gponnaprelacionado = Gpon::find($this->gponid);
+            $this->reset('napid');
+        } else {
+            $this->reset('napid');
         }
     }
     public function tarjetagponrelacion()
     {
-        if (isset($this->tarjetaidnuevo)) {
-            $this->tarjetaide = $this->tarjetaidnuevo;
-            $this->tarjetaid = $this->tarjetaidnuevo;
-            // $this->reset('gponidnuevo', 'gponid');
-        }
         if (is_numeric($this->tarjetaid)) {
             $this->tarjetagponrelacionado = Tarjeta::find($this->tarjetaid);
-            // $this->reset('gponidnuevo', 'gponid');
+            $this->reset('gponid');
+        } else {
+            $this->reset('gponid');
         }
     }
     public function olttarjetarelacion()
     {
-        if (isset($this->oltidnuevo)) {
-            $this->oltid = $this->oltidnuevo;
-        }
         if (is_numeric($this->oltid)) {
             $this->olttarjetarelacionado = Olt::find($this->oltid);
             $this->reset('tarjetaid');
+        } else {
+            $this->reset('tarjetaid');
         }
     }
-
     public function mount()
     {
         $this->totalcontar = Cliente::count();
@@ -136,12 +150,12 @@ class ShowCliente extends Component
     public function resetearcampos($value)
     {
         if ($value == 'Antena') {
-            $this->reset('gponrelacionado', 'clientegpon', 'gponrelacionado','datacenterid','oltid','tarjetaid','gponid','napid');
+            $this->reset('gponrelacionado', 'clientegpon', 'gponrelacionado', 'datacenterid', 'oltid', 'tarjetaid', 'gponid', 'napid');
         } elseif ($value == 'Fibra') {
             $this->reset('condicionantena', 'mac', 'ip', 'frecuencia', 'antenaid');
-        }else{
+        } else {
             $this->reset('condicionantena', 'mac', 'ip', 'frecuencia', 'antenaid');
-            $this->reset('gponrelacionado', 'clientegpon', 'gponrelacionado','datacenterid','oltid','tarjetaid','gponid','napid');
+            $this->reset('gponrelacionado', 'clientegpon', 'gponrelacionado', 'datacenterid', 'oltid', 'tarjetaid', 'gponid', 'napid');
         }
     }
     // AGREGAR SERVICIO POR ANTENA
@@ -200,9 +214,9 @@ class ShowCliente extends Component
         $this->IDClienteServicio = $this->AgregarServicio->id;
         $this->NombreClienteServicio = $this->AgregarServicio->nombre;
         $this->ApellidoClienteServicio = $this->AgregarServicio->apellido;
-        $this->reset('tiposervicio','datacenterid','estado','plannuevo');
-        $this->estado='1';
-
+        $this->reset('antenaid', 'mac', 'ip', 'frecuencia', 'clientegpon', 'plannuevo');
+        $this->reset('tiposervicio', 'datacenterid', 'condicionantena', 'oltid', 'tarjetaid', 'gponid', 'napid');
+        $this->estado = '1';
     }
     public function verservicioantena(Cliente $cliente)
     {
@@ -220,7 +234,6 @@ class ShowCliente extends Component
         //FIN
         $this->planid = $this->VerServicio->servicio->plan->nombre;
         $this->estado_id = $this->VerServicio->servicio->estado->nombre;
-
     }
     public function verserviciofibra(Cliente $cliente)
     {
@@ -293,7 +306,7 @@ class ShowCliente extends Component
         }
         if (is_numeric($this->datacenterid)) {
             $this->datacenterselect = Datacenter::find($this->datacenterid);
-            $this->reset('tarjetaid', 'oltid', 'olttarjetarelacionado', 'tarjetagponrelacionado', 'oltidnuevo', 'tarjetaidnuevo');
+            $this->reset('tarjetaid', 'oltid', 'olttarjetarelacionado', 'tarjetagponrelacionado');
         } else {
             $this->reset('oltid', 'tarjetaid', 'datacenterid', 'olttarjetarelacionado', 'tarjetagponrelacionado');
         }

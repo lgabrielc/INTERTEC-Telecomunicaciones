@@ -9,7 +9,8 @@
                             <span class="material-icons text-white text-3xl leading-none">trending_up</span>
                         </div>
                         <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2 text-right undefined">
-                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">N° de Clientes Activos</h5>
+                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">N° de Clientes Activos
+                            </h5>
                             <span class="text-3xl text-gray-900">
                                 {{ $clientesactivos }}
                             </span>
@@ -29,7 +30,8 @@
                             <span class="material-icons text-white text-3xl leading-none">trending_up</span>
                         </div>
                         <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2 text-right undefined">
-                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">N° de Clientes Deuda Vencida</h5>
+                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">N° de Clientes Deuda
+                                Vencida</h5>
                             <span class="text-3xl text-gray-900">
                                 {{ $clientesvencidos }}
                             </span>
@@ -49,7 +51,8 @@
                             <span class="material-icons text-white text-3xl leading-none">trending_up</span>
                         </div>
                         <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2 text-right undefined">
-                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">N° de Clientes Corte sin Ejecutar</h5>
+                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">N° de Clientes Corte sin
+                                Ejecutar</h5>
                             <span class="text-3xl text-gray-900">
                                 {{ $clientescortesinejecutar }}
                             </span>
@@ -69,7 +72,8 @@
                             <span class="material-icons text-white text-3xl leading-none">trending_up</span>
                         </div>
                         <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2 text-right undefined">
-                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">N° de Clientes Corte Ejecutado</h5>
+                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">N° de Clientes Corte
+                                Ejecutado</h5>
                             <span class="text-3xl text-gray-900">
                                 {{ $clientesejecutados }}
                             </span>
@@ -140,15 +144,11 @@
                                                 ID
                                                 @if ($sort == 'id')
                                                 @if ($direction == 'asc')
-                                                {{-- SI ES ASCENDENTE PONER SU ICONO --}}
                                                 <i class="fas fa-sort-numeric-up float-right"></i>
-                                                {{-- SI ES DESCENDENTE PONER SU ICONO --}}
                                                 @else
-                                                {{-- SI ES DESCENDENTE PONER SU ICONO --}}
                                                 <i class="fas fa-sort-numeric-up-alt float-right"></i>
                                                 @endif
                                                 @else
-                                                {{-- SI ES CLICKEA POR PRIMERA VEZ EN ID PONER SU ICONO --}}
                                                 <i class="fas fa-sort float-right"></i>
                                                 @endif
                                             </th>
@@ -211,7 +211,7 @@
                                                 <button wire:click="verservicioantena({{ $cliente->id }})" type="button"
                                                     class="btn btn-success rounded-pill mx-1 my-1" data-toggle="modal"
                                                     data-target="#modalverservicioantena">
-                                                    Realizar Primer pago 
+                                                    Realizar Primer pago
                                                 </button>
                                                 @else
                                                 <button wire:click="agregarservicio({{ $cliente->id }})" type="button"
