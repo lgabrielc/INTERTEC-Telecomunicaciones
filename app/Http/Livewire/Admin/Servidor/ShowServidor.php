@@ -105,9 +105,9 @@ class ShowServidor extends Component
     {
         $estadoservidor = $servidor->estado_id;
         if ($estadoservidor == '1') {
-            Servidor::where('id', $servidor)->update(['estado_id' => '2']);
+            Servidor::where('id', $servidor->id)->update(['estado_id' => '2']);
         }else{
-            Servidor::where('id', $servidor)->update(['estado_id' => '1']);
+            Servidor::where('id', $servidor->id)->update(['estado_id' => '1']);
         }
     }
 }
