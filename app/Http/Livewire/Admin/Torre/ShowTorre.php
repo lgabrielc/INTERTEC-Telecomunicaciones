@@ -77,15 +77,6 @@ class ShowTorre extends Component
                 'mensualidad' => $this->mensualidadEdit,
             ]);
         }
-        $Eliminarphone = Telefono::where('telefono_id', $this->torreID)->delete();
-        $phone = new Telefono();
-        $phone->numero = $this->telefonoEdit;
-        $updTorre->telefono()->save($phone);
-        $Eliminarphone = Direccion::where('direccion_id', $this->torreID)->delete();
-        $directione = new Direccion();
-        $directione->direccion = $this->direccionEdit;
-        $updTorre->direccion()->save($directione);
-        $this->totaltorres = Torre::count();
         $this->emit('cerrarModalEditar');
         $this->emit('alert', 'El servidor se actualizo satisfactoriamente');
     }
@@ -99,13 +90,7 @@ class ShowTorre extends Component
             'telefono' => $this->telefono,
             'mensualidad' => $this->mensualidad,
             'estado_id' => $this->estado
-        ]);
-        $phone = new Telefono();
-        $phone->numero = $this->telefono;;
-        $tower->telefono()->save($phone);
-        $directione = new Direccion();
-        $directione->direccion = $this->direccion;
-        $tower->direccion()->save($directione);
+        ]);                  
         $this->totaltorres = Torre::count();
         $this->reset(['nombre', 'dueño', 'direccion', 'telefono', 'mensualidad']);
         $this->emit('cerrarModalCrear');
@@ -123,12 +108,12 @@ class ShowTorre extends Component
     }
     public function delete($id)
     {
-        Torre::where('id', $id)->delete();
-        $this->totaltorres = Torre::count();
+        // Torre::where('id', $id)->delete();
+        // $this->totaltorres = Torre::count();
         
-        $Eliminarphone = Telefono::where('telefono_id', $id)->delete();
-        $Eliminarphone = Direccion::where('direccion_id', $id)->delete();
-        $this->identificador = rand();
+        // $Eliminarphone = Telefono::where('telefono_id', $id)->delete();
+        // $Eliminarphone = Direccion::where('direccion_id', $id)->delete();
+        // $this->identificador = rand();
         // $servidorEliminar->delete();
     }
 }
