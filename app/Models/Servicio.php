@@ -9,9 +9,9 @@ class Servicio extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'fechaInicio',
-        'fechaVencimiento',
-        'fechaCorte',
+        'fechainicio',
+        'fechavencimiento',
+        'fechacorte',
         'tiposervicio',
         'condicionAntena',
         'mac',
