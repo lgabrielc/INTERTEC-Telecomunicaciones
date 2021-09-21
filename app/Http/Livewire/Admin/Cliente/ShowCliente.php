@@ -16,8 +16,6 @@ use Livewire\WithPagination;
 
 class ShowCliente extends Component
 {
-
-
     use WithPagination;
     public $sort = 'id';
     public $direction = 'desc';
@@ -98,13 +96,10 @@ class ShowCliente extends Component
     public function mount()
     {
         $this->totalcontar = Cliente::count();
-        // $this->fechaInicio = date('Y-m-d');
-        // $this->fechaVencimiento = date("Y-m-d", strtotime($this->fechaInicio . "+ 1 month"));
-        // $this->fechaCorte = date("Y-m-d", strtotime($this->fechaVencimiento . "+ 3 days"));
         $this->totalplanes = Plan::all();
         $this->totalestados = Estado::all();
         $this->totalantenas = Antena::all();
-        $this->totaldatacenters = DataCenter::where('estado_id', "=", '1')->get();
+        $this->totaldatacenters = DataCenter::where('estado_id', "=", '1');
     }
     public function order($sort)
     {
@@ -300,16 +295,6 @@ class ShowCliente extends Component
         $this->emit('cerrarModalCrear');
         $this->emit('alert', 'El cliente se creo satisfactoriamente');
     }
-    // public function actualizarfechas($value)
-    // {
-    //     // $this->fechainicio = date('Y-m-d');
-    //     $this->fechaVencimiento = date("Y-m-d", strtotime($value . "+ 1 month"));
-    //     $this->fechaCorte = date("Y-m-d", strtotime($this->fechaVencimiento . "+ 3 days"));
-    // }
-    // public function actualizarfechas2($value)
-    // {
-    //     $this->fechacorte = date("Y-m-d", strtotime($value . "+ 3 days"));
-    // }
     public function generarolts()
     {
         if (isset($this->datacenteride)) {
