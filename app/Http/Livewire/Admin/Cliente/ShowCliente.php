@@ -99,7 +99,8 @@ class ShowCliente extends Component
         $this->totalplanes = Plan::all();
         $this->totalestados = Estado::all();
         $this->totalantenas = Antena::all();
-        $this->totaldatacenters = DataCenter::where('estado_id', "=", '1');
+        $this->totaldatacenters = Datacenter::all();
+        // $this->totaldatacenters = DataCenter::where('estado_id', "=", '1');
     }
     public function order($sort)
     {
