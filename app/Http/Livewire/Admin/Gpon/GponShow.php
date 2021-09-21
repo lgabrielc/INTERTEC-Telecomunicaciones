@@ -24,8 +24,8 @@ class GponShow extends Component
 
     public function mount()
     {
+        $this->totaldatacenters = DataCenter::where('estado_id', "=", '1')->get();
         $this->totalcontar = Gpon::count();
-        $this->totaldatacenters = Datacenter::where('estado_id', "=", '1')->get();
         $this->totalolts = Olt::where('estado_id', "=", '1')->get();
         $this->estados = Estado::where('nombre', "=", 'Activo')->orwhere('nombre', "=", 'Deshabilitado')->get();
     }

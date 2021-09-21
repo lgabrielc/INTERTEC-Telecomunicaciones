@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Admin\Cliente;
 
+use App\Models\DataCenter;
 use App\Models\Antena;
 use App\Models\Cliente;
-use App\Models\Datacenter;
 use App\Models\Estado;
 use App\Models\Gpon;
 use App\Models\Olt;
