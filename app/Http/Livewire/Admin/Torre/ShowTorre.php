@@ -54,8 +54,8 @@ class ShowTorre extends Component
         $this->torreID = $this->torreEdit->id;
         $this->nombreEdit = $this->torreEdit->nombre;
         $this->dueñoEdit = $this->torreEdit->dueño;
-        $this->direccionEdit = $this->torreEdit->direccion[0]->direccion;
-        $this->telefonoEdit = $this->torreEdit->telefono[0]->numero;
+        $this->direccionEdit = $this->torreEdit->direccion;
+        $this->telefonoEdit = $this->torreEdit->numero;
         $this->mensualidadEdit = $this->torreEdit->mensualidad;
     }
     public function update()

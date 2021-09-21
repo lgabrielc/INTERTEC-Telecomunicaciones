@@ -150,9 +150,9 @@
                                                             Editar
                                                         </button>
                                                         <button
-                                                            wire:click="$emit('deletServidor', {{ $servidor->id }})"
+                                                            wire:click="$emit('cambiarestado', {{ $servidor->id }})"
                                                             type="button" class="btn btn-danger rounded-pill mx-1">
-                                                            Eliminar
+                                                            Cambiar estado
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -179,10 +179,10 @@
     </div>
     @include('livewire.admin.servidor.modaleditar')
     <script>
-        livewire.on('deletServidor', serverid => {
+        livewire.on('cambiarestado', serverid => {
             Swal.fire({
                 title: 'Estás seguro?',
-                text: "¡No podrás revertir esto!",
+                text: "¡Actualizaras el estado!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -190,11 +190,11 @@
                 confirmButtonText: '¡Sí, bórralo!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    @this.call('delete', serverid)
+                    @this.call('cambiarestado', serverid)
                     // Livewire.emitTo('ShowServidor', 'delete', serverid);
                     Swal.fire(
-                        'Deleted!',
-                        'El servidor ha sido eliminado.',
+                        'Actualizado!',
+                        'El servidor ha actualizado su estado.',
                         'success'
                     )
                 }

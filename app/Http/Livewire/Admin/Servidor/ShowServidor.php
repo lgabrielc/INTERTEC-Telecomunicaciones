@@ -101,15 +101,14 @@ class ShowServidor extends Component
             ->paginate($this->cant);
         return view('livewire.admin.servidor.show-servidor', compact('servidores'));
     }
-    public function delete($id)
+    public function cambiarestado($id)
     {
         $this->prueba = $id;
-        Servidor::where('id', $id)->delete();
-        $this->totalservidores = Servidor::count();
-        $this->identificador = rand();
-        $Eliminarphone = Telefono::where('telefono_id', $id)->where('telefono_type','App\Models\Torre')->delete();
-        $Eliminarphone = Direccion::where('direccion_id', $id)->where('direccion_type','App\Models\Torre')->delete();
-
-        // $servidorEliminar->delete();
+        $servidor = Servidor::where('id', $id)->get();
+        if ($servidor->estado_id == '1') {
+            Servidor::where('id', $id)->update(['estado_id' => 2]);
+        }else{
+            Servidor::where('id', $id)->update(['estado_id' => 1]);
+        }
     }
 }
