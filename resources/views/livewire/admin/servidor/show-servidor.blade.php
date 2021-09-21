@@ -105,6 +105,11 @@
                                                     IP Salida
                                                     <i class="fas fa-sort float-right mt-1"></i>
                                                 </th>
+                                                <th wire:click="order('estado_id')"
+                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                    Estado
+                                                    <i class="fas fa-sort float-right mt-1"></i>
+                                                </th>
                                                 <th
                                                     class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                     Acciones
@@ -139,6 +144,11 @@
                                                     <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
                                                         <p class="text-gray-900 whitespace-no-wrap">
                                                             {{ $servidor->ipSalida }}
+                                                        </p>
+                                                    </td>
+                                                    <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
+                                                        <p class="text-gray-900 whitespace-no-wrap">
+                                                            {{ $servidor->estado_id }}
                                                         </p>
                                                     </td>
                                                     <td
