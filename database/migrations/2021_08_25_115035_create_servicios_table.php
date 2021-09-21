@@ -15,9 +15,9 @@ class CreateServiciosTable extends Migration
     {
         Schema::create('servicios', function (Blueprint $table) {
             $table->id();
-            $table->date('fechainicio')->nullable()->default('');
-            $table->date('fechavencimiento')->nullable()->default('');
-            $table->date('fechacorte')->nullable()->default('');
+            $table->date('fechainicio')->nullable();
+            $table->date('fechavencimiento')->nullable();
+            $table->date('fechacorte')->nullable();
             $table->string('tiposervicio');
             //Por ver nullable
             $table->string('condicionAntena')->nullable();
