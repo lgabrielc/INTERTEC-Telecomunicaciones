@@ -101,14 +101,13 @@ class ShowServidor extends Component
             ->paginate($this->cant);
         return view('livewire.admin.servidor.show-servidor', compact('servidores'));
     }
-    public function cambiarestado($id)
+    public function cambiarestado(Servidor $servidor)
     {
-        $this->prueba = $id;
-        $servidor = Servidor::where('id', $id)->get();
-        if ($servidor->estado_id == '1') {
-            Servidor::where('id', $id)->update(['estado_id' => 2]);
+        $estadoservidor = $servidor->estado_id;
+        if ($estadoservidor == '1') {
+            Servidor::where('id', $servidor)->update(['estado_id' => '2']);
         }else{
-            Servidor::where('id', $id)->update(['estado_id' => 1]);
+            Servidor::where('id', $servidor)->update(['estado_id' => '1']);
         }
     }
 }
