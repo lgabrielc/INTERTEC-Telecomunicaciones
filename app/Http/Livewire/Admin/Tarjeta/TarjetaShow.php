@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Tarjeta;
 
-use App\Models\DataCenter;
+use App\Models\Datacenter;
 use App\Models\Estado;
 use App\Models\Olt;
 use App\Models\Tarjeta;

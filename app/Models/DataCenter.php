@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Datacenter extends Model
 {
     use HasFactory;
+    protected $table ='datacenters';
     protected $fillable = [
         'nombre',
         'ubicacion',
@@ -15,7 +16,6 @@ class Datacenter extends Model
         'encargado',
         'estado_id',
     ];
-    public $table = 'datacenters';
 
     //Relaccion uno a muchos olts
     public function olts()
