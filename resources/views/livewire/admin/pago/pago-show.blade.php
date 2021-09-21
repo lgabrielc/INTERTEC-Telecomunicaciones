@@ -208,15 +208,15 @@
                                             <td class="py-1 border-b border-gray-200 bg-white text-sm text-center">
 
                                                 @if (empty($cliente->pagos->first()))
-                                                <button wire:click="verservicioantena({{ $cliente->id }})" type="button"
+                                                <button wire:click="registrarprimerpago({{ $cliente->id }})" type="button"
                                                     class="btn btn-success rounded-pill mx-1 my-1" data-toggle="modal"
-                                                    data-target="#modalverservicioantena">
+                                                    data-target="#modalnuevopago">
                                                     Realizar Primer pago
                                                 </button>
                                                 @else
-                                                <button wire:click="agregarservicio({{ $cliente->id }})" type="button"
+                                                <button wire:click="registrarpago({{ $cliente->id }})" type="button"
                                                     class="btn btn-success rounded-pill mx-1 my-1" data-toggle="modal"
-                                                    data-target="#modalcrearservicio">
+                                                    data-target="#modalpago">
                                                     Realizar Pago
                                                 </button>
                                                 @endif
@@ -243,10 +243,9 @@
             </div>
         </div>
     </div>
-    {{-- @include('livewire.admin.cliente.modaleditar')
-    @include('livewire.admin.cliente.modalcrearservicio')
-    @include('livewire.admin.cliente.modalverserviciofibra')
-    @include('livewire.admin.cliente.modalverservicioantena')
+
+    @include('livewire.admin.pago.modalnuevopago')
+    @include('livewire.admin.pago.modalpago')
     <script>
         livewire.on('deletthis', deletID => {
             Swal.fire({
@@ -260,7 +259,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     @this.call('delete', deletID)
-                    // Livewire.emitTo('ShowServidor', 'delete', serverid);
+                    Livewire.emitTo('ShowServidor', 'delete', serverid);
                     Swal.fire(
                         'Deleted!',
                         'El Cli ha sido eliminado.',
@@ -271,26 +270,26 @@
         }); --}}
     </script>
     <script>
-        // window.livewire.on('cerrarModalCrear', () => {
-        //     $('#exampleModal').modal('hide');
-        // });
-        // window.livewire.on('cerrarModalCrearPlan', () => {
-        //     $('#modalcrearplan').modal('hide');
-        // });
-        // window.livewire.on('cerrarModalCrearServicio', () => {
-        //     $('#modalcrearservicio').modal('hide');
-        // });
-        // window.livewire.on('cerrarModalCrearTipoAntena', () => {
-        //     $('#modalcreartipoantena').modal('hide');
-        // });
-        // window.livewire.on('cerrarModalVerServicioAntena', () => {
-        //     $('#updateModal').modal('hide');
-        // });
-        // window.livewire.on('cerrarModalVerServicioFibra', () => {
-        //     $('#updateModal').modal('hide');
-        // });
-        // window.livewire.on('cerrarModalEditar', () => {
-        //     $('#updateModal').modal('hide');
+        window.livewire.on('cerrarModalCrear', () => {
+            $('#exampleModal').modal('hide');
+        });
+        window.livewire.on('cerrarModalCrearPlan', () => {
+            $('#modalcrearplan').modal('hide');
+        });
+        window.livewire.on('cerrarModalCrearServicio', () => {
+            $('#modalcrearservicio').modal('hide');
+        });
+        window.livewire.on('cerrarModalCrearTipoAntena', () => {
+            $('#modalcreartipoantena').modal('hide');
+        });
+        window.livewire.on('cerrarModalVerServicioAntena', () => {
+            $('#updateModal').modal('hide');
+        });
+        window.livewire.on('cerrarModalVerServicioFibra', () => {
+            $('#updateModal').modal('hide');
+        });
+        window.livewire.on('cerrarModalEditar', () => {
+            $('#updateModal').modal('hide');
         });
     </script>
 </div>

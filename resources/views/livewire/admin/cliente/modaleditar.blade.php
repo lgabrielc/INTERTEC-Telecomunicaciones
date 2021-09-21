@@ -3,7 +3,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Editar Torre</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Editar Cliente</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -13,20 +13,32 @@
                     <div class="form-group">
                         <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Nombre * </label>
                         <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                            placeholder="Ejm: Castiel Luis" wire:model.defer="EditarNombre">
+                             wire:model.defer="EditarNombre">
                         @error('EditarNombre') <span class="text-danger error">{{ $message }}</span>@enderror
                     </div>
                     <div class="form-group">
                         <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Apellido * </label>
                         <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                            wire:model.defer="EditarApellido" placeholder="Ejm: Torres Castro">
+                            wire:model.defer="EditarApellido" >
                         @error('EditarApellido') <span class="text-danger error">{{ $message }}</span>@enderror
                     </div>
                     <div class="form-group">
                         <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">DNI * </label>
                         <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                            wire:model.defer="EditarDNI" placeholder="Ejm: 1597532">
+                            wire:model.defer="EditarDNI" >
                         @error('EditarDNI') <span class="text-danger error">{{ $message }}</span>@enderror
+                    </div>
+                    <div class="form-group">
+                        <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Direccion * </label>
+                        <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
+                            wire:model.defer="EditarDireccion">
+                        @error('EditarDireccion') <span class="text-danger error">{{ $message }}</span>@enderror
+                    </div>
+                    <div class="form-group">
+                        <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Telefono * </label>
+                        <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
+                            wire:model.defer="EditarTelefono">
+                        @error('EditarTelefono') <span class="text-danger error">{{ $message }}</span>@enderror
                     </div>
                     <div class="form-group">
                         <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Correo (Opcional)</label>

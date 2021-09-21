@@ -13,6 +13,8 @@ class Torre extends Model
         'nombre',
         'dueño',
         'mensualidad',
+        'direccion',
+        'telefono',
         'estado_id',
      ];
     //Relaccion uno a muchos
@@ -21,13 +23,13 @@ class Torre extends Model
     }
 
     //Relacion 1 a 1 polimorfica con direccion
-    public function direccion(){
-        return $this->morphMany('App\Models\Direccion','direccion');
-    }
-    //Relacion uno a muchos polimorfica con telefono
-    public function telefono(){
-        return $this->morphMany('App\Models\Telefono','telefono');
-    }    
+    // public function direccion(){
+    //     return $this->morphMany('App\Models\Direccion','direccion');
+    // }
+    // //Relacion uno a muchos polimorfica con telefono
+    // public function telefono(){
+    //     return $this->morphMany('App\Models\Telefono','telefono');
+    // }    
     public function estado()
     {
         return $this->belongsTo('App\Models\Estado', 'estado_id', 'id');

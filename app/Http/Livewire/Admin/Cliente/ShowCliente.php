@@ -24,7 +24,7 @@ class ShowCliente extends Component
     public $tiposervicio, $VerServicio, $condicionAntena;
     public $search, $totalcontar, $totalestados, $totalplanes, $totalantenas, $totaldatacenters;
     //Editar Cliente
-    public $EditarCliente, $EditarNombre, $EditarID, $EditarApellido, $EditarDNI, $EditarCorreo;
+    public $EditarCliente, $EditarNombre, $EditarID, $EditarApellido, $EditarDNI, $EditarCorreo,$EditarDireccion,$EditarTelefono;
     //Agregar Servicio
     public $AgregarServicio, $planid, $IDClienteServicio, $NombreClienteServicio, $ApellidoClienteServicio, $estado_id;
     public $condicionantena, $mac, $ip, $frecuencia, $antenaid;
@@ -32,7 +32,7 @@ class ShowCliente extends Component
     public $gponrelacionado, $clientegpon, $estado, $plannuevo, $olttarjetarelacionado, $tarjetagponrelacionado, $gponnaprelacionado;
     public $datacenterid, $datacenterselect, $oltid, $tarjetaid, $gponid, $napid;
     //Datos Cliente
-    public $nombre, $apellido, $dni, $correo;
+    public $nombre, $apellido, $dni, $correo, $direccion, $telefono;
     //Agregar Plan
     public $NombrePlan, $VelocidadDescarga, $VelocidadSubida, $PrecioPlan;
     public $isDisabled = true;
@@ -44,15 +44,18 @@ class ShowCliente extends Component
         'nombre' => 'required|min:5|max:50',
         'apellido' => 'required|min:3|max:50',
         'dni' => 'required|size:8',
+        'direccion' => 'required|min:3|max:50',
+        'telefono' => 'required|min:7|max:20',
         'correo' => 'nullable|email|min:3|max:30',
+
     ];
 
     public function cambiartipodeservicio()
     {
-        if ($$tiposervicio == 'Antena') {
-            $this->reset('gponrelacionado', 'clientegpon', 'gponrelacionado', 'datacenterid', 'oltid', 'tarjetaid', 'gponid', 'napid','plannuevo');
+        if ($this->tiposervicio == 'Antena') {
+            $this->reset('gponrelacionado', 'clientegpon', 'gponrelacionado', 'datacenterid', 'oltid', 'tarjetaid', 'gponid', 'napid', 'plannuevo');
         } else {
-            $this->reset('condicionantena', 'mac', 'ip', 'frecuencia', 'antenaid','plannuevo');
+            $this->reset('condicionantena', 'mac', 'ip', 'frecuencia', 'antenaid', 'plannuevo');
         }
     }
 
@@ -122,6 +125,8 @@ class ShowCliente extends Component
         $this->EditarNombre = $this->EditarCliente->nombre;
         $this->EditarApellido = $this->EditarCliente->apellido;
         $this->EditarDNI = $this->EditarCliente->dni;
+        $this->EditarDireccion = $this->EditarCliente->direccion;
+        $this->EditarTelefono = $this->EditarCliente->telefono;
         $this->EditarCorreo = $this->EditarCliente->correo;
     }
     public function saveplan()
@@ -259,7 +264,9 @@ class ShowCliente extends Component
             'EditarNombre' => 'required|min:5|max:50',
             'EditarApellido' => 'required|min:5|max:50',
             'EditarDNI' => 'required|size:8',
-            'EditarCorreo' => 'required|email|min:3|max:30',
+            'EditarDireccion' => 'required|min:3|max:50',
+            'EditarTelefono' => 'required|min:7|max:20',
+            'EditarCorreo' => 'nullable|email|min:3|max:30',
         ]);
         if ($this->EditarID) {
             $updAntena = Cliente::find($this->EditarID);
@@ -267,6 +274,8 @@ class ShowCliente extends Component
                 'nombre' => $this->EditarNombre,
                 'apellido' => $this->EditarApellido,
                 'dni' => $this->EditarDNI,
+                'direccion' => $this->EditarDireccion,
+                'telefono' => $this->EditarTelefono,
                 'correo' => $this->EditarCorreo,
             ]);
         }
@@ -281,11 +290,13 @@ class ShowCliente extends Component
             'nombre' => $this->nombre,
             'apellido' => $this->apellido,
             'dni' => $this->dni,
+            'direccion' => $this->direccion,
+            'telefono' => $this->telefono,
             'correo' => $this->correo,
         ]);
 
         $this->totalcontar = Cliente::count();
-        $this->reset(['nombre', 'apellido', 'dni', 'correo']);
+        $this->reset(['nombre', 'apellido', 'dni', 'correo', 'direccion', 'telefono']);
         $this->emit('cerrarModalCrear');
         $this->emit('alert', 'El cliente se creo satisfactoriamente');
     }

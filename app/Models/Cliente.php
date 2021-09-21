@@ -12,6 +12,8 @@ class Cliente extends Model
         'nombre',
         'apellido',
         'dni',
+        'direccion',
+        'telefono',
         'correo'
      ];
     public $table = 'clientes';
@@ -24,11 +26,11 @@ class Cliente extends Model
         return $this->hasMany('App\Models\Pago');
     }
     //Relacion 1 a 1 polimorfica con direccion
-    public function direccion(){
-        return $this->morphOne('App\Models\Direccion','direcciones');
-    }
+    // public function direccion(){
+    //     return $this->morphOne('App\Models\Direccion','direcciones');
+    // }
     //Relacion uno a muchos polimorfica con telefono
-    public function telefono(){
-        return $this->morphMany('App\Models\Telefono','telefono');
-    }
+    // public function telefono(){
+    //     return $this->morphMany('App\Models\Telefono','telefono');
+    // }
 }

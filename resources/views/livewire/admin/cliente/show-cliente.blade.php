@@ -119,17 +119,27 @@
                                                 Nombre
                                                 <i class="fas fa-sort float-right mt-1"></i>
                                             </th>
-                                            <th wire:click="order('dueño')"
+                                            <th wire:click="order('apellido')"
                                                 class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 Apellido
                                                 <i class="fas fa-sort float-right mt-1"></i>
                                             </th>
-                                            <th wire:click="order('pago')"
+                                            <th wire:click="order('dni')"
                                                 class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 DNI
                                                 <i class="fas fa-sort float-right mt-1"></i>
                                             </th>
+                                            <th wire:click="order('direccion')"
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Direccion
+                                                <i class="fas fa-sort float-right mt-1"></i>
+                                            </th>
                                             <th wire:click="order('telefono')"
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Telefono
+                                                <i class="fas fa-sort float-right mt-1"></i>
+                                            </th>
+                                            <th wire:click="order('correo')"
                                                 class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 Correo
                                                 <i class="fas fa-sort float-right mt-1"></i>
@@ -162,6 +172,14 @@
                                             <td class="py-1 border-b border-gray-200 bg-white text-sm text-center">
                                                 <p class="text-gray-900 whitespace-no-wrap">
                                                     {{ $cliente->dni }}</p>
+                                            </td>
+                                            <td class="py-1 border-b border-gray-200 bg-white text-sm text-center">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $cliente->direccion }}</p>
+                                            </td>
+                                            <td class="py-1 border-b border-gray-200 bg-white text-sm text-center">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $cliente->telefono }}</p>
                                             </td>
                                             <td class="py-1 border-b border-gray-200 bg-white text-sm text-center">
                                                 <p class="text-gray-900 whitespace-no-wrap">

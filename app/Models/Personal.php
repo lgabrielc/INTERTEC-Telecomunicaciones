@@ -21,11 +21,11 @@ class Personal extends Model
         return $this->belongsTo('App\Models\User','user_id','id');
     }
     //Relacion 1 a 1 polimorfica con direccion
-    public function direccion(){
-        return $this->morphOne('App\Models\Direccion','direcciones');
-    }
-    //Relacion uno a muchos polimorfica con telefono
-    public function telefono(){
-        return $this->morphMany('App\Models\Telefono','telefono');
-    }    
+    // public function direccion(){
+    //     return $this->morphOne('App\Models\Direccion','direcciones');
+    // }
+    // //Relacion uno a muchos polimorfica con telefono
+    // public function telefono(){
+    //     return $this->morphMany('App\Models\Telefono','telefono');
+    // }    
 }

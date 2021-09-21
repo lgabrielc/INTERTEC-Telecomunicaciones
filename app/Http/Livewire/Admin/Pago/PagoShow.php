@@ -14,11 +14,40 @@ class PagoShow extends Component
     public $sort = 'id';
     public $search, $totalestados, $totalplanes, $totalantenas, $totaldatacenters;
     public $clientesactivos, $clientesvencidos, $clientescortesinejecutar, $clientesejecutados;
+    public $cliente, $fechainicio, $fechavencimiento, $fechacorte, $monto, $nombre, $apellido;
     public $direction = 'desc';
     public $cant = '5';
     public $open = false;
+    public $disable=false;
 
-
+    public function doubleClick()
+    {
+        $this->disable = 'false';
+    }
+    public function actualizarfechas($value)
+    {
+        // $this->fechainicio = date('Y-m-d');
+        $this->fechavencimiento = date("Y-m-d", strtotime($value . "+ 1 month"));
+        $this->fechacorte = date("Y-m-d", strtotime($this->fechavencimiento . "+ 3 days"));
+    }
+    public function actualizarfechas2($value)
+    {
+        $this->fechacorte = date("Y-m-d", strtotime($value . "+ 3 days"));
+    }
+    public function registrarprimerpago(Servicio $servicio)
+    {
+        $this->reset('fechainicio', 'fechavencimiento', 'fechacorte');
+        $this->fechainicio = date('Y-m-d');
+        $this->fechavencimiento = date("Y-m-d", strtotime($this->fechainicio . "+ 1 month"));
+        $this->fechacorte = date("Y-m-d", strtotime($this->fechavencimiento . "+ 3 days"));
+        $this->servicio = $servicio;
+        $this->nombre = $this->servicio->cliente->nombre;
+        $this->apellido = $this->servicio->cliente->apellido;
+        $this->monto = $this->servicio->plan->precio;
+    }
+    public function registrarpago(Cliente $cliente)
+    {
+    }
     public function mount()
     {
         $this->clientesactivos = Servicio::where('estado_id', "=", '1')->count();
@@ -44,7 +73,7 @@ class PagoShow extends Component
     }
     public function render()
     {
-        $clientes = Cliente::join("servicios","servicios.cliente_id","=","clientes.id")->select("clientes.nombre","servicios.tiposervicio","servicios.id","clientes.apellido","clientes.dni")->paginate($this->cant);
+        $clientes = Cliente::join("servicios", "servicios.cliente_id", "=", "clientes.id")->select("clientes.nombre", "servicios.tiposervicio", "servicios.id", "clientes.apellido", "clientes.dni")->paginate($this->cant);
         // $clientes = Servicio::where('nombre', 'like', '%' . $this->search . '%')
         //     ->orwhere('apellido', 'like', '%' . $this->search . '%')
         //     ->orwhere('dni', 'like', '%' . $this->search . '%')

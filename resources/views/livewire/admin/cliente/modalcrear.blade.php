@@ -33,6 +33,18 @@
                     @error('dni') <span class="text-danger error">{{ $message }}</span>@enderror
                 </div>
                 <div class="form-group">
+                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Direccion * </label>
+                    <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
+                        wire:model.defer="direccion" placeholder="Ejm: Noveno Gr.1 Lt.10">
+                    @error('direccion') <span class="text-danger error">{{ $message }}</span>@enderror
+                </div>
+                <div class="form-group">
+                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Telefono * </label>
+                    <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
+                        wire:model.defer="telefono" placeholder="Ejm: 985652369">
+                    @error('telefono') <span class="text-danger error">{{ $message }}</span>@enderror
+                </div>
+                <div class="form-group">
                     <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Correo (Opcional)</label>
                     <input type="email" class="block text-sm py-3 px-4 rounded w-full border outline-none"
                         wire:model.defer="correo" placeholder="Ejm: CastielC@hotmail.com">

@@ -18,6 +18,8 @@ class CreateTorresTable extends Migration
             $table->string('nombre');
             $table->string('dueño');
             $table->float('mensualidad');
+            $table->string('direccion');
+            $table->string('telefono');
             $table->unsignedBigInteger('estado_id');
             $table->foreign('estado_id')->references('id')->on('estados');
             $table->timestamps();
