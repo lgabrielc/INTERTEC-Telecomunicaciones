@@ -153,17 +153,13 @@
                                                     </td>
                                                     <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
                                                         <p class="text-gray-900 whitespace-no-wrap">
-                                                            @foreach ($torre->telefono as $numero)
-                                                                {{ $numero->numero }}
-                                                            @endforeach
+                                                            {{ $torre->telefono }}
 
                                                         </p>
                                                     </td>
                                                     <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
                                                         <p class="text-gray-900 whitespace-no-wrap">
-                                                            @foreach ($torre->direccion as $direccion)
-                                                                {{ $direccion->direccion }}
-                                                            @endforeach
+                                                            {{ $torre->direccion }}
                                                         </p>
                                                     </td>
                                                     <td
