@@ -20,7 +20,7 @@ class TarjetaShow extends Component
     public function mount()
     {
         //Sirven para crear un nuevo
-        $this->totaldatacenters = DataCenter::where('estado_id', "=", '1')->get();
+        $this->totaldatacenters = Datacenter::where('estado_id', "=", '1')->get();
         $this->totalolts = Olt::where('estado_id', "=", '1')->get();
         //Finn
         $this->estados = Estado::where('nombre', "=", 'Activo')->orwhere('nombre', "=", 'Deshabilitado')->get();

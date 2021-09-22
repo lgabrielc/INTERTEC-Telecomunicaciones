@@ -21,7 +21,7 @@ class OltShow extends Component
     public function mount()
     {
         $this->totalcontar = Olt::count();
-        $this->totaldatacenters = DataCenter::where('estado_id', "=", '1')->get();
+        $this->totaldatacenters = Datacenter::where('estado_id', "=", '1')->get();
         $this->estados = Estado::where('nombre', "=", 'Activo')->orwhere('nombre', "=", 'Deshabilitado')->get();
     }
     public function save()

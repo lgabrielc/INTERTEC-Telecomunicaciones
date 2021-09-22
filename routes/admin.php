@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\AntenaController;
 use App\Http\Controllers\Admin\ClienteController;
-use App\Http\Controllers\Admin\DataCenterController;
+use App\Http\Controllers\Admin\DatacenterController;
 use App\Http\Controllers\Admin\GponController;
 use App\Http\Controllers\Admin\NapController;
 use App\Http\Controllers\Admin\OltController;
@@ -28,7 +28,7 @@ Route::resource('torre', TorreController::class);
 
 Route::resource('servidor', ServidorController::class);
 
-Route::resource('datacenter', DataCenterController::class);
+Route::resource('datacenter', DatacenterController::class);
 
 Route::resource('olt', OltController::class);
 
