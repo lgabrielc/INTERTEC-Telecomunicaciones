@@ -26,9 +26,9 @@ Route::resource('tipoantena', TipoAntenaController::class);
 
 Route::resource('torre', TorreController::class);
 
-Route::resource('servidor', ServidorController::class);
-
 Route::resource('datacenter', DatacenterController::class);
+
+Route::resource('servidor', ServidorController::class);
 
 Route::resource('olt', OltController::class);
 

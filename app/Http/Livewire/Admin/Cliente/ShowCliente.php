@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Http\Livewire\Admin\Cliente;
-
-use App\Models\Datacenter;
 use App\Models\Antena;
 use App\Models\Cliente;
+use App\Models\Datacenter;
 use App\Models\Estado;
 use App\Models\Gpon;
 use App\Models\Olt;
@@ -99,7 +98,7 @@ class ShowCliente extends Component
         $this->totalplanes = Plan::all();
         $this->totalestados = Estado::all();
         $this->totalantenas = Antena::all();
-        $this->totaldatacenters = Datacenter::where('estado_id', "=", '1');
+        $this->totaldatacenters = Datacenter::where('estado_id', "=", '1')->get();
     }
     public function order($sort)
     {
