@@ -43,6 +43,7 @@ class PagoShow extends Component
             'user_id' => $this->user_id,
         ]);
     }
+    // no sirve
     public function doubleClick()
     {
         $this->disable = 'false';
