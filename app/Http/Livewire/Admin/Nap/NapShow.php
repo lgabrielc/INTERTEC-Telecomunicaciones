@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Nap;
 
-use App\Models\Datacenter;
+use App\Models\DataCenter;
 use App\Models\Estado;
 use App\Models\Gpon;
 use App\Models\Nap;
@@ -28,7 +28,7 @@ class NapShow extends Component
     public function mount()
     {
         $this->totalcontar = Nap::count();
-        $this->totaldatacenters = Datacenter::where('estado_id', "=", '1')->get();
+        $this->totaldatacenters = DataCenter::where('estado_id', "=", '1')->get();
         $this->estados = Estado::where('nombre', "=", 'Activo')->orwhere('nombre', "=", 'Deshabilitado')->get();
     }
     public function save()
@@ -98,7 +98,7 @@ class NapShow extends Component
             $this->datacenterid = $this->datacenteride;
         }
         if (is_numeric($this->datacenterid)) {
-            $this->datacenterselect = Datacenter::find($this->datacenterid);
+            $this->datacenterselect = DataCenter::find($this->datacenterid);
             $this->reset('tarjetaid', 'oltid', 'olttarjetarelacionado', 'tarjetagponrelacionado', 'oltidnuevo', 'tarjetaidnuevo');
         } else {
             // $this->reset('oltid', 'tarjetaid', 'datacenterid', 'olttarjetarelacionado', 'tarjetagponrelacionado');

@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Tarjeta;
 
-use App\Models\Datacenter;
+use App\Models\Centrodato;
 use App\Models\Estado;
 use App\Models\Olt;
 use App\Models\Tarjeta;
@@ -20,7 +20,7 @@ class TarjetaShow extends Component
     public function mount()
     {
         //Sirven para crear un nuevo
-        $this->totaldatacenters = Datacenter::where('estado_id', "=", '1')->get();
+        $this->totaldatacenters = Centrodato::where('estado_id', "=", '1')->get();
         $this->totalolts = Olt::where('estado_id', "=", '1')->get();
         //Finn
         $this->estados = Estado::where('nombre', "=", 'Activo')->orwhere('nombre', "=", 'Deshabilitado')->get();
@@ -28,7 +28,7 @@ class TarjetaShow extends Component
     public function generarolts()
     {
         if (is_numeric($this->datacenteride)) {
-            $dataselect = DataCenter::find($this->datacenteride);
+            $dataselect = Centrodato::find($this->datacenteride);
             $this->datacenterselect = $dataselect;
         } else {
             $this->datacenterselect = null;

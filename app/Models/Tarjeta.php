@@ -21,7 +21,6 @@ class Tarjeta extends Model
     {
         return $this->belongsTo('App\Models\Olt');
     }
-
     public function gpons()
     {
         return $this->hasMany('App\Models\Gpon');

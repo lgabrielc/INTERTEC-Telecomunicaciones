@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Datacenter extends Model
+class Centrodato extends Model
 {
     use HasFactory;
-    protected $table = 'datacenters';
+    public $table ='centrodatos';
     protected $fillable = [
         'nombre',
         'ubicacion',

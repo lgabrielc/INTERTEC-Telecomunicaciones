@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\AntenaController;
+use App\Http\Controllers\Admin\CentrodatosController;
 use App\Http\Controllers\Admin\ClienteController;
-use App\Http\Controllers\Admin\DatacenterController;
 use App\Http\Controllers\Admin\GponController;
 use App\Http\Controllers\Admin\NapController;
 use App\Http\Controllers\Admin\OltController;
@@ -26,7 +26,7 @@ Route::resource('tipoantena', TipoAntenaController::class);
 
 Route::resource('torre', TorreController::class);
 
-Route::resource('datacenter', DatacenterController::class);
+Route::resource('datacenter', CentrodatosController::class);
 
 Route::resource('servidor', ServidorController::class);
 

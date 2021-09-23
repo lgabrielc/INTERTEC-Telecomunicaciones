@@ -13,15 +13,15 @@ class Olt extends Model
         'slots',
         'modelo',
         'marca',
-        'datacenter_id',
+        'centrodato_id',
         'estado_id',
     ];
     public $table = 'olts';
 
     //Relacion con Datacenter uno a muchos inversa
-    public function datacenter()
+    public function centrodato()
     {
-        return $this->belongsTo('App\Models\Datacenter','datacenter_id','id');
+        return $this->belongsTo('App\Models\Centrodato','datacenter_id','id');
     }
     //Relacion con Tarjetas uno a muchos inversa
     public function tarjetas()

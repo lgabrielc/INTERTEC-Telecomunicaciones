@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Datacenter;
 
-use App\Models\Datacenter;
+use App\Models\Centrodato;
 use App\Models\Estado;
 use Livewire\WithPagination;
 use Livewire\Component;
@@ -18,7 +18,7 @@ class DatacenterShow extends Component
 
     public function mount()
     {
-        $this->totaldatacenters = Datacenter::count();
+        $this->totaldatacenters = Centrodato::count();
         $this->estados = Estado::where('nombre',"=" ,'Activo')->orwhere('nombre',"=" ,'Deshabilitado')->get();
     }
     public function resetcampos()
@@ -38,20 +38,20 @@ class DatacenterShow extends Component
             'estado_id' => 'required',
         ]);
 
-        $NewDatacenter = Datacenter::create([
+        $NewDatacenter = Centrodato::create([
             'nombre' => $this->nombre,
             'ubicacion' => $this->ubicacion,
             'direccion' => $this->direccion,
             'encargado' => $this->encargado,
             'estado_id' => $this->estado_id,
         ]);
-        $this->totaldatacenters = Datacenter::count();
+        $this->totaldatacenters = Centrodato::count();
         $this->reset(['nombre', 'ubicacion', 'direccion', 'encargado', 'estado_id']);
         $this->emit('cerrarModalCrearDataCenter');
         $this->emit('alert', 'El DataCenter se creo satisfactoriamente');
     }
 
-    public function edit(Datacenter $dataCenter)
+    public function edit(Centrodato $dataCenter)
     {
         $this->DataCenterEdit = $dataCenter;
         $this->datacenterid = $this->DataCenterEdit->id;
@@ -72,7 +72,7 @@ class DatacenterShow extends Component
         ]);
 
         if ($this->datacenterid) {
-            $updDataCenter = Datacenter::find($this->datacenterid);
+            $updDataCenter = Centrodato::find($this->datacenterid);
             $updDataCenter->update([
                 'nombre' => $this->nombre,
                 'ubicacion' => $this->ubicacion,
@@ -91,7 +91,7 @@ class DatacenterShow extends Component
     public function cambiarestado($id)
     {
 
-        $actualizardatacenter = Datacenter::find($id);
+        $actualizardatacenter = Centrodato::find($id);
         if ($actualizardatacenter->estado_id == '1') {
             $this->estado_id = '2';
             $actualizardatacenter->update(['estado_id' => $this->estado_id]);
@@ -115,13 +115,12 @@ class DatacenterShow extends Component
     }
     public function render()
     {
-        $datacenters = Datacenter::where('nombre', 'like', '%' . $this->search . '%')
+        $datacenters = Centrodato::where('nombre', 'like', '%' . $this->search . '%')
             ->orwhere('ubicacion', 'like', '%' . $this->search . '%')
             ->orwhere('direccion', 'like', '%' . $this->search . '%')
             ->orwhere('encargado', 'like', '%' . $this->search . '%')
             ->orderBy($this->sort, $this->direction)
             ->paginate($this->cant);
-
         return view('livewire.admin.datacenter.datacenter-show', compact('datacenters'));
     }
 }

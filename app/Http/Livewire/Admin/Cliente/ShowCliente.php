@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Livewire\Admin\Cliente;
+
 use App\Models\Antena;
 use App\Models\Cliente;
-use App\Models\Datacenter;
+use App\Models\Centrodato;
 use App\Models\Estado;
 use App\Models\Gpon;
 use App\Models\Olt;
@@ -21,7 +22,7 @@ class ShowCliente extends Component
     public $tiposervicio, $VerServicio, $condicionAntena;
     public $search, $totalcontar, $totalestados, $totalplanes, $totalantenas, $totaldatacenters;
     //Editar Cliente
-    public $EditarCliente, $EditarNombre, $EditarID, $EditarApellido, $EditarDNI, $EditarCorreo,$EditarDireccion,$EditarTelefono;
+    public $EditarCliente, $EditarNombre, $EditarID, $EditarApellido, $EditarDNI, $EditarCorreo, $EditarDireccion, $EditarTelefono;
     //Agregar Servicio
     public $AgregarServicio, $planid, $IDClienteServicio, $NombreClienteServicio, $ApellidoClienteServicio, $estado_id;
     public $condicionantena, $mac, $ip, $frecuencia, $antenaid;
@@ -46,7 +47,15 @@ class ShowCliente extends Component
         'correo' => 'nullable|email|min:3|max:30',
 
     ];
-
+    public function mount()
+    {
+        $this->totalcontar = Cliente::count();
+        $this->totalplanes = Plan::all();
+        $this->totalestados = Estado::all();
+        $this->totalantenas = Antena::all();
+        $this->totaldatacenters = Centrodato::where('estado_id', "=", '1')->get();
+        // $this->totaldatacenters = Centrodato::all();
+    }
     public function cambiartipodeservicio()
     {
         if ($this->tiposervicio == 'Antena') {
@@ -92,14 +101,7 @@ class ShowCliente extends Component
             $this->reset('tarjetaid');
         }
     }
-    public function mount()
-    {
-        $this->totalcontar = Cliente::count();
-        $this->totalplanes = Plan::all();
-        $this->totalestados = Estado::all();
-        $this->totalantenas = Antena::all();
-        $this->totaldatacenters = Datacenter::where('estado_id', "=", '1')->get();
-    }
+
     public function order($sort)
     {
         if ($sort == $this->sort) {
@@ -247,7 +249,7 @@ class ShowCliente extends Component
         $this->gponid = $this->VerServicio->servicio->nap->gpon->nombre;
         $this->tarjetaid = $this->VerServicio->servicio->nap->gpon->tarjeta->nombre;
         $this->oltid = $this->VerServicio->servicio->nap->gpon->tarjeta->olt->nombre;
-        $this->datacenterid = $this->VerServicio->servicio->nap->gpon->tarjeta->olt->datacenter->nombre;
+        $this->datacenterid = $this->VerServicio->servicio->nap->gpon->tarjeta->olt->centrodato->nombre;
         //FIN
         $this->planid = $this->VerServicio->servicio->plan->nombre;
         $this->estado_id = $this->VerServicio->servicio->estado->nombre;
@@ -300,7 +302,7 @@ class ShowCliente extends Component
             $this->datacenterid = $this->datacenteride;
         }
         if (is_numeric($this->datacenterid)) {
-            $this->datacenterselect = Datacenter::find($this->datacenterid);
+            $this->datacenterselect = Centrodato::find($this->datacenterid);
             $this->reset('tarjetaid', 'oltid', 'olttarjetarelacionado', 'tarjetagponrelacionado');
         } else {
             $this->reset('oltid', 'tarjetaid', 'datacenterid', 'olttarjetarelacionado', 'tarjetagponrelacionado');

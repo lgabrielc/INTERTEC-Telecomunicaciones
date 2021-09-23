@@ -20,9 +20,9 @@ class Estado extends Model
         return $this->hasMany('App\Models\Servicio');
     }
 
-    public function datacenters()
+    public function centrodatos()
     {
-        return $this->hasMany('App\Models\Datacenter');
+        return $this->hasMany('App\Models\Centrodatos');
     }
     public function olts()
     {

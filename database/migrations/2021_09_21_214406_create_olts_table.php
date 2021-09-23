@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDatacentersTable extends Migration
+class CreateOltsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateDatacentersTable extends Migration
      */
     public function up()
     {
-        Schema::create('datacenters', function (Blueprint $table) {
+        Schema::create('olts', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('ubicacion');
-            $table->string('direccion');
-            $table->string('encargado')->nullable();
+            $table->integer('slots');
+            $table->string('modelo');
+            $table->string('marca');
+            $table->unsignedBigInteger('centrodato_id')->nullable();
+            $table->foreign('centrodato_id')->references('id')->on('centrodatos')->delete('cascade');
             $table->unsignedBigInteger('estado_id');
             $table->foreign('estado_id')->references('id')->on('estados');
             $table->timestamps();
@@ -32,6 +34,6 @@ class CreateDatacentersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('datacenters');
+        Schema::dropIfExists('olts');
     }
 }

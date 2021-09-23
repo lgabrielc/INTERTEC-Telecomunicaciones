@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOltsTable extends Migration
+class CreateNapsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,16 @@ class CreateOltsTable extends Migration
      */
     public function up()
     {
-        Schema::create('olts', function (Blueprint $table) {
+        Schema::create('naps', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->integer('slots');
-            $table->string('modelo');
-            $table->string('marca');
-            $table->unsignedBigInteger('datacenter_id')->nullable();
-            $table->foreign('datacenter_id')->references('id')->on('datacenters')->delete('cascade');
-            
+            $table->integer('slots')->nullable();
+            $table->unsignedBigInteger('gpon_id')->nullable();
+            $table->foreign('gpon_id')->references('id')->on('gpons')->delete('cascade');
             $table->unsignedBigInteger('estado_id');
             $table->foreign('estado_id')->references('id')->on('estados');
             $table->timestamps();
+
         });
     }
 
@@ -35,6 +33,6 @@ class CreateOltsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('olts');
+        Schema::dropIfExists('naps');
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Admin\Pago;
 
 use App\Models\Cliente;
-use App\Models\Datacenter;
+use App\Models\DataCenter;
 use App\Models\Estado;
 use App\Models\Servicio;
 use Livewire\Component;
@@ -58,7 +58,7 @@ class PagoShow extends Component
         // $this->totalplanes = Plan::all();
         $this->totalestados = Estado::all();
         // $this->totalantenas = Antena::all();
-        $this->totaldatacenters = Datacenter::where('estado_id', "=", '1')->get();
+        $this->totaldatacenters = DataCenter::where('estado_id', "=", '1')->get();
     }
     public function order($sort)
     {

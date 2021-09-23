@@ -37,6 +37,7 @@ class CreateServiciosTable extends Migration
             $table->foreign('antena_id')->references('id')->on('antenas');
             $table->foreign('plan_id')->references('id')->on('planes');
             $table->timestamps();
+
         });
     }
 

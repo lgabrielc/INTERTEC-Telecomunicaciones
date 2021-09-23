@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Gpon;
 
-use App\Models\Datacenter;
+use App\Models\Centrodato;
 use App\Models\Estado;
 use App\Models\Gpon;
 use App\Models\Olt;
@@ -24,7 +24,7 @@ class GponShow extends Component
 
     public function mount()
     {
-        $this->totaldatacenters = Datacenter::where('estado_id', "=", '1')->get();
+        $this->totaldatacenters = Centrodato::where('estado_id', "=", '1')->get();
         $this->totalcontar = Gpon::count();
         $this->totalolts = Olt::where('estado_id', "=", '1')->get();
         $this->estados = Estado::where('nombre', "=", 'Activo')->orwhere('nombre', "=", 'Deshabilitado')->get();
@@ -36,7 +36,7 @@ class GponShow extends Component
             $this->datacenterid = $this->datacenteride;
         }
         if (is_numeric($this->datacenterid)) {
-            $this->datacenterselect = Datacenter::find($this->datacenterid);
+            $this->datacenterselect = Centrodato::find($this->datacenterid);
             $this->reset('tarjetaid', 'oltid', 'olttarjetarelacionado', 'tarjetagponrelacionado', 'oltidnuevo', 'tarjetaidnuevo');
         } else {
             $this->reset('oltid', 'tarjetaid', 'datacenterid', 'olttarjetarelacionado', 'tarjetagponrelacionado');

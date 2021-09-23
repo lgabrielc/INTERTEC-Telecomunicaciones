@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNapsTable extends Migration
+class CreateCentrodatosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateNapsTable extends Migration
      */
     public function up()
     {
-        Schema::create('naps', function (Blueprint $table) {
+        Schema::create('centrodatos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->integer('slots')->nullable();
-            $table->unsignedBigInteger('gpon_id')->nullable();
-            $table->foreign('gpon_id')->references('id')->on('gpons')->delete('cascade');
-            
+            $table->string('ubicacion');
+            $table->string('direccion');
+            $table->string('encargado')->nullable();
             $table->unsignedBigInteger('estado_id');
             $table->foreign('estado_id')->references('id')->on('estados');
             $table->timestamps();
@@ -33,6 +32,6 @@ class CreateNapsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('naps');
+        Schema::dropIfExists('centrodatos');
     }
 }

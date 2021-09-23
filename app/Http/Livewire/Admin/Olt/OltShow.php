@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Olt;
 
-use App\Models\Datacenter;
+use App\Models\Centrodato;
 use App\Models\Estado;
 use App\Models\Olt;
 use Livewire\Component;
@@ -21,7 +21,7 @@ class OltShow extends Component
     public function mount()
     {
         $this->totalcontar = Olt::count();
-        $this->totaldatacenters = Datacenter::where('estado_id', "=", '1')->get();
+        $this->totaldatacenters = Centrodato::where('estado_id', "=", '1')->get();
         $this->estados = Estado::where('nombre', "=", 'Activo')->orwhere('nombre', "=", 'Deshabilitado')->get();
     }
     public function save()
@@ -53,7 +53,7 @@ class OltShow extends Component
     }
     public function dataoltrelacionado()
     {
-        $dataCenter = Datacenter::find($this->datacenterid);
+        $dataCenter = Centrodato::find($this->datacenterid);
         $this->dataoltrelacionado = $dataCenter;
     }
     public function cambiarestado($id)
