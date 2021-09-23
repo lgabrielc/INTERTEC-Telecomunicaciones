@@ -23,18 +23,20 @@
                 @if ($datacenterselect==null)
                 <div class="form-group">
                     <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Olt</label>
-                    <select class="block text-sm py-3 px-4 rounded w-full border outline-none">
-                        <option value="{{ $oltide }}">{{ $oltnombre }}</option>
-                    </select>
+                    <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
+                    value="{{ $oltnombre }}" disabled>
                 </div>
                 @endif
+
                 @if ($datacenterselect != null)
                 <div class="form-group">
                     <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Olt</label>
-                    <select class="block text-sm py-3 px-4 rounded w-full border outline-none" wire:model="oltidnuevo" wire:change="olttarjetarelacion">
-                        <option value="">Escoja una Olt</option>
-                        @foreach ($datacenterselect->olts as $oltt)
-                        <option value="{{ $oltt->id }}">{{ $oltt->nombre }}</option>
+                    <select class="block text-sm py-3 px-4 rounded w-full border outline-none" wire:model="oltidnuevo"
+                        wire:change='olttarjetarelacion'>
+                        <option value="">-Escoja una Olt-</option>
+                        @foreach ($datacenterselect->olts as $olt)
+                        <option value="{{ $olt->id }}">{{ $olt->nombre }}&nbsp,&nbsp
+                            Slots:{{ $olt->slots }}</option>
                         @endforeach
                     </select>
                     @error('oltidnuevo') <span class="text-danger error">{{ $message }}</span>@enderror
