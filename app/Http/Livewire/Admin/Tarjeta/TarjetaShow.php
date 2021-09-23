@@ -57,7 +57,7 @@ class TarjetaShow extends Component
             'slots' => 'required|numeric|min:1|max:15',
             'oltid' => 'required',
             'estado_id' => 'required',
-            'datacenteride' => 'required',
+            'datacenteride' => 'required|numeric',
         ]);
 
         $NewTarjeta = Tarjeta::create([
