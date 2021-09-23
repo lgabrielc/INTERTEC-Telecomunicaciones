@@ -22,7 +22,6 @@ class Centrodato extends Model
     {
         return $this->hasMany('App\Models\Olt');
     }
-
     public function estado()
     {
         return $this->belongsTo('App\Models\Estado', 'estado_id', 'id');

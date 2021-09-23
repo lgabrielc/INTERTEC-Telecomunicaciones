@@ -110,7 +110,7 @@ class GponShow extends Component
     {
         $this->resetcampos();
         $this->gponedit     = $gpon;
-        $this->datacenteride = $this->gponedit->tarjeta->olt->datacenter->id;
+        $this->datacenteride = $this->gponedit->tarjeta->olt->centrodato->id;
         $this->gponide    = $this->gponedit->id;
         $this->nombre       = $this->gponedit->nombre;
         $this->slots        = $this->gponedit->slots;

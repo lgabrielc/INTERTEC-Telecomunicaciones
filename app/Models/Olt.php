@@ -21,7 +21,7 @@ class Olt extends Model
     //Relacion con Datacenter uno a muchos inversa
     public function centrodato()
     {
-        return $this->belongsTo('App\Models\Centrodato','datacenter_id','id');
+        return $this->belongsTo('App\Models\Centrodato','centrodato_id','id');
     }
     //Relacion con Tarjetas uno a muchos inversa
     public function tarjetas()

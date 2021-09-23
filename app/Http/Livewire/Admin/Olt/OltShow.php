@@ -43,7 +43,7 @@ class OltShow extends Component
             'slots' => $this->slots,
             'marca' => $this->marca,
             'modelo' => $this->modelo,
-            'datacenter_id' => $this->datacenterid,
+            'centrodato_id' => $this->datacenterid,
             'estado_id' => $this->estado_id,
         ]);
         $this->totalcontar = Olt::count();
@@ -76,7 +76,7 @@ class OltShow extends Component
         $this->slots = $this->OltEdit->slots;
         $this->marca = $this->OltEdit->marca;
         $this->modelo = $this->OltEdit->modelo;
-        $this->datacenteride = $this->OltEdit->datacenter->id;
+        $this->datacenteride = $this->OltEdit->centrodato->id;
     }
     public function update()
     {
@@ -95,7 +95,7 @@ class OltShow extends Component
                 'slots' => $this->slots,
                 'marca' => $this->marca,
                 'modelo' => $this->modelo,
-                'datacenter_id' => $this->datacenteride,
+                'centrodato_id' => $this->datacenteride,
             ]);
         }
         $this->reset(['nombre', 'slots', 'marca', 'modelo']);

@@ -12,7 +12,7 @@ class TarjetaShow extends Component
 {
     public $datacenterid, $datacenteride, $oltid, $oltide, $tarjetaid, $tarjetaedit, $nombre, $slots, $estados, $estado_id;
     public $search, $totalcontar, $totaldatacenters, $selectolt, $datacenterselect, $olttarjetarelacionado, $totalolts;
-    public $oltnombre, $datacenternombre;
+    public $oltnombre, $datacenternombre, $oltidnuevo;
     public $sort = 'id';
     public $direction = 'desc';
     public $cant = '5';
@@ -28,10 +28,28 @@ class TarjetaShow extends Component
     public function generarolts()
     {
         if (is_numeric($this->datacenteride)) {
-            $dataselect = Centrodato::find($this->datacenteride);
-            $this->datacenterselect = $dataselect;
+            $this->datacenterselect = Centrodato::find($this->datacenteride);
+            $this->reset('olttarjetarelacionado', 'oltidnuevo');
         } else {
-            $this->datacenterselect = null;
+            $this->reset( 'datacenterid', 'olttarjetarelacionado');
+        }
+        if (is_numeric($this->datacenterid)) {
+            $this->datacenterselect = Centrodato::find($this->datacenterid);
+            $this->reset('olttarjetarelacionado', 'oltidnuevo');
+        } else {
+            $this->reset('datacenterid', 'olttarjetarelacionado');
+        }
+    }
+
+    public function olttarjetarelacion()
+    {
+        if (is_numeric($this->oltidnuevo)) {
+            $this->olttarjetarelacionado = Olt::find($this->oltidnuevo);
+            $this->reset('tarjetaid');
+        }
+        if (is_numeric($this->oltid)) {
+            $this->olttarjetarelacionado = Olt::find($this->oltid);
+            $this->reset('tarjetaid');
         }
     }
     public function save()
@@ -58,26 +76,22 @@ class TarjetaShow extends Component
 
     public function edit(Tarjeta $tarjeta)
     {
-        $this->reset(['nombre', 'slots', 'oltid', 'datacenterselect', 'datacenterid']);
+        $this->reset(['nombre', 'slots', 'oltid', 'oltidnuevo', 'datacenterselect', 'datacenterid']);
         $this->tarjetaedit = $tarjeta;
         $this->tarjetaid = $this->tarjetaedit->id;
         $this->nombre = $this->tarjetaedit->nombre;
         $this->slots = $this->tarjetaedit->slots;
         $this->oltide = $this->tarjetaedit->olt->id;
         $this->oltnombre = $this->tarjetaedit->olt->nombre;
-        $this->datacenteride = $this->tarjetaedit->olt->datacenter->id;
-        $this->datacenternombre = $this->tarjetaedit->olt->datacenter->nombre;
+        $this->datacenteride = $this->tarjetaedit->olt->centrodato->id;
+        $this->datacenternombre = $this->tarjetaedit->olt->centrodato->nombre;
     }
     public function update()
     {
-
-        if ($this->oltid != null) {
-            $this->oltide = $this->oltid;
-        }
         $this->validate([
             'nombre' => 'required|min:3|max:50',
             'slots' => 'required|numeric|min:1|max:15',
-            'oltide' => 'required',
+            'oltidnuevo' => 'required|numeric',
         ]);
 
         if ($this->tarjetaid) {
@@ -85,10 +99,10 @@ class TarjetaShow extends Component
             $updDataCenter->update([
                 'nombre' => $this->nombre,
                 'slots' => $this->slots,
-                'olt_id' => $this->oltide,
+                'olt_id' => $this->oltidnuevo,
             ]);
         }
-        $this->reset(['nombre', 'slots','oltid','oltide']);
+        $this->reset(['nombre', 'slots', 'oltid', 'oltidnuevo']);
         $this->emit('cerrarModalEditar');
         $this->emit('alert', 'La Tarjeta se actualizo satisfactoriamente');
     }
@@ -107,11 +121,6 @@ class TarjetaShow extends Component
             $this->estado_id = '1';
             $actualizartarjeta->update(['estado_id' => $this->estado_id]);
         }
-    }
-    public function olttarjetarelacionado()
-    {
-        $Olt = Olt::find($this->oltid);
-        $this->olttarjetarelacionado = $Olt;
     }
     public function resetcampos()
     {
@@ -133,6 +142,9 @@ class TarjetaShow extends Component
     }
     public function render()
     {
+        if (is_numeric($this->oltidnuevo)) {
+            $this->olttarjetarelacion();
+        }
         $tarjetas = Tarjeta::where('nombre', 'like', '%' . $this->search . '%')
             ->orwhere('slots', 'like', '%' . $this->search . '%')
             ->orderBy($this->sort, $this->direction)

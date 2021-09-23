@@ -30,7 +30,7 @@
                     <div class="form-group">
                         <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Olt</label>
                         <select class="block text-sm py-3 px-4 rounded w-full border outline-none" wire:model="oltid"
-                            wire:change='olttarjetarelacionado'>
+                            wire:change='olttarjetarelacion'>
                             <option value="">-Escoja una Olt-</option>
                             @foreach ($datacenterselect->olts as $olt)
                                 <option value="{{ $olt->id }}">{{ $olt->nombre }}&nbsp,&nbsp

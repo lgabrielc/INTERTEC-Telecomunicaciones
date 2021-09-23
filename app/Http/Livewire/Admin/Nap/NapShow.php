@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Nap;
 
-use App\Models\DataCenter;
+use App\Models\Centrodato;
 use App\Models\Estado;
 use App\Models\Gpon;
 use App\Models\Nap;
@@ -28,7 +28,7 @@ class NapShow extends Component
     public function mount()
     {
         $this->totalcontar = Nap::count();
-        $this->totaldatacenters = DataCenter::where('estado_id', "=", '1')->get();
+        $this->totaldatacenters = Centrodato::where('estado_id', "=", '1')->get();
         $this->estados = Estado::where('nombre', "=", 'Activo')->orwhere('nombre', "=", 'Deshabilitado')->get();
     }
     public function save()
@@ -60,7 +60,7 @@ class NapShow extends Component
         $this->objprueba = Nap::find($nap->id);
         $this->napedit     = $nap;
         $this->napid     = $this->napedit->id;
-        $this->datacenteride = $this->napedit->gpon->tarjeta->olt->datacenter->id;
+        $this->datacenteride = $this->napedit->gpon->tarjeta->olt->centrodato->id;
         $this->oltide       = $this->napedit->gpon->tarjeta->olt->id;
         $this->oltnombre    = $this->napedit->gpon->tarjeta->olt->nombre;
         $this->tarjetaide   = $this->napedit->gpon->tarjeta->id;
@@ -98,7 +98,7 @@ class NapShow extends Component
             $this->datacenterid = $this->datacenteride;
         }
         if (is_numeric($this->datacenterid)) {
-            $this->datacenterselect = DataCenter::find($this->datacenterid);
+            $this->datacenterselect = Centrodato::find($this->datacenterid);
             $this->reset('tarjetaid', 'oltid', 'olttarjetarelacionado', 'tarjetagponrelacionado', 'oltidnuevo', 'tarjetaidnuevo');
         } else {
             // $this->reset('oltid', 'tarjetaid', 'datacenterid', 'olttarjetarelacionado', 'tarjetagponrelacionado');

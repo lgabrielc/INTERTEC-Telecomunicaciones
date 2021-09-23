@@ -161,7 +161,7 @@
                                                     </td>
                                                     <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
                                                         <p class="text-gray-900 whitespace-no-wrap">
-                                                            {{ $olt->datacenter->nombre }}
+                                                            {{ $olt->centrodato->nombre}}
                                                         </p>
                                                     </td>
                                                     <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
