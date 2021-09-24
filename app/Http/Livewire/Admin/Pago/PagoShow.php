@@ -22,7 +22,7 @@ class PagoShow extends Component
     public $cant = '5';
     public $open = false;
     public $disable = false;
-
+// Commit
     public function savepago()
     {
         $this->user_id = '1';
