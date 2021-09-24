@@ -169,7 +169,7 @@
                                             </th>
                                             <th wire:click="order('telefono')"
                                                 class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                Correo
+                                                Servicio
                                                 <i class="fas fa-sort float-right mt-1"></i>
                                             </th>
                                             <th
@@ -203,21 +203,23 @@
                                             </td>
                                             <td class="py-1 border-b border-gray-200 bg-white text-sm text-center">
                                                 <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $cliente->correo }}</p>
+                                                    {{$cliente->tiposervicio}}
+                                                </p>
                                             </td>
                                             <td class="py-1 border-b border-gray-200 bg-white text-sm text-center">
 
-                                                @if (empty($cliente->pagos->first()))
-                                                <button wire:click="registrarprimerpago({{ $cliente->id }})" type="button"
-                                                    class="btn btn-success rounded-pill mx-1 my-1" data-toggle="modal"
-                                                    data-target="#modalnuevopago">
-                                                    Realizar Primer pago
+                                                @if ($cliente->fechainicio ==null)
+                                                <button wire:click="registrarprimerpago({{ $cliente->id }})"
+                                                type="button" class="btn btn-warning rounded-pill mx-1 my-1"
+                                                data-toggle="modal" data-target="#modalnuevopago">
+                                                Realizar Primer pago
                                                 </button>
                                                 @else
-                                                <button wire:click="registrarpago({{ $cliente->id }})" type="button"
-                                                    class="btn btn-success rounded-pill mx-1 my-1" data-toggle="modal"
-                                                    data-target="#modalpago">
-                                                    Realizar Pago
+                                                <button wire:click="registrarpago({{ $cliente->id }})"
+                                                type="button"
+                                                class="btn btn-success rounded-pill mx-1 my-1" data-toggle="modal"
+                                                data-target="#modalpago">
+                                                Realizar Pago
                                                 </button>
                                                 @endif
                                             </td>
@@ -270,26 +272,11 @@
         }); --}}
     </script>
     <script>
-        window.livewire.on('cerrarModalCrear', () => {
-            $('#exampleModal').modal('hide');
+        window.livewire.on('cerrarModalNuevoPago', () => {
+            $('#modalnuevopago').modal('hide');
         });
-        window.livewire.on('cerrarModalCrearPlan', () => {
-            $('#modalcrearplan').modal('hide');
-        });
-        window.livewire.on('cerrarModalCrearServicio', () => {
-            $('#modalcrearservicio').modal('hide');
-        });
-        window.livewire.on('cerrarModalCrearTipoAntena', () => {
-            $('#modalcreartipoantena').modal('hide');
-        });
-        window.livewire.on('cerrarModalVerServicioAntena', () => {
-            $('#updateModal').modal('hide');
-        });
-        window.livewire.on('cerrarModalVerServicioFibra', () => {
-            $('#updateModal').modal('hide');
-        });
-        window.livewire.on('cerrarModalEditar', () => {
-            $('#updateModal').modal('hide');
+        window.livewire.on('cerrarModalPago', () => {
+            $('#modalpago').modal('hide');
         });
     </script>
 </div>

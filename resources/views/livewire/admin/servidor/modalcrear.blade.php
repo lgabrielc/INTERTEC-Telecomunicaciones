@@ -39,7 +39,7 @@
                 <div class="form-group">
                     <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Estado:</label>
                     <select class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                        wire:model="estado">
+                        wire:model.defer="estado">
                         <option value="">-Seleccione el estado-</option>
                         @foreach ($totalestados as $estado)
                         @if ($estado->nombre == 'Activo')

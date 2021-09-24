@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Servidor;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,6 +20,17 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             PersonalSeeder::class,
             EstadosSeeder::class,
-            ]);
+            ServidorSeeder::class,
+            TorreSeeder::class,
+            TipoantenapSeeder::class,
+            AntenaSeeder::class,
+            CentrodatoSeeder::class,
+            OltSeeder::class,
+            TarjetaSeeder::class,
+            GponSeeder::class,
+            CajanapSeeder::class,
+            PlanSeeder::class,
+            ClientesSeeder::class,
+        ]);
     }
 }

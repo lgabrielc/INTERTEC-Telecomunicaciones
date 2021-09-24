@@ -202,7 +202,7 @@
                                                 @endif
                                                 @else
                                                 <button wire:click="agregarservicio({{ $cliente->id }})" type="button"
-                                                    class="btn btn-warning rounded-pill mx-1 my-1" data-toggle="modal"
+                                                    class="btn btn-secondary rounded-pill mx-1 my-1" data-toggle="modal"
                                                     data-target="#modalcrearservicio">
                                                     Agregar Servicio
                                                 </button>

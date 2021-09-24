@@ -7,9 +7,12 @@ use App\Models\Estado;
 use App\Models\Olt;
 use App\Models\Tarjeta;
 use Livewire\Component;
+use Livewire\WithPagination;
+
 
 class TarjetaShow extends Component
 {
+    use WithPagination;
     public $oltidnuevo,$datacenterid, $datacenteride, $oltid, $oltide, $tarjetaid, $tarjetaedit, $nombre, $slots, $estados, $estado_id;
     public $search, $totalcontar, $totaldatacenters, $selectolt, $datacenterselect, $olttarjetarelacionado, $totalolts;
     public $oltnombre, $datacenternombre;

@@ -22,7 +22,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-6">
-                        <div class="">
+                        <div class="form-group">
                             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">IP:</label>
                             <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
                                 wire:model.defer="ip" placeholder="Ejm: 192.168.10.123">

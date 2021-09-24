@@ -1,6 +1,6 @@
 <!-- Modal -->
-<div wire:ignore.self class="modal fade" id="modalpago" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div wire:ignore.self class="modal fade" id="modalpago" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,27 +10,114 @@
                 </button>
             </div>
             <div class="modal-body">
+
                 <div class="form-group">
-                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Nombre del Plan</label>
-                    <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                        placeholder="Ejm: Plan Básico" wire:model.defer="NombrePlan">
-                    @error('NombrePlan') <span class="text-danger error">{{ $message }}</span>@enderror
+                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Nombre del Cliente:</label>
+                    <input type="text" class="block text-sm py-2 px-4 rounded w-full border outline-none"
+                        value="{{ $nombre }}&nbsp;{{ $apellido }}" disabled>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Fecha de Pago</label>
+                            <input type="date" class="block text-sm py-2 px-4 rounded w-full border outline-none"
+                                value="{{ $fechapago }}" disabled>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Fecha de Corte
+                                Ejecutado</label>
+                            <input type="date" class="block text-sm py-2 px-4 rounded w-full border outline-none"
+                                value="{{ $fechacorte }}" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Fecha de Corte</label>
+                            <input type="date" class="block text-sm py-2 px-4 rounded w-full border outline-none"
+                                value="{{ $nombre }}&nbsp;{{ $apellido }}" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Estado</label>
+                            <input type="text" class="block text-sm py-2 px-4 rounded w-full border outline-none"
+                                value="{{ $nombre }}&nbsp;{{ $apellido }}" disabled>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Deuda</label>
+                            <input type="text" class="block text-sm py-2 px-4 rounded w-full border outline-none"
+                                value="{{ $nombre }}&nbsp;{{ $apellido }}" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Mensualidad</label>
+                            <input type="text" class="block text-sm py-2 px-4 rounded w-full border outline-none"
+                                value="{{ $nombre }}&nbsp;{{ $apellido }}" disabled>
+                            @error('PrecioPlan') <span class="text-danger error">{{ $message }}</span>@enderror
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Fecha de Pago
+                                Deuda</label>
+                            <input type="text" class="block text-sm py-2 px-4 rounded w-full border outline-none"
+                                value="{{ $nombre }}&nbsp;{{ $apellido }}" disabled>
+                        </div>
+                    </div>
+                </div>
+
+
+                {{-- --------------------------------------------------------------------------------------- --}}
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Dias de Retraso</label>
+                            <input type="text" class="block text-sm py-2 px-4 rounded w-full border outline-none"
+                                placeholder="Ejm: 60.00" wire:model.defer="PrecioPlan">
+                            @error('PrecioPlan') <span class="text-danger error">{{ $message }}</span>@enderror
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Dias en Corte</label>
+                            <input type="text" class="block text-sm py-2 px-4 rounded w-full border outline-none"
+                                placeholder="Ejm: 60.00" wire:model.defer="PrecioPlan">
+                            @error('PrecioPlan') <span class="text-danger error">{{ $message }}</span>@enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Proximo Pago</label>
+                            <input type="text" class="block text-sm py-2 px-4 rounded w-full border outline-none"
+                                placeholder="Ejm: 60.00" wire:model.defer="PrecioPlan">
+                            @error('PrecioPlan') <span class="text-danger error">{{ $message }}</span>@enderror
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Proximo Corte</label>
+                            <input type="text" class="block text-sm py-2 px-4 rounded w-full border outline-none"
+                                placeholder="Ejm: 60.00" wire:model.defer="PrecioPlan">
+                            @error('PrecioPlan') <span class="text-danger error">{{ $message }}</span>@enderror
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Velocidad de Descarga</label>
-                    <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                        placeholder="Ejm: 8MB" wire:model.defer="VelocidadDescarga">
-                    @error('VelocidadDescarga') <span class="text-danger error">{{ $message }}</span>@enderror
-                </div>
-                <div class="form-group">
-                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Velocidad de Subida</label>
-                    <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                        placeholder="Ejm: 6MB" wire:model.defer="VelocidadSubida">
-                    @error('VelocidadSubida') <span class="text-danger error">{{ $message }}</span>@enderror
-                </div>
-                <div class="form-group">
-                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Precio</label>
-                    <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
+                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Periodo de Pago</label>
+                    <input type="text" class="block text-sm py-2 px-4 rounded w-full border outline-none"
                         placeholder="Ejm: 60.00" wire:model.defer="PrecioPlan">
                     @error('PrecioPlan') <span class="text-danger error">{{ $message }}</span>@enderror
                 </div>

@@ -10,6 +10,7 @@
                 </button>
             </div>
             <div class="modal-body">
+                
                 <div class="form-group">
                     <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Nombre del Cliente:</label>
                     <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
@@ -40,8 +41,7 @@
                     <div class="form-group" x-on:dblclick="$wire.doubleClick()">
                         <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Monto:</label>
                         <input disabled='false' type="text"
-                            class="block text-sm py-3 px-4 rounded w-full border outline-none" wire:model="monto">
-                        @error('monto') <span class="text-danger error">{{ $message }}</span>@enderror
+                            class="block text-sm py-3 px-4 rounded w-full border outline-none" value="{{$monto}}" disabled>
                     </div>
                 </div>
             </div>

@@ -16,7 +16,8 @@ class PagoShow extends Component
     public $sort = 'id';
     public $search, $totalestados, $totalplanes, $totalantenas, $totaldatacenters;
     public $clientesactivos, $clientesvencidos, $clientescortesinejecutar, $clientesejecutados;
-    public $cliente, $fechainicio, $fechavencimiento, $fechacorte, $monto, $nombre, $apellido,$clienteid,$periodo,$fecha,$user_id,$cliente_id;
+    public $fechapago, $cliente, $fechainicio, $fechavencimiento,
+     $fechacorte, $monto, $nombre, $apellido, $clienteid, $periodo, $fecha, $user_id, $cliente_id, $servicioid,$servicio;
     public $direction = 'desc';
     public $cant = '5';
     public $open = false;
@@ -24,7 +25,7 @@ class PagoShow extends Component
 
     public function savepago()
     {
-        $this->user_id='1';
+        $this->user_id = '1';
         $this->validate([
             'fecha' => 'required|date_format:Y-m-d',
             'monto' => 'required|numeric',
@@ -32,8 +33,8 @@ class PagoShow extends Component
             'cliente_id' => 'required|numeric',
             'user_id' => 'required|numeric',
             'fechainicio' => 'required|date_format:Y-m-d',
-            'fechacorte' => 'required|date_format:Y-m-d',
-            'fechavencimiento' => 'required|date_format:Y-m-d',
+            'fechavencimiento' => 'required|date_format:Y-m-d|after:fechainicio',
+            'fechacorte' => 'required|date_format:Y-m-d|after:fechavencimiento',
         ]);
         Pago::create([
             'fecha' => $this->fecha,
@@ -42,6 +43,14 @@ class PagoShow extends Component
             'cliente_id' => $this->cliente_id,
             'user_id' => $this->user_id,
         ]);
+        $servicioobj = Servicio::find($this->servicioid);
+        $servicioobj->update([
+            'fechainicio' => $this->fechainicio,
+            'fechavencimiento' => $this->fechavencimiento,
+            'fechacorte' => $this->fechacorte,
+        ]);
+        $this->emit('cerrarModalNuevoPago');
+        $this->emit('alert', 'El servidor se actualizo satisfactoriamente');
     }
     // no sirve
     public function doubleClick()
@@ -65,15 +74,22 @@ class PagoShow extends Component
         $this->fechavencimiento = date("Y-m-d", strtotime($this->fechainicio . "+ 1 month"));
         $this->fechacorte = date("Y-m-d", strtotime($this->fechavencimiento . "+ 3 days"));
         $this->fecha = date('Y-m-d');
-        $this->periodo = $this->fechainicio.' al '.$this->fechacorte;
+        $this->periodo = $this->fechainicio . ' al ' . $this->fechacorte;
         $this->servicio = $servicio;
-        $this->cliente_id=$this->servicio->cliente->id;
+        $this->servicioid = $servicio->id;
+        $this->cliente_id = $this->servicio->cliente->id;
         $this->nombre = $this->servicio->cliente->nombre;
         $this->apellido = $this->servicio->cliente->apellido;
         $this->monto = $this->servicio->plan->precio;
     }
-    public function registrarpago(Cliente $cliente)
+    public function registrarpago(Servicio $servicio)
     {
+        $this->servicio = $servicio;
+        $this->cliente_id = $this->servicio->cliente->id;
+        $this->nombre = $this->servicio->cliente->nombre;
+        $this->apellido = $this->servicio->cliente->apellido;
+        $this->fechapago = $this->servicio->fechavencimiento;
+        $this->fechacorte = $this->servicio->fechacorte;
     }
     public function mount()
     {
@@ -81,9 +97,7 @@ class PagoShow extends Component
         $this->clientesvencidos = Servicio::where('estado_id', "=", '4')->count();
         $this->clientescortesinejecutar = Servicio::where('estado_id', "=", '5')->count();
         $this->clientesejecutados = Servicio::where('estado_id', "=", '6')->count();
-        // $this->totalplanes = Plan::all();
         $this->totalestados = Estado::all();
-        // $this->totalantenas = Antena::all();
         $this->totaldatacenters = Centrodato::where('estado_id', "=", '1')->get();
     }
     public function order($sort)
@@ -100,13 +114,17 @@ class PagoShow extends Component
     }
     public function render()
     {
-        $clientes = Cliente::join("servicios", "servicios.cliente_id", "=", "clientes.id")->select("clientes.nombre", "servicios.tiposervicio", "servicios.id", "clientes.apellido", "clientes.dni")->paginate($this->cant);
-        // $clientes = Servicio::where('nombre', 'like', '%' . $this->search . '%')
+        // $clientes = Cliente::join("servicios", "servicios.cliente_id", "=", "clientes.id")
+        //     ->select("clientes.nombre","clientes.apellido","servicios.tiposervicio", "servicios.id", "clientes.apellido", "clientes.dni")
+        //     ->paginate($this->cant);
+        // $clientes = Cliente::where('nombre', 'like', '%' . $this->search . '%')
         //     ->orwhere('apellido', 'like', '%' . $this->search . '%')
         //     ->orwhere('dni', 'like', '%' . $this->search . '%')
         //     ->orwhere('correo', 'like', '%' . $this->search . '%')
         //     ->orderBy($this->sort, $this->direction)
         //     ->paginate($this->cant);
+        $clientes = Cliente::join("servicios", "servicios.cliente_id", "=", "clientes.id")
+            ->paginate($this->cant);
         return view('livewire.admin.pago.pago-show', compact('clientes'));
     }
 }
