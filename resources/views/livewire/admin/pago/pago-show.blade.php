@@ -157,17 +157,17 @@
                                                 Nombre
                                                 <i class="fas fa-sort float-right mt-1"></i>
                                             </th>
-                                            <th wire:click="order('dueño')"
+                                            <th wire:click="order('apellido')"
                                                 class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 Apellido
                                                 <i class="fas fa-sort float-right mt-1"></i>
                                             </th>
-                                            <th wire:click="order('pago')"
+                                            <th wire:click="order('dni')"
                                                 class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 DNI
                                                 <i class="fas fa-sort float-right mt-1"></i>
                                             </th>
-                                            <th wire:click="order('telefono')"
+                                            <th wire:click="order('servicio')"
                                                 class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 Servicio
                                                 <i class="fas fa-sort float-right mt-1"></i>

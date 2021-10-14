@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Pago;
 
+use Carbon\Carbon;
 use App\Models\Centrodato;
 use App\Models\Cliente;
 use App\Models\Estado;
@@ -16,13 +17,13 @@ class PagoShow extends Component
     public $sort = 'id';
     public $search, $totalestados, $totalplanes, $totalantenas, $totaldatacenters;
     public $clientesactivos, $clientesvencidos, $clientescortesinejecutar, $clientesejecutados;
-    public $fechapago, $cliente, $fechainicio, $fechavencimiento,
-     $fechacorte, $monto, $nombre, $apellido, $clienteid, $periodo, $fecha, $user_id, $cliente_id, $servicioid,$servicio;
+    public $fechapago, $cliente, $fechainicio, $fechavencimiento, $diasretraso, $diasencorte, $fechacorteejecutado,
+        $fechacorte, $monto, $nombre, $apellido, $clienteid, $periodo, $fecha, $user_id, $cliente_id, $servicioid, $servicio;
     public $direction = 'desc';
     public $cant = '5';
     public $open = false;
     public $disable = false;
-// Commit
+    // Commit
     public function savepago()
     {
         $this->user_id = '1';
@@ -90,6 +91,25 @@ class PagoShow extends Component
         $this->apellido = $this->servicio->cliente->apellido;
         $this->fechapago = $this->servicio->fechavencimiento;
         $this->fechacorte = $this->servicio->fechacorte;
+        $this->fechacorteejecutado = $this->servicio->fechacorteejecutado;
+        $fechaactual = date('Y-m-d');
+        $finicio = Carbon::createFromFormat('Y-m-d', $fechaactual);
+        $ffinal = Carbon::createFromFormat('Y-m-d', $this->fechapago);
+        if ($this->fechacorteejecutado != null) {
+            $ffinal2 = Carbon::createFromFormat('Y-m-d', $this->fechacorteejecutado);
+            if ($finicio->gt($ffinal2)) {
+                $this->diasencorte = $ffinal2->diffInDays($finicio);
+            } else {
+                $this->diasencorte = '0';
+            }
+        } else {
+            $this->diasencorte = '0';
+        }
+        if ($finicio->gt($ffinal)) {
+            $this->diasretraso = $ffinal->diffInDays($finicio);
+        } else {
+            $this->diasretraso = '0';
+        }
     }
     public function mount()
     {
@@ -124,6 +144,7 @@ class PagoShow extends Component
         //     ->orderBy($this->sort, $this->direction)
         //     ->paginate($this->cant);
         $clientes = Cliente::join("servicios", "servicios.cliente_id", "=", "clientes.id")
+            ->where('clientes.nombre', 'like', '%' . $this->search . '%')
             ->paginate($this->cant);
         return view('livewire.admin.pago.pago-show', compact('clientes'));
     }

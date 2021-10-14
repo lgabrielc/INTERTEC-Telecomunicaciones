@@ -17,7 +17,7 @@
                         value="{{ $nombre }}&nbsp;{{ $apellido }}" disabled>
                 </div>
                 <div class="form-group">
-                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Fecha de Inicio:</label>
+                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Fecha de Pago:</label>
                     <input type="date" class="block text-sm py-3 px-4 rounded w-full border outline-none"
                         wire:model="fechainicio" wire:change="actualizarfechas($event.target.value)"
                         value="{{ date('Y-m-d') }}">
@@ -37,11 +37,18 @@
                         wire:model="fechacorte">
                     @error('fechacorte') <span class="text-danger error">{{ $message }}</span>@enderror
                 </div>
-                <div x-data>
-                    <div class="form-group" x-on:dblclick="$wire.doubleClick()">
+                <div>
+                    <div class="form-group">
                         <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Monto:</label>
                         <input disabled='false' type="text"
                             class="block text-sm py-3 px-4 rounded w-full border outline-none" value="{{$monto}}" disabled>
+                    </div>
+                </div>
+                <div>
+                    <div class="form-group">
+                        <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Periodo:</label>
+                        <input disabled='false' type="text"
+                            class="block text-sm py-3 px-4 rounded w-full border outline-none" value="{{$fechainicio;}}   AL   {{$fechavencimiento}}" disabled>
                     </div>
                 </div>
             </div>

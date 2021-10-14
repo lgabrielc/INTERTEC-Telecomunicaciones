@@ -18,13 +18,15 @@ class CreateServiciosTable extends Migration
             $table->date('fechainicio')->nullable();
             $table->date('fechavencimiento')->nullable();
             $table->date('fechacorte')->nullable();
+            $table->date('fechacorteejecutado')->nullable();
             $table->string('tiposervicio');
             //Por ver nullable
             $table->string('condicionAntena')->nullable();
             $table->string('mac')->nullable();
             $table->string('ip')->nullable();
             $table->string('frecuencia')->nullable();
-            //Por cambiar
+            //Por cambiar  
+            $table->float('deuda')->nullable();
             $table->string('clientegpon')->nullable();
             $table->unsignedBigInteger('cliente_id');
             $table->unsignedBigInteger('antena_id')->nullable();
