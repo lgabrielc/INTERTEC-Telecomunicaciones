@@ -26,7 +26,7 @@ class PagoShow extends Component
     // Commit
     public function savepago()
     {
-        $this->user_id = '1';
+        $this->user_id = auth()->user()->personal->id;
         $this->validate([
             'fecha' => 'required|date_format:Y-m-d',
             'monto' => 'required|numeric',
@@ -55,7 +55,7 @@ class PagoShow extends Component
     }
     public function savepago2()
     {
-        $this->user_id = '1';
+        $this->user_id = auth()->user()->personal->id;
         $this->validate([
             'fecha' => 'required|date_format:Y-m-d',
             'monto' => 'required|numeric',
@@ -116,6 +116,7 @@ class PagoShow extends Component
         $this->nombre = $this->servicio->cliente->nombre;
         $this->apellido = $this->servicio->cliente->apellido;
         $this->monto = $this->servicio->plan->precio;
+        
     }
     public function registrarpago(Servicio $servicio)
     {

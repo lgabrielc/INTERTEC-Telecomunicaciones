@@ -23,6 +23,7 @@ class TarjetaShow extends Component
     public function mount()
     {
         //Sirven para crear un nuevo
+        $this->totalcontar = Tarjeta::count();
         $this->totaldatacenters = Centrodato::where('estado_id', "=", '1')->get();
         $this->totalolts = Olt::where('estado_id', "=", '1')->get();
         //Finn
