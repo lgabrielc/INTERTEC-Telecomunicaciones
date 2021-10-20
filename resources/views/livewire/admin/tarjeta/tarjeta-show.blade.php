@@ -1,5 +1,5 @@
 <div>
-    <!-- Button trigger modal -->
+    <!-- Button trigger modala -->
     <div class="container mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-1 content-center">
             <div class="px-4 mb-4">
