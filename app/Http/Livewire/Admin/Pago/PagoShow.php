@@ -122,6 +122,9 @@ class PagoShow extends Component
     {
         $this->fecha = date('Y-m-d');
         $this->servicio = $servicio;
+        if ($this->servicio->estado == 'Activo') {
+            # code...A
+        }
         $this->cliente_id = $this->servicio->cliente->id;
         $this->nombre = $this->servicio->cliente->nombre;
         $this->apellido = $this->servicio->cliente->apellido;
