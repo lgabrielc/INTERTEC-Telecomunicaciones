@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Antena extends Model
 {
+    
     protected $fillable = [
         'nombre',
         'ip',
