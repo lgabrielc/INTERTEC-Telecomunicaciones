@@ -10,121 +10,118 @@ use App\Models\Olt;
 use App\Models\Tarjeta;
 use Livewire\Component;
 use Livewire\WithPagination;
-
+use Illuminate\Support\Facades\DB;
 
 class NapShow extends Component
 {
     use WithPagination;
     //Propiedades para crear nuevo Nap
-    public $datacenterid, $oltid, $tarjetaid, $nombre, $slots, $estado_id, $gponid;
+    public $datacenterid, $oltid, $tarjetaid, $nombre, $slots, $estado, $gponid;
     //Extraer relaciones entre modelos
     public $datacenterselect, $olttarjetarelacionado, $tarjetagponrelacionado, $gponnaprelacionado;
     //Propiedades para editar una Nap
     public $napid, $napedit, $datacenteride, $oltide, $oltnombre, $gponide, $gponnombre, $oltidnuevo, $tarjetaide, $tarjetanombre, $tarjetaidnuevo, $gponidnuevo;
     //Método mount
-    public $totalcontar, $totaldatacenters, $estados;
+    public $totalcontar, $totaldatacenters, $totalestados;
     public $sort = 'id', $direction = 'desc', $cant = '5', $search = '';
     public $objprueba;
+    public $vermodalcrear = false;
+    public $vermodaleditar = false;
     public function mount()
     {
         $this->totalcontar = Nap::count();
         $this->totaldatacenters = Centrodato::where('estado_id', "=", '1')->get();
-        $this->estados = Estado::where('nombre', "=", 'Activo')->orwhere('nombre', "=", 'Deshabilitado')->get();
+        $this->totalestados = Estado::where('nombre', "=", 'Activo')->orwhere('nombre', "=", 'Deshabilitado')->get();
+    }
+    public function activarmodalcrear()
+    {
+        $this->vermodalcrear = true;
+        $this->reset(['nombre', 'slots', 'oltid', 'datacenterselect', 'datacenterid', 'olttarjetarelacionado', 'tarjetaid', 'tarjetagponrelacionado', 'gponnaprelacionado']);
+        $this->estado = "1";
     }
     public function save()
     {
         $this->validate([
             'nombre' => 'required|min:3|max:50',
             'slots' => 'required|numeric|min:1|max:15',
-            'datacenterid' => 'required',
-            'oltid' => 'required',
-            'tarjetaid' => 'required',
-            'gponid' => 'required',
+            'datacenterid' => 'required|numeric',
+            'oltid' => 'required|numeric',
+            'tarjetaid' => 'required|numeric',
+            'gponid' => 'required|numeric',
+            'estado' => 'required|numeric',
         ]);
 
         $NewNap = Nap::create([
             'nombre' => $this->nombre,
             'slots' => $this->slots,
             'gpon_id' => $this->gponid,
-            'estado_id' => $this->estado_id,
+            'estado_id' => $this->estado,
         ]);
         $this->totalcontar = Nap::count();
-
-        $this->resetcampos();
-        $this->emit('cerrarModalCrear');
+        $this->vermodalcrear = false;
+        $this->search= '';
         $this->emit('alert', 'La Caja Nap se creo satisfactoriamente');
     }
     public function edit(Nap $nap)
     {
-        $this->resetcampos();
-        $this->objprueba = Nap::find($nap->id);
+        $this->reset(['nombre', 'slots', 'oltid', 'datacenterselect', 'datacenterid', 'olttarjetarelacionado', 'tarjetaid', 'tarjetagponrelacionado', 'gponnaprelacionado']);
+        $this->vermodaleditar = true;
         $this->napedit     = $nap;
         $this->napid     = $this->napedit->id;
-        $this->datacenteride = $this->napedit->gpon->tarjeta->olt->centrodato->id;
-        $this->oltide       = $this->napedit->gpon->tarjeta->olt->id;
+        $this->datacenterid = $this->napedit->gpon->tarjeta->olt->centrodato->id;
+        $this->oltid     = $this->napedit->gpon->tarjeta->olt->id;
         $this->oltnombre    = $this->napedit->gpon->tarjeta->olt->nombre;
-        $this->tarjetaide   = $this->napedit->gpon->tarjeta->id;
+        $this->tarjetaid   = $this->napedit->gpon->tarjeta->id;
         $this->tarjetanombre = $this->napedit->gpon->tarjeta->nombre;
-        $this->gponide    = $this->napedit->gpon->id;
+        $this->gponid    = $this->napedit->gpon->id;
         $this->gponnombre    = $this->napedit->gpon->nombre;
         $this->nombre       = $this->napedit->nombre;
         $this->slots        = $this->napedit->slots;
+        $this->estado        = $this->napedit->estado_id;
     }
     public function update()
     {
-        if (is_numeric($this->gponidnuevo)) {
-            $this->gponide = $this->gponidnuevo;
-        }
         $this->validate([
             'nombre' => 'required|min:5|max:10',
             'slots' => 'required|numeric|min:1|max:15',
-            'gponide' => 'required|numeric',
+            'datacenterid' => 'required|numeric',
+            'oltid' => 'required|numeric',
+            'tarjetaid' => 'required|numeric',
+            'gponid' => 'required|numeric',
+            'estado' => 'required|numeric',
         ]);
-        if ($this->gponide) {
+        if ($this->napid) {
             $updNap = Nap::find($this->napid);
             $updNap->update([
                 'nombre' => $this->nombre,
                 'slots' => $this->slots,
-                'gpon_id' => $this->gponide,
+                'gpon_id' => $this->gponid,
+                'estado_id' => $this->estado,
             ]);
         }
         $this->reset('search');
-        $this->emit('cerrarModalEditar');
+        $this->vermodaleditar = false;
         $this->emit('alert', 'La Caja Nap se actualizo satisfactoriamente');
     }
     public function generarolts()
     {
-        if (is_numeric($this->datacenteride)) {
-            $this->datacenterid = $this->datacenteride;
-        }
         if (is_numeric($this->datacenterid)) {
             $this->datacenterselect = Centrodato::find($this->datacenterid);
-            $this->reset('tarjetaid', 'oltid', 'olttarjetarelacionado', 'tarjetagponrelacionado', 'oltidnuevo', 'tarjetaidnuevo');
-        } else {
-            // $this->reset('oltid', 'tarjetaid', 'datacenterid', 'olttarjetarelacionado', 'tarjetagponrelacionado');
+            $this->oltid = "";
         }
     }
-    //Cada vez que cambiamos uN OLT o escogemos una nueva
     public function olttarjetarelacion()
     {
-        if (is_numeric($this->oltidnuevo)) {
-            $this->oltid = $this->oltidnuevo;
-        }
         if (is_numeric($this->oltid)) {
             $this->olttarjetarelacionado = Olt::find($this->oltid);
-            $this->reset('tarjetaid');
+            $this->tarjetaid = "";
         }
     }
     public function tarjetagponrelacion()
     {
-        if (is_numeric($this->tarjetaidnuevo)) {
-            $this->tarjetaide = $this->tarjetaidnuevo;
-            $this->tarjetaid = $this->tarjetaidnuevo;
-            $this->reset('gponidnuevo', 'gponid');
-        }
         if (is_numeric($this->tarjetaid)) {
             $this->tarjetagponrelacionado = Tarjeta::find($this->tarjetaid);
-            $this->reset('gponidnuevo', 'gponid');
+            $this->gponid = "";
         }
     }
     public function gponnaprelacion()
@@ -167,11 +164,20 @@ class NapShow extends Component
     }
     public function render()
     {
-        if (is_numeric($this->oltidnuevo)) {
-            $this->olttarjetarelacion();
-        }
-        $naps = Nap::where('nombre', 'like', '%' . $this->search . '%')
-            ->orwhere('slots', 'like', '%' . $this->search . '%')
+        $naps = DB::table('naps')
+            ->select('naps.nombre as napnombre' ,'naps.slots as napslot','naps.id as id', 'estados.nombre as estadonombre', 'estados.id as estadoid', 'gpons.nombre as gponnombre', 'gpons.id as gponid', 'tarjetas.nombre as tarjetanombre', 'tarjetas.id as tarjetaid', 'olts.nombre as oltnombre', 'olts.id as oltid', 'centrodatos.nombre as datacenternombre', 'centrodatos.id as datacenterid')
+            ->join('estados', 'estados.id', '=', 'naps.estado_id')
+            ->join('gpons', 'gpons.id', '=', 'naps.gpon_id')
+            ->join('tarjetas', 'tarjetas.id', '=', 'gpons.tarjeta_id')
+            ->join('olts', 'olts.id', '=', 'tarjetas.olt_id')
+            ->join('centrodatos', 'centrodatos.id', '=', 'olts.centrodato_id')
+            ->where('naps.nombre', 'like', '%' . $this->search . '%')
+            ->orwhere('naps.slots', 'like', '%' . $this->search . '%')
+            ->orwhere('gpons.nombre', 'like', '%' . $this->search . '%')
+            ->orwhere('tarjetas.nombre', 'like', '%' . $this->search . '%')
+            ->orwhere('olts.nombre', 'like', '%' . $this->search . '%')
+            ->orwhere('centrodatos.nombre', 'like', '%' . $this->search . '%')
+            ->orwhere('estados.nombre', 'like', '%' . $this->search . '%')
             ->orderBy($this->sort, $this->direction)
             ->paginate($this->cant);
         return view('livewire.admin.nap.nap-show', compact('naps'));

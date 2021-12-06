@@ -1,8 +1,8 @@
 <div>
     {{-- CONTEO TOTAL DE DATOS DEL MODULO --}}
-    <div class="container mx-auto">
+    <div class="w-full">
         <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-1 content-center">
-            <div class="px-4 mb-4">
+            <div class="pt-4 px-4 mb-2">
                 <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
                     <div class="flex flex-wrap border-b border-gray-200 undefined">
                         <div
@@ -26,7 +26,7 @@
     <div class=" max-w-7x1 mx-auto px-4 sm:px-6 lg:px-8 ">
         <div class="w-full">
             <div class="bg-white  rounded-2xl px-10 py-8 shadow-lg hover:shadow-2xl transition duration-500 w-full">
-                <div class="container w-full">
+                <div class="w-full">
                     <div class=w-full">
                         <h1 class="text-2xl font-semibold leading-tight mb-2">Gestionar Torre</h1>
                         @include('livewire.admin.torre.modalcrear')
@@ -70,124 +70,125 @@
                         <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-1 overflow-x-auto">
                             <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
                                 @if (count($torres))
-                                    <table class="min-w-full leading-normal">
-                                        <thead>
-                                            <tr>
-                                                <th wire:click="order('id')"
-                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                    ID
-                                                    @if ($sort == 'id')
-                                                        @if ($direction == 'asc')
-                                                            {{-- SI ES ASCENDENTE PONER SU ICONO --}}
-                                                            <i class="fas fa-sort-numeric-up float-right"></i>
-                                                            {{-- SI ES DESCENDENTE PONER SU ICONO --}}
-                                                        @else
-                                                            {{-- SI ES DESCENDENTE PONER SU ICONO --}}
-                                                            <i class="fas fa-sort-numeric-up-alt float-right"></i>
-                                                        @endif
+                                <table class="min-w-full leading-normal">
+                                    <thead>
+                                        <tr>
+                                            <th wire:click="order('id')"
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                ID
+                                                @if ($sort == 'id')
+                                                @if ($direction == 'asc')
+                                                {{-- SI ES ASCENDENTE PONER SU ICONO --}}
+                                                <i class="fas fa-sort-numeric-up float-right"></i>
+                                                {{-- SI ES DESCENDENTE PONER SU ICONO --}}
+                                                @else
+                                                {{-- SI ES DESCENDENTE PONER SU ICONO --}}
+                                                <i class="fas fa-sort-numeric-up-alt float-right"></i>
+                                                @endif
+                                                @else
+                                                {{-- SI ES CLICKEA POR PRIMERA VEZ EN ID PONER SU ICONO --}}
+                                                <i class="fas fa-sort float-right mt-1"></i>
+                                                @endif
+                                            </th>
+                                            <th wire:click="order('nombre')"
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Nombre
+                                                <i class="fas fa-sort float-right mt-1"></i>
+                                            </th>
+                                            <th wire:click="order('dueño')"
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Dueño
+                                                <i class="fas fa-sort float-right mt-1"></i>
+                                            </th>
+                                            <th wire:click="order('direccion')"
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Direccion
+                                                <i class="fas fa-sort float-right mt-1"></i>
+                                            </th>
+                                            <th wire:click="order('telefono')"
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Telefono
+                                                <i class="fas fa-sort float-right mt-1"></i>
+                                            </th>
+                                            <th wire:click="order('pago')"
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Pago
+                                                <i class="fas fa-sort float-right mt-1"></i>
+                                            </th>
+                                            <th wire:click="order('estadonombre')"
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Estado
+                                                <i class="fas fa-sort float-right mt-1"></i>
+                                            </th>
+                                            <th
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Acciones
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($torres as $torre)
+                                        <tr class="">
+                                            <td class="px-5 py-4 border-b border-gray-200 bg-white text-base ">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $torre->id }}
+                                                </p>
+                                            </td>
+                                            <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $torre->nombre }}
+                                                </p>
+                                            </td>
+                                            <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $torre->dueño }}</p>
+                                            </td>
+                                            <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $torre->direccion }}
+                                                </p>
+                                            </td>
+                                            <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $torre->telefono }}
+                                                </p>
+                                            </td>
+                                            <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $torre->mensualidad }}
+                                                </p>
+                                            </td>
+                                            <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $torre->estadonombre }}
+                                                </p>
+                                            </td>
+                                            <td class="px-5 py-3 border-b border-gray-200 text-sm text-center">
+                                                <a wire:click="edit({{$torre->id}})" class="btn2 btn-blue mb-3 py-2">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a wire:click="$emit('cambiarestado', {{ $torre->id }})"
+                                                    class="btn2 btn-red mb-3 py-2">
+                                                    @if ($torre->estadoid == 2)
+                                                    <i class="fas fa-toggle-off"></i>
                                                     @else
-                                                        {{-- SI ES CLICKEA POR PRIMERA VEZ EN ID PONER SU ICONO --}}
-                                                        <i class="fas fa-sort float-right mt-1"></i>
+                                                    <i class="fas fa-toggle-on"></i>
                                                     @endif
-                                                </th>
-                                                <th wire:click="order('nombre')"
-                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                    Nombre
-                                                    <i class="fas fa-sort float-right mt-1"></i>
-                                                </th>
-                                                <th wire:click="order('dueño')"
-                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                    Dueño
-                                                    <i class="fas fa-sort float-right mt-1"></i>
-                                                </th>
-                                                <th wire:click="order('pago')"
-                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                    Pago
-                                                    <i class="fas fa-sort float-right mt-1"></i>
-                                                </th>
-                                                <th wire:click="order('telefono')"
-                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                    Telefono
-                                                    <i class="fas fa-sort float-right mt-1"></i>
-                                                </th>
-                                                <th wire:click="order('direccion')"
-                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                    Direccion
-                                                    <i class="fas fa-sort float-right mt-1"></i>
-                                                </th>
-                                                <th
-                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                    Acciones
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($torres as $torre)
-                                                <tr class="">
-                                                    <td class="px-5 py-4 border-b border-gray-200 bg-white text-base ">
-                                                        <div class="flex items-center">
-                                                            <div class="ml-3">
-                                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                                    {{ $torre->id }}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">
-                                                        <div class="flex items-center">
-                                                            <div class="ml-3">
-                                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                                    {{ $torre->nombre }}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
-                                                        <p class="text-gray-900 whitespace-no-wrap">
-                                                            {{ $torre->dueño }}</p>
-                                                    </td>
-                                                    <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
-                                                        <p class="text-gray-900 whitespace-no-wrap">
-                                                            {{ $torre->mensualidad }}
-                                                        </p>
-                                                    </td>
-                                                    <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
-                                                        <p class="text-gray-900 whitespace-no-wrap">
-                                                            {{ $torre->telefono }}
-
-                                                        </p>
-                                                    </td>
-                                                    <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
-                                                        <p class="text-gray-900 whitespace-no-wrap">
-                                                            {{ $torre->direccion }}
-                                                        </p>
-                                                    </td>
-                                                    <td
-                                                        class=" px-5 py-1 border-b border-gray-200 bg-white text-sm text-center">
-
-                                                        <button wire:click="edit({{ $torre->id }})" type="button"
-                                                            class="btn btn-info rounded-pill mx-1 my-1"
-                                                            data-toggle="modal" data-target="#updateModal">
-                                                            Editar
-                                                        </button>
-                                                        <button wire:click="$emit('deletServidor', {{ $torre->id }})"
-                                                            type="button" class="btn btn-danger rounded-pill mx-1 my-1">
-                                                            Eliminar
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                    @if ($torres->hasPages())
-                                        <div class="px-6 py-3">
-                                            {{ $torres->links() }}
-                                        </div>
-                                    @endif
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                @if ($torres->hasPages())
+                                <div class="px-6 py-3">
+                                    {{ $torres->links() }}
+                                </div>
+                                @endif
                                 @else
-                                    <div class="px-6 py-4">
-                                        No existe ningún registro coincidente
-                                    </div>
+                                <div class="px-6 py-4">
+                                    No existe ningún registro coincidente
+                                </div>
                                 @endif
                             </div>
                         </div>
@@ -200,27 +201,26 @@
 
     @include('livewire.admin.torre.modaleditar')
     <script>
-        livewire.on('deletServidor', torreID => {
-            Swal.fire({
-                title: 'Estás seguro?',
-                text: "¡No podrás revertir esto!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: '¡Sí, bórralo!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    @this.call('delete', torreID)
-                    // Livewire.emitTo('ShowServidor', 'delete', serverid);
-                    Swal.fire(
-                        'Deleted!',
-                        'El servidor ha sido eliminado.',
-                        'success'
-                    )
-                }
-            })
-        });
+        livewire.on('cambiarestado', deletid => {
+        Swal.fire({
+            title: 'Estás seguro?',
+            text: "¡No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡Sí, Actualizar!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                @this.call('cambiarestado', deletid)
+                Swal.fire(
+                    'Actualizado!',
+                    'La Torre ha cambiado su estado con éxito.',
+                    'success'
+                )
+            }
+        })
+    });
     </script>
     <script>
         window.livewire.on('cerrarModalCrear', () => {

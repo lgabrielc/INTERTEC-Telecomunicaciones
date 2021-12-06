@@ -1,8 +1,8 @@
 <div>
     <!-- Button trigger modal -->
-    <div class="container mx-auto">
+    <div class="w-full">
         <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-1 content-center">
-            <div class="px-4 mb-4">
+            <div class="pt-4 px-4 mb-2">
                 <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
                     <div class="flex flex-wrap border-b border-gray-200 undefined">
                         <div
@@ -26,7 +26,7 @@
     <div class=" max-w-7x1 mx-auto px-4 sm:px-6 lg:px-8 ">
         <div class="w-full">
             <div class="bg-white  rounded-2xl px-10 py-8 shadow-lg hover:shadow-2xl transition duration-500 w-full">
-                <div class="container w-full">
+                <div class="w-full">
                     <div class=w-full">
                         <h1 class="text-2xl font-semibold leading-tight mb-2">Gestionar Caja Nap</h1>
                         @include('livewire.admin.nap.modalcrear')
@@ -90,40 +90,43 @@
                                                 <i class="fas fa-sort float-right mt-1"></i>
                                                 @endif
                                             </th>
-                                            <th wire:click="order('nombre')"
+                                            <th wire:click="order('napnombre')"
                                                 class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 Nombre
                                                 <i class="fas fa-sort float-right mt-1"></i>
                                             </th>
-                                            <th wire:click="order('slots')"
+                                            <th wire:click="order('napslot')"
                                                 class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 Slots
                                                 <i class="fas fa-sort float-right mt-1"></i>
                                             </th>
-                                            <th wire:click="order('gpon_id')"
+                                            <th wire:click="order('gponnombre')"
                                                 class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 Gpon
                                                 <i class="fas fa-sort float-right mt-1"></i>
                                             </th>
-                                            <th
-                                                class=" px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                            <th wire:click="order('tarjetanombre')"
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 Tarjeta
-                                            </th>
-                                            <th
-                                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                <i class="fas fa-sort float-right mt-1"></i>
+                                            </th> 
+                                            <th wire:click="order('oltnombre')"
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 Olt
+                                                <i class="fas fa-sort float-right mt-1"></i>
                                             </th>
-                                            <th
-                                                class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                            <th wire:click="order('datacenternombre')"
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 DataCenter
+                                                <i class="fas fa-sort float-right mt-1"></i>
                                             </th>
-                                            <th wire:click="order('estado_id')"
+                                            <th wire:click="order('estadonombre')"
                                                 class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 Estado
                                                 <i class="fas fa-sort float-right mt-1"></i>
                                             </th>
                                             <th
-                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                class="cursor-pointer px-3 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 Acciones
                                             </th>
                                         </tr>
@@ -145,57 +148,52 @@
                                                 <div class="flex items-center">
                                                     <div class="ml-3">
                                                         <p class="text-gray-900 whitespace-no-wrap">
-                                                            {{ $nap->nombre }}
+                                                            {{ $nap->napnombre }}
                                                         </p>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
                                                 <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $nap->slots }}</p>
+                                                    {{ $nap->napslot }}</p>
                                             </td>
                                             <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
                                                 <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $nap->gpon->nombre }}
+                                                    {{ $nap->gponnombre }}
                                                 </p>
                                             </td>
                                             <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
                                                 <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $nap->gpon->tarjeta->nombre }}
+                                                    {{ $nap->tarjetanombre }}
                                                 </p>
                                             </td>
                                             <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
                                                 <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $nap->gpon->tarjeta->olt->nombre }}
+                                                    {{ $nap->oltnombre }}
                                                 </p>
                                             </td>
                                             <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
                                                 <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $nap->gpon->tarjeta->olt->centrodato->nombre }}
+                                                    {{ $nap->datacenternombre }}
                                                 </p>
                                             </td>
                                             <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
                                                 <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $nap->estado->nombre }}
+                                                    {{ $nap->estadonombre }}
                                                 </p>
                                             </td>
-                                            <td class="px-5 py-1 border-b border-gray-200 bg-white text-sm text-center">
-                                                <button wire:click="edit({{ $nap->id }})" type="button"
-                                                    class="btn btn-info rounded-pill mx-1" data-toggle="modal"
-                                                    data-target="#updateModal">
-                                                    Editar
-                                                </button>
-                                                @if ($nap->estado->nombre != 'Activo')
-                                                <button wire:click="$emit('cambiarestado', {{ $nap->id }})"
-                                                    type="button" class="btn btn-danger rounded-pill mt-1">
-                                                    Activar
-                                                </button>
-                                                @else
-                                                <button wire:click="$emit('cambiarestado', {{ $nap->id }})"
-                                                    type="button" class="btn btn-danger rounded-pill mt-1">
-                                                    Deshabilitar
-                                                </button>
-                                                @endif
+                                            <td class="px-3 py-1 border-b border-gray-200 text-sm text-center">
+                                                <a wire:click="edit({{$nap->id}})" class="btn2 btn-blue mb-1 py-2">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a wire:click="$emit('cambiarestado', {{ $nap->id }})"
+                                                    class="btn2 btn-red mb-1 py-2">
+                                                    @if ($nap->estadoid == 2)
+                                                    <i class="fas fa-toggle-off"></i>
+                                                    @else
+                                                    <i class="fas fa-toggle-on"></i>
+                                                    @endif
+                                                </a>
                                             </td>
                                         </tr>
                                         @endforeach

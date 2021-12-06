@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@section('title', 'Modulo Cajas Nap')
+@section('title', 'Modulo Pagos')
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="{{ mix('css/app.css') }}">
@@ -8,8 +8,7 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 @section('content')
-
-@livewire('admin.nap.nap-show')
+@livewire('admin.reporte-cliente.show-reporte-cliente')
 @stop
 @livewireScripts
 <script>
@@ -24,5 +23,4 @@
 @stack('modals')
 @stack('js')
 @section('js')
-
 @stop

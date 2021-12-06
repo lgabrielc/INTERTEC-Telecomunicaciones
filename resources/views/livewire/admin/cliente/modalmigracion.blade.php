@@ -1,6 +1,6 @@
-<x-jet-dialog-modal wire:model='vermodalcrearservicio'>
+<x-jet-dialog-modal wire:model='vermodalmigracion'>
     <x-slot name="title">
-        Agregar Servicio
+        Servicio del Cliente
     </x-slot>
     <x-slot name="content">
         <div class="flex flex-col w-full md:flex-row">
@@ -15,19 +15,14 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Tipo de Servicio
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model='tiposervicio'
-                    wire:change='cambiartipodeservicio' required>
-                    <option value="" selected>-Escoja el Tipo de Servicio-</option>
-                    <option value="Antena">Antena</option>
-                    <option value="Fibra">Fibra Optica</option>
-                </select>
+                <x-jet-input type="text" class="block w-full px-6" value="{{ $tiposervicio }}" disabled />
                 @error('tiposervicio')
                 <div class="text-red-500">{{ $message }}</div>
                 @enderror
             </div>
         </div>
         <div class="flex flex-col w-full md:flex-row">
-            @if ($tiposervicio == 'Fibra' && $vermodalcrearservicio == true && $vermodalfibra == false)
+            @if ($tiposervicio == 'Fibra' && $vermodalmigracion == true && $vermodalfibra == false)
             <div class="w-full p-2 ">
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     DataCenter
@@ -44,7 +39,7 @@
                 @enderror
             </div>
             @endif
-            @if (is_numeric($datacenterid) && $vermodalcrearservicio == true && $vermodalfibra == false)
+            @if ($tiposervicio == 'Fibra' && is_numeric($datacenterid) && $vermodalmigracion == true && $vermodalfibra == false)
             <div class="w-full p-2 ">
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Olt
@@ -63,7 +58,7 @@
             @endif
         </div>
         <div class="flex flex-col w-full md:flex-row">
-            @if (is_numeric($oltid) && is_numeric($datacenterid) && $vermodalcrearservicio == true && $vermodalfibra
+            @if ($tiposervicio == 'Fibra' && is_numeric($oltid) && is_numeric($datacenterid) && $vermodalmigracion == true && $vermodalfibra
             == false)
             <div class="w-full p-2 ">
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
@@ -82,7 +77,7 @@
                 @enderror
             </div>
             @endif
-            @if (is_numeric($tarjetaid) && is_numeric($oltid) && is_numeric($datacenterid)&& $vermodalcrearservicio ==
+            @if ($tiposervicio == 'Fibra' && is_numeric($tarjetaid) && is_numeric($oltid) && is_numeric($datacenterid)&& $vermodalmigracion ==
             true && $vermodalfibra == false)
             <div class="w-full p-2 ">
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
@@ -105,14 +100,13 @@
 
         <div class="flex flex-col w-full md:flex-row">
 
-            @if (is_numeric($tarjetaid) && is_numeric($oltid) && is_numeric($datacenterid) &&
-            is_numeric($gponid)&& $vermodalcrearservicio == true && $vermodalfibra == false)
+            @if ($tiposervicio == 'Fibra' && is_numeric($tarjetaid) && is_numeric($oltid) && is_numeric($datacenterid) &&
+            is_numeric($gponid)&& $vermodalmigracion == true && $vermodalfibra == false)
             <div class="w-full p-2 ">
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Caja Nap
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="napid"
-                    required>
+                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="napid" required>
                     <option value="" selected>-Escoja una Caja Nap-</option>
                     @foreach ($gponnaprelacionado->naps as $nap)
                     <option value="{{ $nap->id }}">{{ $nap->nombre }}&nbsp,&nbsp
@@ -124,14 +118,13 @@
                 @enderror
             </div>
             @endif
-            @if (is_numeric($tarjetaid) && is_numeric($oltid) && is_numeric($datacenterid) &&
+            @if ($tiposervicio == 'Fibra' && is_numeric($tarjetaid) && is_numeric($oltid) && is_numeric($datacenterid) &&
             is_numeric($gponid) && is_numeric($napid))
             <div class="w-full p-2 ">
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Numero del Cliente
                 </label>
-                <x-jet-input type="text" class="block w-full px-6" placeholder="Ejm: 1001"
-                    wire:model='clientegpon' />
+                <x-jet-input type="text" class="block w-full px-6" placeholder="Ejm: 1001" wire:model='clientegpon' />
                 @error('clientegpon')
                 <div class="text-red-500">{{ $message }}</div>
                 @enderror
@@ -225,7 +218,6 @@
                 </label>
                 <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model.defer='plan'
                     required>
-                    <option value="" select>-Escoja una Plan de Internet-</option>
                     @foreach ($totalplanes as $plan)
                     <option value="{{ $plan->id }}">
                         {{ $plan->nombre }}&nbsp{{ $plan->descarga }} </option>
@@ -239,16 +231,16 @@
     </x-slot>
 
     <x-slot name="footer">
-        <x-jet-secondary-button wire:click="$set('vermodalcrearservicio',false)" wire:loading.attr="disabled"
+        <x-jet-secondary-button wire:click="$set('vermodalmigracion',false)" wire:loading.attr="disabled"
             class="float-left">
-            {{ __('Cancel') }}
+            {{ __('Volver Atras') }}
         </x-jet-secondary-button>
         @if ($this->tiposervicio == 'Fibra')
-        <x-jet-danger-button wire:click="saveserviciofibra" wire:loading.attr="disabled">
+        <x-jet-danger-button wire:click="savemigrarfibra" wire:loading.attr="disabled">
             {{ __('Guardar Cambios') }}
         </x-jet-danger-button>
         @elseif ($this->tiposervicio == 'Antena')
-        <x-jet-danger-button wire:click="saveservicioantena" wire:loading.attr="disabled">
+        <x-jet-danger-button wire:click="savemigrarantena" wire:loading.attr="disabled">
             {{ __('Guardar Cambios') }}
         </x-jet-danger-button>
         @endif

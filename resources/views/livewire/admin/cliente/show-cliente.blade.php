@@ -1,7 +1,7 @@
 <div>
-    <div class="container mx-auto">
+    <div class="w-full mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 content-center">
-            <div class="px-4 mb-4">
+            <div class="pt-4 px-4 mb-2">
                 <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
                     <div class="flex flex-wrap border-b border-gray-200 undefined">
                         <div
@@ -21,7 +21,7 @@
                             total</span></div>
                 </div>
             </div>
-            <div class="px-4 mb-4">
+            <div class="pt-4 px-4 mb-2">
                 <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
                     <div class="flex flex-wrap border-b border-gray-200 undefined">
                         <div
@@ -50,7 +50,7 @@
     <div class=" max-w-7x1 mx-auto px-4 sm:px-6 lg:px-8 ">
         <div class="w-full">
             <div class="bg-white  rounded-2xl px-10 py-8 shadow-lg hover:shadow-2xl transition duration-500 w-full">
-                <div class="container w-full">
+                <div class="w-full">
                     <div class=w-full">
                         <h1 class="text-2xl font-semibold leading-tight mb-2">Gestionar Clientes</h1>
                         @include('livewire.admin.cliente.modalcrear')
@@ -185,33 +185,32 @@
                                                 <p class="text-gray-900 whitespace-no-wrap">
                                                     {{ $cliente->correo }}</p>
                                             </td>
-                                            <td class="py-1 border-b border-gray-200 bg-white text-sm text-center">
+                                            <td class="py-1 border-b border-gray-200 text-sm text-center">
                                                 @if ($cliente->servicio)
-                                                @if ($cliente->servicio['tiposervicio']=='Antena')
-                                                <button wire:click="verservicioantena({{ $cliente->id }})" type="button"
-                                                    class="btn btn-warning rounded-pill mx-1 my-1" data-toggle="modal"
-                                                    data-target="#modalverservicioantena">
-                                                    Ver Servicio Antena
-                                                </button>
-                                                @elseif ($cliente->servicio['tiposervicio']=='Fibra')
-                                                <button wire:click="verserviciofibra({{ $cliente->id }})" type="button"
-                                                    class="btn btn-warning rounded-pill mx-1 my-1" data-toggle="modal"
-                                                    data-target="#modalverserviciofibra">
-                                                    Ver Servicio de Fibra
-                                                </button>
-                                                @endif
+                                                    @if ($cliente->servicio['tiposervicio']=='Antena')
+                                                    <a wire:click="verservicioantena({{$cliente->id}})"
+                                                        class="btn2 btn-green mb-1 py-2">
+                                                        <i class="fas fa-broadcast-tower"></i>
+                                                    </a>
+                                                    @elseif ($cliente->servicio['tiposervicio']=='Fibra')
+                                                    <a wire:click="verserviciofibra({{$cliente->id}})"
+                                                        class="btn2 btn-yellow mb-1 py-2">
+                                                        <i class="fas fa-code-branch px-1"></i>
+                                                    </a>
+                                                    @endif
+                                                    <a wire:click="vermigracion({{$cliente->id}})"
+                                                        class="btn2 btn-purple mb-1 py-2">
+                                                        <i class="fas fa-exchange-alt"></i>
+                                                    </a>
                                                 @else
-                                                <button wire:click="agregarservicio({{ $cliente->id }})" type="button"
-                                                    class="btn btn-secondary rounded-pill mx-1 my-1" data-toggle="modal"
-                                                    data-target="#modalcrearservicio">
-                                                    Agregar Servicio
-                                                </button>
+                                                <a wire:click="activarmodalcrearservicio({{$cliente->id}})"
+                                                    class="btn2 btn-red mb-1 py-2">
+                                                    <i class="fas fa-plus-square"></i>
+                                                </a>
                                                 @endif
-                                                <button wire:click="edit({{ $cliente->id }})" type="button"
-                                                    class="btn btn-info rounded-pill mx-1 my-1" data-toggle="modal"
-                                                    data-target="#updateModal">
-                                                    Editar
-                                                </button>
+                                                <a wire:click="edit({{$cliente->id}})" class="btn2 btn-blue mb-1 py-2">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -239,6 +238,7 @@
     @include('livewire.admin.cliente.modalcrearservicio')
     @include('livewire.admin.cliente.modalverserviciofibra')
     @include('livewire.admin.cliente.modalverservicioantena')
+    @include('livewire.admin.cliente.modalmigracion')
     <script>
         livewire.on('deletthis', deletID => {
             Swal.fire({
@@ -252,7 +252,6 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     @this.call('delete', deletID)
-                    // Livewire.emitTo('ShowServidor', 'delete', serverid);
                     Swal.fire(
                         'Deleted!',
                         'El Cli ha sido eliminado.',

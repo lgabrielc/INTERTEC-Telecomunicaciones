@@ -1,8 +1,8 @@
 <div>
     <!-- Button trigger modal -->
-    <div class="container mx-auto">
+    <div class="w-full">
         <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-1 content-center">
-            <div class="px-4 mb-4">
+            <div class="pt-4 px-4 mb-2">
                 <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
                     <div class="flex flex-wrap border-b border-gray-200 undefined">
                         <div
@@ -25,10 +25,10 @@
     {{-- axxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxa --}}
     <div class=" max-w-7x1 mx-auto px-4 sm:px-6 lg:px-8 ">
         <div class="w-full">
-            <div class="bg-white  rounded-2xl px-10 py-8 shadow-lg hover:shadow-2xl transition duration-500 w-full">
-                <div class="container w-full">
+            <div class="bg-white  rounded-2xl px-8 py-6 shadow-lg hover:shadow-2xl transition duration-500 w-full">
+                <div class="w-full">
                     <div class=w-full">
-                        <h1 class="text-2xl font-semibold leading-tight mb-2">Gestionar DataCenters</h1>
+                        <h1 class="text-2xl font-semibold leading-tight mb-2">Gestionar Data Centers</h1>
                         @include('livewire.admin.datacenter.modalcrear')
                         <div class="my-2 flex sm:flex-row flex-col">
                             <div class="pr-2 flex flex-row mb-1 sm:mb-0 content-center justify-center">
@@ -74,7 +74,7 @@
                                     <thead>
                                         <tr>
                                             <th wire:click="order('id')"
-                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                class="cursor-pointer mx-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 ID
                                                 @if ($sort == 'id')
                                                 @if ($direction == 'asc')
@@ -91,7 +91,7 @@
                                                 @endif
                                             </th>
                                             <th wire:click="order('nombre')"
-                                                class="cursor-pointer  py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                class="cursor-pointer mx-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 Nombre
                                                 <i class="fas fa-sort  mt-1"></i>
                                             </th>
@@ -124,74 +124,52 @@
                                     <tbody>
                                         @foreach ($datacenters as $datacenter)
                                         <tr class="">
-                                            <td class="
-                                            px-5 py-4 border-b border-gray-200 bg-white text-base ">
-                                                <div class="  flex items-center">
-                                                    <div class="ml-3">
-                                                        <p class="text-gray-900 whitespace-no-wrap">
-                                                            {{ $datacenter->id }}
-                                                        </p>
-                                                    </div>
-                                                </div>
+                                            <td class="py-2 border-b border-gray-200 bg-white text-center">
+                                                {{-- <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $datacenter->id }}</p> --}}
+                                                    {{ $datacenter->id }}
                                             </td>
-                                            <td class=" py-4 border-b border-gray-200 bg-white text-base">
-                                                <div class="flex items-center">
-                                                    <div class="ml-3">
-                                                        <p class="text-gray-900 whitespace-no-wrap">
-                                                            {{ $datacenter->nombre }}
-                                                        </p>
-                                                    </div>
-                                                </div>
+                                            <td class=" py-2 border-b border-gray-200 bg-white text-base">
+                                                {{-- <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $datacenter->nombre }}</p> --}}
+                                                    {{ $datacenter->nombre }}
                                             </td>
                                             <td class=" py-1 border-b border-gray-200 bg-white text-base">
-                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $datacenter->ubicacion }}</p>
+                                                {{-- <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $datacenter->ubicacion }}</p> --}}
+                                                    {{ $datacenter->ubicacion }}
                                             </td>
                                             <td class=" py-1 border-b border-gray-200 bg-white text-base">
-                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                {{-- <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $datacenter->direccion }} --}}
                                                     {{ $datacenter->direccion }}
                                                 </p>
                                             </td>
                                             <td class=" py-1 border-b border-gray-200 bg-white text-base">
-                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                {{-- <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $datacenter->encargado }} --}}
                                                     {{ $datacenter->encargado }}
                                                 </p>
                                             </td>
                                             <td class=" py-1 border-b border-gray-200 bg-white text-base">
-                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $datacenter->estado->nombre }}
+                                                {{-- <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $datacenter->estado->nombre }} --}}
+                                                    {{ $datacenter->estadonombre }}
                                                 </p>
                                             </td>
-                                            <td
-                                                class="px-3 py-1 border-b border-gray-200 bg-white text-sm text-center  mx-3">
-
-                                                <button wire:click="edit({{ $datacenter->id }})" type="button"
-                                                    class="btn btn-info rounded-pill mx-1" data-toggle="modal"
-                                                    data-target="#updateModal">
-                                                    Editar
-                                                </button>
-
-                                                @if ($datacenter->olts)
-                                                @if ($datacenter->estado->nombre != 'Activo')
-                                                <button wire:click="$emit('deletthis', {{ $datacenter->id }})"
-                                                    type="button" class="btn btn-danger rounded-pill mt-1">
-                                                    Activar
-                                                </button>
-                                                @else
-                                                <button wire:click="$emit('deletthis', {{ $datacenter->id }})"
-                                                    type="button" class="btn btn-danger rounded-pill mt-1">
-                                                    Deshabilitar
-                                                </button>
-
-                                                @endif
-                                                @else
-
-                                                <button wire:click="$emit('deletthis', {{ $datacenter->id }})"
-                                                    type="button" class="btn btn-danger rounded-pill mt-1">
-                                                    Eliminar
-                                                </button>
-                                                @endif
-
+                                            <td class="px-3 py-1 border-b border-gray-200 text-sm text-center">
+                                                <a wire:click="edit({{$datacenter->id}})"
+                                                    class="btn2 btn-blue mb-1 py-2">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a wire:click="$emit('cambiarestado', {{ $datacenter->id }})"
+                                                    class="btn2 btn-red mb-1 py-2">
+                                                    @if ($datacenter->estadoid == 2)
+                                                    <i class="fas fa-toggle-off"></i>
+                                                    @else
+                                                    <i class="fas fa-toggle-on"></i>
+                                                    @endif
+                                                </a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -217,7 +195,7 @@
     </div>
     @include('livewire.admin.datacenter.modaleditar')
     <script>
-        livewire.on('deletthis', activarid => {
+        livewire.on('cambiarestado', activarid => {
         Swal.fire({
             title: 'Estás seguro?',
             text: "¡Cambiaras el estado esto!",
@@ -237,14 +215,6 @@
                 )
             }
         })
-    });
-    </script>
-    <script>
-        window.livewire.on('cerrarModalCrearDataCenter', () => {
-        $('#modalcrear').modal('hide');
-    });
-    window.livewire.on('cerrarModalEditarDataCenter', () => {
-        $('#updateModal').modal('hide');
     });
     </script>
 </div>

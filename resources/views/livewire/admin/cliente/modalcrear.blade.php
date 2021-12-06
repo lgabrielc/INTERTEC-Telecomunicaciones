@@ -1,62 +1,76 @@
-<button type="button" class="btn btn-success rounded-pill" data-toggle="modal" data-target="#exampleModal">
-    Crear Nuevo
-</button>
+<a wire:click="activarmodalcrearcliente" class="btn2 btn-green mx-2 py-2">
+    <i class="fas fa-plus"></i>
+</a>
 
-<!-- Modal -->
-<div wire:ignore.self class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Crear nuevo Cliente</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true close-btn">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Nombre * </label>
-                    <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                        placeholder="Ejm: Castiel Luis" wire:model.defer="nombre">
-                    @error('nombre') <span class="text-danger error">{{ $message }}</span>@enderror
-                </div>
-                <div class="form-group">
-                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Apellido * </label>
-                    <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                        wire:model.defer="apellido" placeholder="Ejm: Torres Castro">
-                    @error('apellido') <span class="text-danger error">{{ $message }}</span>@enderror
-                </div>
-                <div class="form-group">
-                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">DNI * </label>
-                    <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                        wire:model.defer="dni" placeholder="Ejm: 1597532">
-                    @error('dni') <span class="text-danger error">{{ $message }}</span>@enderror
-                </div>
-                <div class="form-group">
-                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Direccion * </label>
-                    <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                        wire:model.defer="direccion" placeholder="Ejm: Noveno Gr.1 Lt.10">
-                    @error('direccion') <span class="text-danger error">{{ $message }}</span>@enderror
-                </div>
-                <div class="form-group">
-                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Telefono * </label>
-                    <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                        wire:model.defer="telefono" placeholder="Ejm: 985652369">
-                    @error('telefono') <span class="text-danger error">{{ $message }}</span>@enderror
-                </div>
-                <div class="form-group">
-                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Correo (Opcional)</label>
-                    <input type="email" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                        wire:model.defer="correo" placeholder="Ejm: CastielC@hotmail.com">
-                    @error('correo') <span class="text-danger error">{{ $message }}</span>@enderror
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-info close-btn rounded-pill" data-dismiss="modal">Cancelar</button>
-                <button type="button" wire:click.prevent="save" wire:loading.attr="disabled"
-                    class="btn btn-danger close-modal rounded-pill">Guardar
-                    Cambios</button>
-            </div>
+<x-jet-dialog-modal wire:model='vermodalcrearcliente'>
+    <x-slot name="title">
+        Agregar nuevo Cliente
+    </x-slot>
+    <x-slot name="content">
+        <div class="mb-4">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Nombre *
+            </label>
+            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: Castiel Luis"
+                wire:model.defer="nombre" />
+            @error('nombre')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
         </div>
-    </div>
-</div>
+        <div class="mb-4">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Apellido *
+            </label>
+            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: Torres Castro" wire:model.defer="apellido" />
+            @error('apellido')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                DNI *
+            </label>
+            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: 1597532" wire:model.defer="dni" />
+            @error('dni')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Direccion *
+            </label>
+            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: Noveno Gr.1 Lt.10" wire:model.defer="direccion" />
+            @error('direccion')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Telefono *
+            </label>
+            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: 985652369" wire:model.defer="telefono" />
+            @error('telefono')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Correo (Opcional)
+            </label>
+            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: CastielC@hotmail.com" wire:model.defer="correo" />
+            @error('correo')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
+        </div>
+    </x-slot>
+
+    <x-slot name="footer">
+        <x-jet-secondary-button wire:click="$set('vermodalcrearcliente',false)" wire:loading.attr="disabled"
+            class="float-left">
+            {{ __('Cancel') }}
+        </x-jet-secondary-button>
+        <x-jet-danger-button wire:click="save" wire:loading.attr="disabled">
+            {{ __('Guardar Cambios') }}
+        </x-jet-danger-button>
+    </x-slot>
+</x-jet-dialog-modal>

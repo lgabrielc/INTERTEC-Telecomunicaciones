@@ -1,4 +1,4 @@
-<div wire:ignore.self class="modal fade" id="updateModal" tabindex="-1" role="dialog"
+{{-- <div wire:ignore.self class="modal fade" id="updateModal" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -19,7 +19,6 @@
                     </select>
                     @error('datacenterid') <span class="text-danger error">{{ $message }}</span>@enderror
                 </div>
-                {{-- OLT POR DEFECTO DEL ID SELECCIONADO --}}
                 @if ($datacenterselect == null && isset($objprueba))
                 <div class="form-group">
                     <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Olt</label>
@@ -29,7 +28,6 @@
                     @error('oltide') <span class="text-danger error">{{ $message }}</span>@enderror
                 </div>
                 @endif
-                {{-- OLTS A ESCOJER SI SE DECIDE EDITAR --}}
                 @if ($datacenterselect != null)
                 <div class="form-group">
                     <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Olt</label>
@@ -42,17 +40,14 @@
                     @error('oltidnuevo') <span class="text-danger error">{{ $message }}</span>@enderror
                 </div>
                 @endif
-                {{-- TARJETA POR DEFECTO --}}
                 @if ($datacenterselect == null && isset($objprueba))
                 <div class="form-group">
                     <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Tarjeta</label>
                     <select class="block text-sm py-3 px-4 rounded w-full border outline-none">
                         <option value="{{ $tarjetaide }}">{{ $tarjetanombre }}</option>
                     </select>
-                    {{-- @error('oltid') <span class="text-danger error">{{ $message }}</span>@enderror --}}
                 </div>
                 @endif
-                {{-- NUEVA TARJETA --}}
                 @if (is_numeric($oltidnuevo))
                 <div class="form-group">
                     <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Tarjeta</label>
@@ -67,18 +62,15 @@
                     @error('tarjetaidnuevo') <span class="text-danger error">{{ $message }}</span>@enderror
                 </div>
                 @endif
-                {{-- GPON POR DEFECTO --}}
                 @if ($datacenterselect == null && isset($objprueba))
                 <div class="form-group">
                     <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Gpon</label>
                     <select class="block text-sm py-3 px-4 rounded w-full border outline-none">
                         <option value="{{ $gponide }}">{{ $gponnombre }}</option>
                     </select>
-                    {{-- @error('oltid') <span class="text-danger error">{{ $message }}</span>@enderror --}}
                 </div>
                 {{ $tarjetaid }}
                 @endif
-                {{-- Gpon a escojer si se quiere actualizar uno nuevo --}}
                 @if (is_numeric($tarjetaidnuevo) && is_numeric($oltidnuevo))
                 <div class="form-group">
                     <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Gpon</label>
@@ -128,4 +120,158 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
+
+{{-- ---------- --}}
+<x-jet-dialog-modal wire:model='vermodaleditar'>
+    <x-slot name="title">
+        Editar Caja Nap
+    </x-slot>
+    <x-slot name="content">
+        <div class="mb-3">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                DataCenter
+            </label>
+            <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="datacenterid"
+                wire:change='generarolts'>
+                @foreach ($totaldatacenters as $datacenter)
+                <option value="{{ $datacenter->id }}">{{ $datacenter->nombre }}</option>
+                @endforeach
+            </select>
+            @error('datacenterid')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
+        </div>
+        @if (!$datacenterselect)
+        <div class="mb-3">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Olt
+            </label>
+            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="oltnombre" disabled />
+        </div>
+        @endif
+        @if (!$datacenterselect)
+        <div class="mb-3">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Tarjeta
+            </label>
+            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="tarjetanombre" disabled />
+        </div>
+        @endif
+        @if (!$datacenterselect)
+        <div class="mb-3">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Gpon
+            </label>
+            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="gponnombre" disabled />
+        </div>
+        @endif
+        @if (is_numeric($datacenterid) && isset($datacenterselect))
+        <div class="mb-3">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Olt
+            </label>
+            <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="oltid"
+                wire:change='olttarjetarelacion'>
+                <option value="">-Escoja una Olt-</option>
+                @foreach ($datacenterselect->olts as $olt)
+                <option value="{{ $olt->id }}">{{ $olt->nombre }}</option>
+                @endforeach
+            </select>
+            @error('oltid')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
+        </div>
+        @endif
+
+        @if ($olttarjetarelacionado && is_numeric($oltid) && is_numeric($datacenterid))
+        <div class="mb-3">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Tarjeta
+            </label>
+            <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="tarjetaid"
+                wire:change='tarjetagponrelacion'>
+                <option value="">-Escoja una Tarjeta-</option>
+                @foreach ($olttarjetarelacionado->tarjetas as $tarjeta)
+                <option value="{{ $tarjeta->id }}">{{ $tarjeta->nombre }}&nbsp,&nbsp
+                    Slots:{{ $tarjeta->slots }}</option>
+                @endforeach
+            </select>
+            @error('tarjetaid')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
+        </div>
+        @endif
+
+        @if ($tarjetagponrelacionado && is_numeric($oltid) && is_numeric($datacenterid) && is_numeric($tarjetaid))
+        <div class="mb-3">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Gpon
+            </label>
+            <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="gponid"
+                wire:change='gponnaprelacion'>
+                <option value="">-Escoja una Gpon-</option>
+                @foreach ($tarjetagponrelacionado->gpons as $gpon)
+                <option value="{{ $gpon->id }}">{{ $gpon->nombre }}</option>
+                @endforeach
+            </select>
+            @error('gponid')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
+        </div>
+        @endif
+
+        @if ($gponnaprelacionado && is_numeric($oltid) && is_numeric($datacenterid) && is_numeric($tarjetaid) &&
+        is_numeric($gponid))
+        <div class="mb-3">
+            <label class=" block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Cajas Nap Registradas:
+                @foreach ($gponnaprelacionado->naps as $nap)
+                {{ $nap->nombre }};
+                @endforeach
+            </label>
+        </div>
+        @endif
+        <div class="mb-3">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Nombre
+            </label>
+            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: Nap 0"
+                wire:model.defer="nombre" />
+            @error('nombre')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Slots
+            </label>
+            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="slots" placeholder="Ejm: 15" />
+            @error('slots')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Estado
+            </label>
+            <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model='estado' required>
+                @foreach ($totalestados as $estados)
+                <option value={{$estados->id}} selected >{{$estados->nombre}}</option>
+                @endforeach
+            </select>
+            @error('estado')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
+        </div>
+    </x-slot>
+    <x-slot name="footer">
+        <x-jet-secondary-button wire:click="$set('vermodaleditar',false)" wire:loading.attr="disabled"
+            class="float-left">
+            {{ __('Cancelar') }}
+        </x-jet-secondary-button>
+        <x-jet-danger-button wire:click="update" wire:loading.attr="disabled">
+            {{ __('Guardar Cambios') }}
+        </x-jet-danger-button>
+    </x-slot>
+</x-jet-dialog-modal>

@@ -1,57 +1,63 @@
 <div class="text-right">
-    <button type="button" class="btn btn-success rounded-pill text-right" data-toggle="modal"
-        data-target="#modalcrearplan">
-        Crear Nuevo
-    </button>
+    <a wire:click="activarmodalcrearplan" class="btn2 btn-green mx-2 py-2">
+        <i class="fas fa-plus"></i>
+    </a>
 </div>
-<!-- Modal -->
-<div wire:ignore.self class="modal fade" id="modalcrearplan" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Crear Nuevo Plan de Internet</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true close-btn">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Nombre del Plan</label>
-                    <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                        placeholder="Ejm: Plan Básico" wire:model.defer="NombrePlan">
-                    @error('NombrePlan') <span class="text-danger error">{{ $message }}</span>@enderror
-                </div>
-                <div class="form-group">
-                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Velocidad de Descarga</label>
-                    <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                        placeholder="Ejm: 8MB" wire:model.defer="VelocidadDescarga">
-                    @error('VelocidadDescarga') <span class="text-danger error">{{ $message }}</span>@enderror
-                </div>
-                <div class="form-group">
-                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Velocidad de Subida</label>
-                    <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                        placeholder="Ejm: 6MB" wire:model.defer="VelocidadSubida">
-                    @error('VelocidadSubida') <span class="text-danger error">{{ $message }}</span>@enderror
-                </div>
-                <div class="form-group">
-                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Precio</label>
-                    <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                        placeholder="Ejm: 60.00" wire:model.defer="PrecioPlan">
-                    @error('PrecioPlan') <span class="text-danger error">{{ $message }}</span>@enderror
-                </div>
-            </div>
-            <div class="modal-footer flex">
-                <div class="text-left">
-                    <button type="button" class="btn btn-info close-btn rounded-pill "
-                        data-dismiss="modal">Cancelar</button>
-                </div>
-                <div class="text-right">
-                    <button type="button" wire:click.prevent="saveplan" wire:loading.attr="disabled"
-                        class="btn btn-danger close-modal rounded-pill">Guardar
-                        Cambios</button>
-                </div>
-            </div>
+
+<x-jet-dialog-modal wire:model='vermodalcrearplan'>
+    <x-slot name="title">
+        Agregar nuevo Plan
+    </x-slot>
+    <x-slot name="content">
+        <div class="mb-4">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Nombre del Plan*
+            </label>
+            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: Plan Básico"
+                wire:model.defer="nombre" />
+            @error('nombre')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
         </div>
-    </div>
-</div>
+        <div class="mb-4">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Velocidad de Descarga *
+            </label>
+            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: 10MB"
+                wire:model.defer="descarga" />
+            @error('descarga')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Velocidad de Subida *
+            </label>
+            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: 10MB" 
+            wire:model.defer="subida"  />
+            @error('subida')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Precio *
+            </label>
+            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: 60.00"
+                wire:model.defer="precio" />
+            @error('precio')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
+        </div>
+    </x-slot>
+
+    <x-slot name="footer">
+        <x-jet-secondary-button wire:click="$set('vermodalcrearplan',false)" wire:loading.attr="disabled"
+            class="float-left">
+            {{ __('Cancel') }}
+        </x-jet-secondary-button>
+        <x-jet-danger-button wire:click="saveplan" wire:loading.attr="disabled">
+            {{ __('Guardar Cambios') }}
+        </x-jet-danger-button>
+    </x-slot>
+</x-jet-dialog-modal>

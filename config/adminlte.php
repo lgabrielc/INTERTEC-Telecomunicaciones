@@ -31,7 +31,7 @@ return [
     */
 
     'use_ico_only' => true,
-    'use_full_favicon' => true,
+    'use_full_favicon' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -298,15 +298,15 @@ return [
             'url'  => 'admin/nap',
             'icon' => 'fas fa-inbox',
         ],
-        ['header' => 'account_settings'],
+        ['header' => 'GESTIONAR REPORTES'],
         [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
+            'text' => 'Pago cliente',
+            'url'  => 'admin/reportecliente',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
+            'text' => 'Reporte Pagos',
+            'url'  => 'admin/reportes',
             'icon' => 'fas fa-fw fa-lock',
         ],
 

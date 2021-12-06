@@ -2,10 +2,9 @@
 
 namespace App\Http\Livewire\Admin\Servidor;
 
-use App\Models\Direccion;
 use App\Models\Estado;
 use App\Models\Servidor;
-use App\Models\Telefono;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -13,27 +12,19 @@ class ShowServidor extends Component
 
 {
     use WithPagination;
-    public $search, $totalservidores, $nombre, $ipEntrada, $ipSalida,$totalestados;
+    public $search, $totalservidores, $nombre, $ipEntrada, $ipSalida, $totalestados,$servidorid;
     public $sort = 'id';
     public $direction = 'desc';
-    public $servidorEdit, $nombreEdit, $ipEntradaEdit, $ipSalidaEdit, $servidorid,$estado;
     public $cant = '5';
     public $open = false;
-    public $identificador;
-    public $prueba;
+    public $vermodaleditar = false;
+    public $vermodalcrear = false;
+    public $estado=1;
 
-    protected $rules = [
-        'nombre' => 'required|min:5|max:30',
-        'ipEntrada' => 'required|ipv4',
-        'ipSalida' => 'required|ipv4',
-        'estado' => 'required',
-    ];
     public function mount()
     {
-        $this->identificador = rand();
         $this->totalservidores = Servidor::count();
-        $this->totalestados = Estado::all();
-
+        $this->totalestados = Estado::where('nombre', "=", 'Activo')->orwhere('nombre', "=", 'Deshabilitado')->get();
     }
     public function order($sort)
     {
@@ -47,39 +38,49 @@ class ShowServidor extends Component
             $this->sort = $sort;
         }
     }
+    public function activarmodalcrear(){
+        $this->reset('nombre', 'ipEntrada', 'ipSalida', 'estado');
+        $this->vermodalcrear = true;
+    }
     public function edit(Servidor $servidor)
     {
+        $this->vermodaleditar = true;
         $this->servidorEdit = $servidor;
         $this->servidorid = $this->servidorEdit->id;
-        $this->nombreEdit = $this->servidorEdit->nombre;
-        $this->ipEntradaEdit = $this->servidorEdit->ipEntrada;
-        $this->ipSalidaEdit = $this->servidorEdit->ipSalida;
+        $this->nombre = $this->servidorEdit->nombre;
+        $this->ipEntrada = $this->servidorEdit->ipEntrada;
+        $this->ipSalida = $this->servidorEdit->ipSalida;
+        $this->estado = $this->servidorEdit->estado_id;
     }
     public function update()
     {
         $this->validate([
-            'nombreEdit' => 'required|min:5|max:30',
-            'ipEntradaEdit' => 'required|ipv4',
-            'ipSalidaEdit' => 'required|ipv4',
+            'nombre' => 'required|min:5|max:30',
+            'ipEntrada' => 'required|ipv4',
+            'ipSalida' => 'required|ipv4',
+            'estado' => 'required|numeric',
         ]);
-        
         if ($this->servidorid) {
             $updServidor = Servidor::find($this->servidorid);
             $updServidor->update([
-                'nombre' => $this->nombreEdit,
-                'ipEntrada' => $this->ipEntradaEdit,
-                'ipSalida' => $this->ipSalidaEdit,
+                'nombre' => $this->nombre,
+                'ipEntrada' => $this->ipEntrada,
+                'ipSalida' => $this->ipSalida,
+                'estado_id' => $this->estado,
             ]);
-            $this->reset(['nombreEdit', 'ipEntradaEdit', 'ipSalidaEdit']);
         }
         $this->totalservidores = Servidor::count();
-
-        $this->emit('cerrarModalEditarServidor');
+        $this->vermodaleditar = false;
         $this->emit('alert', 'El servidor se actualizo satisfactoriamente');
     }
     public function save()
     {
-        $this->validate();
+        $this->validate([
+            'nombre' => 'required|min:5|max:30',
+            'ipEntrada' => 'required|ipv4',
+            'ipSalida' => 'required|ipv4',
+            'estado' => 'required',
+        ]);
         Servidor::create([
             'nombre' => $this->nombre,
             'ipEntrada' => $this->ipEntrada,
@@ -87,27 +88,30 @@ class ShowServidor extends Component
             'estado_id' => $this->estado,
         ]);
         $this->totalservidores = Servidor::count();
-        $this->identificador = rand();
         $this->reset(['nombre', 'ipEntrada', 'ipSalida']);
-        $this->emit('cerrarModalCrearServidor');
+        $this->vermodalcrear = false;
         $this->emit('alert', 'El servidor se creo satisfactoriamente');
-    }
-    public function render()
-    {
-        $servidores = Servidor::where('nombre', 'like', '%' . $this->search . '%')
-            ->orwhere('ipEntrada', 'like', '%' . $this->search . '%')
-            ->orwhere('ipSalida', 'like', '%' . $this->search . '%')
-            ->orderBy($this->sort, $this->direction)
-            ->paginate($this->cant);
-        return view('livewire.admin.servidor.show-servidor', compact('servidores'));
     }
     public function cambiarestado(Servidor $servidor)
     {
         $estadoservidor = $servidor->estado_id;
         if ($estadoservidor == '1') {
             Servidor::where('id', $servidor->id)->update(['estado_id' => '2']);
-        }else{
+        } else {
             Servidor::where('id', $servidor->id)->update(['estado_id' => '1']);
         }
+    }
+    public function render()
+    {
+        $servidores = DB::table('servidores')
+            ->select('servidores.id as id', 'servidores.nombre as nombre', 'servidores.ipEntrada as ipEntrada', 'servidores.ipSalida as ipSalida', 'estados.nombre as estadonombre', 'estados.id as estadoid')
+            ->join('estados', 'servidores.estado_id', '=', 'estados.id')
+            ->where('servidores.nombre', 'like', '%' . $this->search . '%')
+            ->orwhere('servidores.ipEntrada', 'like', '%' . $this->search . '%')
+            ->orwhere('servidores.ipSalida', 'like', '%' . $this->search . '%')
+            ->orwhere('estados.nombre', 'like', '%' . $this->search . '%')
+            ->orderBy($this->sort, $this->direction)
+            ->paginate($this->cant);
+        return view('livewire.admin.servidor.show-servidor', compact('servidores'));
     }
 }

@@ -7,6 +7,7 @@ use App\Models\Estado;
 use App\Models\Olt;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\DB;
 
 
 class OltShow extends Component
@@ -17,12 +18,20 @@ class OltShow extends Component
     public $sort = 'id';
     public $direction = 'desc';
     public $cant = '5';
+    public $vermodalcrear = false;
+    public $vermodaleditar = false;
 
     public function mount()
     {
         $this->totalcontar = Olt::count();
         $this->totaldatacenters = Centrodato::where('estado_id', "=", '1')->get();
-        $this->estados = Estado::where('nombre', "=", 'Activo')->orwhere('nombre', "=", 'Deshabilitado')->get();
+        $this->totalestados = Estado::where('nombre', "=", 'Activo')->orwhere('nombre', "=", 'Deshabilitado')->get();
+    }
+    public function activarmodalcrear()
+    {
+        $this->vermodalcrear = true;
+        $this->reset(['nombre', 'slots', 'marca', 'modelo', 'datacenterid','datacenteride']);
+        $this->estado = "1";
     }
     public function save()
     {
@@ -35,7 +44,7 @@ class OltShow extends Component
             'marca' => 'required|min:3|max:50',
             'modelo' => 'required|min:3|max:50',
             'datacenterid' => 'required',
-            'estado_id' => 'required',
+            'estado' => 'required',
         ]);
 
         $NewOlt = Olt::create([
@@ -44,32 +53,36 @@ class OltShow extends Component
             'marca' => $this->marca,
             'modelo' => $this->modelo,
             'centrodato_id' => $this->datacenterid,
-            'estado_id' => $this->estado_id,
+            'estado_id' => $this->estado,
         ]);
         $this->totalcontar = Olt::count();
-        $this->reset(['nombre', 'slots', 'marca', 'modelo']);
-        $this->emit('cerrarModalCrear');
+        $this->reset(['nombre', 'slots', 'marca', 'modelo', 'datacenterid']);
+        $this->vermodalcrear = false;
         $this->emit('alert', 'El Olt se creo satisfactoriamente');
     }
     public function dataoltrelacionado()
     {
-        $dataCenter = Centrodato::find($this->datacenterid);
-        $this->dataoltrelacionado = $dataCenter;
+        if (is_numeric($this->datacenteride)) {
+            $dataCenter = Centrodato::find($this->datacenteride);
+            $this->dataoltrelacionado = $dataCenter;
+        }else {
+            $dataCenter = Centrodato::find($this->datacenterid);
+            $this->dataoltrelacionado = $dataCenter;
+        }
     }
-    public function cambiarestado($id)
+    public function cambiarestado(Olt $olt)
     {
-
-        $actualizarolt = Olt::find($id);
-        if ($actualizarolt->estado_id == '1') {
-            $this->estado_id = '2';
-            $actualizarolt->update(['estado_id' => $this->estado_id]);
+        $estadoacambiar = $olt->estado_id;
+        if ($estadoacambiar == '1') {
+            Olt::where('id', $olt->id)->update(['estado_id' => '2']);
         } else {
-            $this->estado_id = '1';
-            $actualizarolt->update(['estado_id' => $this->estado_id]);
+            Olt::where('id', $olt->id)->update(['estado_id' => '1']);
         }
     }
     public function edit(Olt $olt)
     {
+        $this->reset(['nombre', 'slots', 'marca', 'modelo', 'dataoltrelacionado','datacenterid','datacenteride']);
+        $this->vermodaleditar = true;
         $this->OltEdit = $olt;
         $this->oltid = $this->OltEdit->id;
         $this->nombre = $this->OltEdit->nombre;
@@ -98,8 +111,7 @@ class OltShow extends Component
                 'centrodato_id' => $this->datacenteride,
             ]);
         }
-        $this->reset(['nombre', 'slots', 'marca', 'modelo']);
-        $this->emit('cerrarModalEditar');
+        $this->vermodaleditar = false;
         $this->emit('alert', 'El Olt se actualizo satisfactoriamente');
     }
     public function delete($id)
@@ -127,12 +139,18 @@ class OltShow extends Component
     }
     public function render()
     {
-        $olts = Olt::where('nombre', 'like', '%' . $this->search . '%')
-            ->orwhere('slots', 'like', '%' . $this->search . '%')
-            ->orwhere('modelo', 'like', '%' . $this->search . '%')
-            ->orwhere('marca', 'like', '%' . $this->search . '%')
-            ->orderBy($this->sort, $this->direction)
-            ->paginate($this->cant);
+        $olts = DB::table('olts')
+        ->select('olts.id as id', 'olts.nombre as nombre','olts.slots as slots','olts.modelo as modelo','olts.marca as marca','centrodatos.nombre as centrodatonombre','estados.nombre as estadonombre','estados.id as estadoid')
+        ->join('centrodatos', 'centrodatos.id', '=', 'olts.centrodato_id')
+        ->join('estados', 'estados.id', '=', 'olts.estado_id')
+        ->where('olts.nombre', 'like', '%' . $this->search . '%')
+        ->orwhere('olts.slots', 'like', '%' . $this->search . '%')
+        ->orwhere('olts.modelo', 'like', '%' . $this->search . '%')
+        ->orwhere('olts.marca', 'like', '%' . $this->search . '%')
+        ->orwhere('centrodatos.nombre', 'like', '%' . $this->search . '%')
+        ->orwhere('estados.nombre', 'like', '%' . $this->search . '%')
+        ->orderBy($this->sort, $this->direction)
+        ->paginate($this->cant);
         return view('livewire.admin.olt.olt-show', compact('olts'));
     }
 }

@@ -2,39 +2,44 @@
 
 namespace App\Http\Livewire\Admin\Torre;
 
-use App\Models\Direccion;
 use App\Models\Estado;
-use App\Models\Telefono;
 use App\Models\Torre;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\DB;
 
 class ShowTorre extends Component
 {
 
     use WithPagination;
-    public $search, $totaltorres, $nombre, $dueño, $direccion, $telefono, $mensualidad,$totalestados,$estado;
+    public $search, $totaltorres, $nombre, $dueño, $direccion, $telefono, $mensualidad, $totalestados, $estado = '1', $estados;
     public $sort = 'id';
     public $direction = 'desc';
-    public $torreEdit, $torreID, $nombreEdit, $dueñoEdit, $direccionEdit,$telefonoEdit,$mensualidadEdit;
     public $cant = '5';
-    public $open = false;
-    public $prueba;
+    public $vermodaleditar = false;
+    public $vermodalcrear = false;
 
-    protected $rules = [
-        'nombre' => 'required|min:5|max:50',
-        'dueño' => 'required|min:3|max:50',
-        'direccion' => 'required|min:3|max:60',
-        'telefono' => 'required|digits_between:7,9|numeric',
-        'mensualidad' => 'required|numeric',
-        'estado' => 'required',
-    ];
-
+    public function activarmodalcrear()
+    {
+        $this->reset(['nombre', 'dueño', 'direccion', 'telefono', 'mensualidad', 'estado']);
+        $this->vermodalcrear = true;
+        $this->estado = "1";
+    }
+    public function cambiarestado($id)
+    {
+        $actualizarid=Torre::find($id);
+        if ($actualizarid->estado_id == '1') {
+            $this->estado_id = '2';
+            $actualizarid->update(['estado_id' => $this->estado_id]);
+        } else {
+            $this->estado_id = '1';
+            $actualizarid->update(['estado_id' => $this->estado_id]);
+        }
+    }
     public function mount()
     {
         $this->totaltorres = Torre::count();
-        $this->totalestados = Estado::all();
-
+        $this->totalestados = Estado::where('nombre', "=", 'Activo')->orwhere('nombre', "=", 'Deshabilitado')->get();
     }
     public function order($sort)
     {
@@ -50,70 +55,76 @@ class ShowTorre extends Component
     }
     public function edit(Torre $Torre)
     {
-        $this->torreEdit = $Torre;
-        $this->torreID = $this->torreEdit->id;
-        $this->nombreEdit = $this->torreEdit->nombre;
-        $this->dueñoEdit = $this->torreEdit->dueño;
-        $this->direccionEdit = $this->torreEdit->direccion;
-        $this->telefonoEdit = $this->torreEdit->numero;
-        $this->mensualidadEdit = $this->torreEdit->mensualidad;
+        $this->reset(['nombre', 'dueño', 'direccion', 'telefono', 'mensualidad', 'estado']);
+        $this->vermodaleditar = true;
+        $this->torreEdit    = $Torre;
+        $this->torreID      = $this->torreEdit->id;
+        $this->nombre       = $this->torreEdit->nombre;
+        $this->dueño        = $this->torreEdit->dueño;
+        $this->direccion    = $this->torreEdit->direccion;
+        $this->telefono     = $this->torreEdit->telefono;
+        $this->mensualidad  = $this->torreEdit->mensualidad;
+        $this->estado      = $this->torreEdit->estado_id;
     }
     public function update()
     {
         $this->validate([
-            'nombreEdit' => 'required|min:5|max:50',
-            'dueñoEdit' => 'required|min:3|max:50',
-            'direccionEdit' => 'required|min:5|max:60',
-            'telefonoEdit' => 'required|digits_between:7,9|numeric',
-            'mensualidadEdit' => 'required|numeric',
+            'nombre' => 'required|min:5|max:50',
+            'dueño' => 'required|min:3|max:50',
+            'direccion' => 'required|min:5|max:60',
+            'telefono' => 'required|digits_between:7,9|numeric',
+            'mensualidad' => 'required|numeric',
+            'estado' => 'required|numeric',
         ]);
         if ($this->torreID) {
             $updTorre = Torre::find($this->torreID);
             $updTorre->update([
-                'nombre' => $this->nombreEdit,
-                'dueño' => $this->dueñoEdit,
-                'direccion' => $this->direccionEdit,
-                'telefono' => $this->telefonoEdit,
-                'mensualidad' => $this->mensualidadEdit,
+                'nombre' => $this->nombre,
+                'dueño' => $this->dueño,
+                'direccion' => $this->direccion,
+                'telefono' => $this->telefono,
+                'mensualidad' => $this->mensualidad,
+                'estado_id' => $this->estado,
             ]);
         }
-        $this->emit('cerrarModalEditar');
+        $this->vermodaleditar = false;
         $this->emit('alert', 'El servidor se actualizo satisfactoriamente');
     }
     public function save()
     {
-        $this->validate();
-        $tower =Torre::create([
+        $this->validate([
+            'nombre' => 'required|min:5|max:50',
+            'dueño' => 'required|min:3|max:50',
+            'direccion' => 'required|min:3|max:60',
+            'telefono' => 'required|digits_between:7,9|numeric',
+            'mensualidad' => 'required|numeric',
+            'estado' => 'required|numeric'
+        ]);
+        Torre::create([
             'nombre' => $this->nombre,
             'dueño' => $this->dueño,
             'direccion' => $this->direccion,
             'telefono' => $this->telefono,
             'mensualidad' => $this->mensualidad,
             'estado_id' => $this->estado
-        ]);                  
+        ]);
         $this->totaltorres = Torre::count();
-        $this->reset(['nombre', 'dueño', 'direccion', 'telefono', 'mensualidad']);
-        $this->emit('cerrarModalCrear');
+        $this->vermodalcrear = false;
         $this->emit('alert', 'La Torre se creo satisfactoriamente');
     }
     public function render()
     {
-        // return view('livewire.admin.torre.show-torre');
-        $torres = Torre::where('nombre', 'like', '%' . $this->search . '%')
-            ->orwhere('dueño', 'like', '%' . $this->search . '%')
-            ->orwhere('mensualidad', 'like', '%' . $this->search . '%')
+        $torres = DB::table('torres')
+            ->select('torres.id as id', 'torres.nombre as nombre', 'torres.dueño as dueño', 'torres.mensualidad as mensualidad', 'torres.telefono as telefono', 'torres.direccion as direccion', 'estados.nombre as estadonombre', 'estados.id as estadoid')
+            ->join('estados', 'torres.estado_id', '=', 'estados.id')
+            ->where('torres.nombre', 'like', '%' . $this->search . '%')
+            ->orwhere('torres.dueño', 'like', '%' . $this->search . '%')
+            ->orwhere('torres.direccion', 'like', '%' . $this->search . '%')
+            ->orwhere('torres.telefono', 'like', '%' . $this->search . '%')
+            ->orwhere('torres.mensualidad', 'like', '%' . $this->search . '%')
+            ->orwhere('estados.nombre', 'like', '%' . $this->search . '%')
             ->orderBy($this->sort, $this->direction)
             ->paginate($this->cant);
         return view('livewire.admin.torre.show-torre', compact('torres'));
-    }
-    public function delete($id)
-    {
-        // Torre::where('id', $id)->delete();
-        // $this->totaltorres = Torre::count();
-        
-        // $Eliminarphone = Telefono::where('telefono_id', $id)->delete();
-        // $Eliminarphone = Direccion::where('direccion_id', $id)->delete();
-        // $this->identificador = rand();
-        // $servidorEliminar->delete();
     }
 }

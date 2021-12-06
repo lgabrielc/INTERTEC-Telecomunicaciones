@@ -1,57 +1,95 @@
-<div wire:ignore.self class="modal fade" id="updateModal" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Editar Olt</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <input type="hidden" wire:model="user_id">
-                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Nombre</label>
-                    <input type="text" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                        wire:model.defer="nombre">
-                    @error('nombre') <span class="text-danger">{{ $message }}</span>@enderror
-                </div>
-                <div class="form-group">
-                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Slots</label>
-                    <input type="email" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                        wire:model.defer="slots">
-                    @error('slots') <span class="text-danger">{{ $message }}</span>@enderror
-                </div>
-                <div class="form-group">
-                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Modelo</label>
-                    <input type="email" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                        wire:model.defer="modelo">
-                    @error('modelo') <span class="text-danger">{{ $message }}</span>@enderror
-                </div>
-                <div class="form-group">
-                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Marca</label>
-                    <input type="email" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                        wire:model.defer="marca">
-                    @error('marca') <span class="text-danger">{{ $message }}</span>@enderror
-                </div>
-                <div class="form-group">
-                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">DataCenter</label>
-                    <select class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                        wire:model="datacenteride">
-                        @foreach ($totaldatacenters as $datacenter)
-                            <option value="{{ $datacenter->id }}">{{ $datacenter->nombre }}</option>
-                        @endforeach
-                    </select>
-                    @error('datacenterid') <span class="text-danger error">{{ $message }}</span>@enderror
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary close-modal rounded-pill"
-                    data-dismiss="modal">Cancelar</button>
-                <button type="button" wire:click.prevent="update"
-                    class="btn btn-danger close-modal rounded-pill">Guardar Cambios
-                </button>
-            </div>
+<x-jet-dialog-modal wire:model='vermodaleditar'>
+    <x-slot name="title">
+        Crearaa nuevo Servidor
+    </x-slot>
+    <x-slot name="content">
+        <div class="mb-4">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                DataCenter
+            </label>
+            <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="datacenteride"
+                wire:change='dataoltrelacionado'>
+                @foreach ($totaldatacenters as $datacenter)
+                <option value="{{ $datacenter->id }}">{{ $datacenter->nombre }}</option>
+                @endforeach
+            </select>
+            @error('datacenteride')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
         </div>
-    </div>
-</div>
+        @if ($dataoltrelacionado)
+         <div class="mb-4">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Olts registrados:
+                @foreach ($dataoltrelacionado->olts as $oltocupado)
+                    {{ $oltocupado->nombre }}
+                @endforeach
+            </label>
+        </div>           
+        @endif
+
+        <div class="mb-4">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Nombre
+            </label>
+            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: Olt 2"
+                wire:model.defer="nombre" />
+            @error('nombre')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Slots
+            </label>
+            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="slots"
+                placeholder="Ejm: 7" />
+            @error('slots')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Marca
+            </label>
+            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="marca"
+                placeholder="Ejm: Huawei" />
+            @error('marca')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Modelo
+            </label>
+            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="modelo"
+                placeholder="Ejm: MA5800X7" />
+            @error('modelo')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                Estado
+            </label>
+            <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model='estado' required>
+                @foreach ($totalestados as $estados)
+                <option value={{$estados->id}} selected >{{$estados->nombre}}</option>
+                @endforeach
+            </select>
+            @error('estado')
+            <div class="text-red-500">{{ $message }}</div>
+            @enderror
+        </div>
+    </x-slot>
+
+    <x-slot name="footer">
+        <x-jet-secondary-button wire:click="$set('vermodaleditar',false)" wire:loading.attr="disabled"
+            class="float-left">
+            {{ __('Cancel') }}
+        </x-jet-secondary-button>
+        <x-jet-danger-button wire:click="update" wire:loading.attr="disabled">
+            {{ __('Guardar Cambios') }}
+        </x-jet-danger-button>
+    </x-slot>
+</x-jet-dialog-modal>

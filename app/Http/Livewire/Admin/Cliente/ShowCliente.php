@@ -17,68 +17,81 @@ use Livewire\WithPagination;
 class ShowCliente extends Component
 {
     use WithPagination;
-    public $sort = 'id';
-    public $direction = 'desc';
-    public $tiposervicio, $VerServicio, $condicionAntena;
-    public $search, $totalcontar, $totalestados, $totalplanes, $totalantenas, $totaldatacenters;
-    //Editar Cliente
-    public $EditarCliente, $EditarNombre, $EditarID, $EditarApellido, $EditarDNI, $EditarCorreo, $EditarDireccion, $EditarTelefono;
-    //Agregar Servicio
-    public $AgregarServicio, $planid, $IDClienteServicio, $NombreClienteServicio, $ApellidoClienteServicio, $estado_id;
-    public $condicionantena, $mac, $ip, $frecuencia, $antenaid;
-    public $nap_id;
-    public $gponrelacionado, $clientegpon, $estado, $plannuevo, $olttarjetarelacionado, $tarjetagponrelacionado, $gponnaprelacionado;
-    public $datacenterid, $datacenterselect, $oltid, $tarjetaid, $gponid, $napid;
-    //Datos Cliente
-    public $nombre, $apellido, $dni, $correo, $direccion, $telefono;
-    //Agregar Plan
-    public $NombrePlan, $VelocidadDescarga, $VelocidadSubida, $PrecioPlan;
-    public $isDisabled = true;
-    public $agregarplan;
-    public $cant = '5';
-    public $open = false;
+    public $totalcontar, $totalplanes, $totalestados, $totaldatacenters, $oltnombre, $tarjetanombre, $napnombre, $gponnombre;
+    public $clienteid, $nombre, $apellido, $dni, $direccion, $telefono, $correo, $tiposervicio;
+    public $datacenterid, $oltid, $tarjetaid, $gponid, $napid, $gponrelacionado, $datacenterselect, $olttarjetarelacionado, $tarjetagponrelacionado, $gponnaprelacionado;
+    public $condicionantena, $clientegpon, $clientegpon2, $mac, $ip, $plan, $frecuencia, $antenaid, $antena, $checkbx, $servicioid, $EditarID;
+    public $descarga, $subida, $precio, $estado, $disabled2 = 1;
+    public $sort = 'id', $search = '', $direction = 'desc', $cant = '5', $isDisabled = 'disabled';
+    public $vermodalcrearcliente = false, $vermodaleditar = false, $vermodalcrearplan = false, $vermodaleditarcliente = false, $vermodalcrearservicio = false,
+        $vermodalantena = false, $vermodalfibra = false, $vermodalmigrarantena = false, $vermodalmigrarfibras = false, $vermodalmigracion = false;
 
-    protected $rules = [
-        'nombre' => 'required|min:5|max:50',
-        'apellido' => 'required|min:3|max:50',
-        'dni' => 'required|size:8',
-        'direccion' => 'required|min:3|max:50',
-        'telefono' => 'required|min:7|max:20',
-        'correo' => 'nullable|email|min:3|max:30',
-
-    ];
     public function mount()
     {
         $this->totalcontar = Cliente::count();
-        $this->totalplanes = Plan::all();
-        $this->totalestados = Estado::all();
-        $this->totalantenas = Antena::all();
+        $this->totalplanes = Plan::where('estado_id', "=", '1')->get();
+        $this->totalestados = Estado::where('nombre', "=", 'Activo')->orwhere('nombre', "=", 'Deshabilitado')->get();
+        $this->totalantenas = Antena::where('estado_id', "=", '1')->get();
         $this->totaldatacenters = Centrodato::where('estado_id', "=", '1')->get();
-        // $this->totaldatacenters = Centrodato::all();
+    }
+    public function disablear()
+    {
+        if ($this->isDisabled == 'enabled') {
+            //sin editar
+            $this->isDisabled = 'disabled';
+            $this->disabled2 = 1;
+        } else {
+            //Quiero editar
+            $this->isDisabled = 'enabled';
+            $this->disabled2 = 0;
+        }
+    }
+    public function activarmodalcrearcliente()
+    {
+        $this->reset(['nombre', 'apellido', 'dni', 'direccion', 'telefono', 'estado', 'correo']);
+        $this->vermodalcrearcliente = true;
+    }
+    public function activarmodalcrearplan()
+    {
+        $this->reset(['nombre', 'descarga', 'subida', 'precio', 'estado']);
+        $this->estado = '1';
+        $this->vermodalcrearplan = true;
+    }
+    public function save()
+    {
+        $this->validate([
+            'nombre' => 'required|min:5|max:50',
+            'apellido' => 'required|min:3|max:50',
+            'dni' => 'required|size:8',
+            'direccion' => 'required|min:3|max:60',
+            'telefono' => 'required|min:7|max:29',
+            'correo' => 'nullable|email|min:3|max:30',
+        ]);
+        Cliente::create([
+            'nombre' => $this->nombre,
+            'apellido' => $this->apellido,
+            'dni' => $this->dni,
+            'direccion' => $this->direccion,
+            'telefono' => $this->telefono,
+            'correo' => $this->correo,
+        ]);
+        $this->totalcontar = Cliente::count();
+        $this->vermodalcrearcliente = false;
+        $this->emit('alert', 'El cliente se creo satisfactoriamente');
     }
     public function cambiartipodeservicio()
     {
         if ($this->tiposervicio == 'Antena') {
-            $this->reset('gponrelacionado', 'clientegpon', 'gponrelacionado', 'datacenterid', 'oltid', 'tarjetaid', 'gponid', 'napid', 'plannuevo');
+            $this->reset('gponrelacionado', 'clientegpon', 'gponrelacionado', 'datacenterid', 'oltid', 'tarjetaid', 'gponid', 'napid');
         } else {
-            $this->reset('condicionantena', 'mac', 'ip', 'frecuencia', 'antenaid', 'plannuevo');
+            $this->reset('condicionantena', 'mac', 'ip', 'frecuencia', 'antenaid', 'plan');
         }
     }
-
-    public function naprelacion()
-    {
-        if (is_numeric($this->napid)) {
-            $this->reset('clientegpon');
-        } else {
-            $this->reset('clientegpon');
-        }
-    }
-
     public function gponnaprelacion()
     {
         if (is_numeric($this->gponid)) {
             $this->gponnaprelacionado = Gpon::find($this->gponid);
-            $this->reset('napid');
+            $this->napid = "";
         } else {
             $this->reset('napid');
         }
@@ -87,7 +100,7 @@ class ShowCliente extends Component
     {
         if (is_numeric($this->tarjetaid)) {
             $this->tarjetagponrelacionado = Tarjeta::find($this->tarjetaid);
-            $this->reset('gponid');
+            $this->gponid = "";
         } else {
             $this->reset('gponid');
         }
@@ -96,12 +109,11 @@ class ShowCliente extends Component
     {
         if (is_numeric($this->oltid)) {
             $this->olttarjetarelacionado = Olt::find($this->oltid);
-            $this->reset('tarjetaid');
+            $this->tarjetaid = "";
         } else {
             $this->reset('tarjetaid');
         }
     }
-
     public function order($sort)
     {
         if ($sort == $this->sort) {
@@ -114,65 +126,79 @@ class ShowCliente extends Component
             $this->sort = $sort;
         }
     }
+    public function activarmodalcrearservicio(Cliente $cliente)
+    {
+        $this->vermodalfibra = false;
+        $this->reset('gponrelacionado', 'clientegpon', 'gponrelacionado', 'datacenterid', 'oltid', 'tarjetaid', 'gponid', 'napid');
+        $this->reset('condicionantena', 'mac', 'ip', 'frecuencia', 'antenaid');
+        $this->tiposervicio = "";
+        $this->condicionantena = "";
+        $this->plan = "";
+        $this->estado = '1';
+        $this->vermodalcrearservicio = true;
+        $this->AgregarServicio = $cliente;
+        $this->clienteid = $this->AgregarServicio->id;
+        $this->nombre = $this->AgregarServicio->nombre;
+        $this->apellido = $this->AgregarServicio->apellido;
+    }
     public function edit(Cliente $cliente)
     {
+        $this->reset(['nombre', 'apellido', 'dni', 'direccion', 'telefono', 'estado']);
+        $this->vermodaleditarcliente = true;
         $this->EditarCliente = $cliente;
         $this->EditarID = $this->EditarCliente->id;
-        $this->EditarNombre = $this->EditarCliente->nombre;
-        $this->EditarApellido = $this->EditarCliente->apellido;
-        $this->EditarDNI = $this->EditarCliente->dni;
-        $this->EditarDireccion = $this->EditarCliente->direccion;
-        $this->EditarTelefono = $this->EditarCliente->telefono;
-        $this->EditarCorreo = $this->EditarCliente->correo;
+        $this->nombre = $this->EditarCliente->nombre;
+        $this->apellido = $this->EditarCliente->apellido;
+        $this->dni = $this->EditarCliente->dni;
+        $this->direccion = $this->EditarCliente->direccion;
+        $this->telefono = $this->EditarCliente->telefono;
+        $this->correo = $this->EditarCliente->correo;
     }
     public function saveplan()
     {
         $this->validate([
-            'NombrePlan' => 'required|min:5|max:50',
-            'VelocidadDescarga' => 'required|min:3|max:15',
-            'VelocidadSubida' => 'required|min:3|max:15',
-            'PrecioPlan' => 'required|numeric',
+            'nombre' => 'required|min:5|max:50',
+            'descarga' => 'required|min:3|max:15',
+            'subida' => 'required|min:3|max:15',
+            'precio' => 'required|numeric',
         ]);
-        $estado = 1;
-        $NuevoPlan = Plan::create([
-            'nombre' => $this->NombrePlan,
-            'descarga' => $this->VelocidadDescarga,
-            'subida' => $this->VelocidadSubida,
-            'precio' => $this->PrecioPlan,
-            'estado_id' => $estado,
+        Plan::create([
+            'nombre' => $this->nombre,
+            'descarga' => $this->descarga,
+            'subida' => $this->subida,
+            'precio' => $this->precio,
+            'estado_id' => $this->estado,
         ]);
-
-        $this->totalplanes = Plan::all();
-        $this->totalcontar = Cliente::count();
-        $this->reset(['NombrePlan', 'VelocidadDescarga', 'VelocidadSubida', 'PrecioPlan']);
-        $this->emit('cerrarModalCrearPlan');
+        $this->totalplanes = Plan::where('estado_id', "=", '1')->get();
+        $this->reset(['nombre', 'descarga', 'subida', 'precio', 'estado']);
+        $this->vermodalcrearplan = false;
         $this->emit('alert', 'El Plan se creo satisfactoriamente');
-    }
-    public function resetearcampos($value)
-    {
-        if ($value == 'Antena') {
-            $this->reset('gponrelacionado', 'clientegpon', 'gponrelacionado', 'datacenterid', 'oltid', 'tarjetaid', 'gponid', 'napid');
-        } elseif ($value == 'Fibra') {
-            $this->reset('condicionantena', 'mac', 'ip', 'frecuencia', 'antenaid');
-        } else {
-            $this->reset('condicionantena', 'mac', 'ip', 'frecuencia', 'antenaid');
-            $this->reset('gponrelacionado', 'clientegpon', 'gponrelacionado', 'datacenterid', 'oltid', 'tarjetaid', 'gponid', 'napid');
-        }
     }
     // AGREGAR SERVICIO POR ANTENA
     public function saveservicioantena()
     {
-        $this->validate([
-            'tiposervicio' => 'required',
-            'condicionantena' => 'required',
-            'antenaid' => 'required|numeric',
-            'mac' => 'required|size:17',
-            'ip' => 'required|ipv4',
-            'frecuencia' => 'required|min:4|max:9',
-            'estado' => 'required',
-            'plannuevo' => 'required',
-        ]);
-        $nuevoServicio = Servicio::create([
+        $this->validate(
+            [
+                'tiposervicio' => 'required',
+                'condicionantena' => 'required',
+                'antenaid' => 'required|numeric',
+                'mac' => 'required|size:17',
+                'ip' => 'required|ipv4',
+                'frecuencia' => 'required|min:4|max:9',
+                'plan' => 'required|numeric',
+                'estado' => 'required|numeric'
+            ],
+            [
+                'condicionantena.required' => 'Por favor seleccione una opcion',
+                'antenaid.required' => 'Por favor seleccione una opcion',
+                'mac.required' => 'El campo Mac es obligatorio',
+                'ip.required' => 'El campo IP es obligatorio',
+                'frecuencia.required' => 'El campo Frecuencia es obligatorio',
+                'plan.required' => 'El campo Plan es obligatorio',
+                'estado.required' => 'El estado es necesario',
+            ]
+        );
+        Servicio::create([
             'tiposervicio' => $this->tiposervicio,
             'condicionAntena' => $this->condicionantena,
             'antena_id' => $this->antenaid,
@@ -180,130 +206,366 @@ class ShowCliente extends Component
             'ip' => $this->ip,
             'frecuencia' => $this->frecuencia,
             'estado_id' => $this->estado,
-            'plan_id' => $this->plannuevo,
-            'cliente_id' => $this->IDClienteServicio,
+            'plan_id' => $this->plan,
+            'cliente_id' => $this->clienteid,
         ]);
-        $this->emit('cerrarModalCrearServicio');
-        $this->emit('alert', 'El Servicio se añadio satisfactoriamente');
+        $this->vermodalcrearservicio = false;
+        $this->reset(['tiposervicio', 'condicionantena', 'antenaid', 'mac', 'ip', 'frecuencia', 'estado', 'plan']);
+        $this->emit('alert', 'El Servicio ha sido actualizado con éxito satisfactoriamente');
     }
     // AGREGAR SERVICIO POR FIBRA
     public function saveserviciofibra()
     {
+        $this->validate(
+            [
+                'datacenterid' => 'required|numeric',
+                'oltid' => 'required|numeric',
+                'tarjetaid' => 'required|numeric',
+                'gponid' => 'required|numeric',
+                'napid' => 'required|numeric',
+                'tiposervicio' => 'required',
+                'clientegpon' => 'required|numeric|unique:servicios',
+                'plan' => 'required|numeric',
+                'estado' => 'required|numeric',
+                'clienteid' => 'required|numeric'
+            ],
+            [
+                'datacenterid.required' => 'Por favor seleccione una opcion',
+                'oltid.required' => 'Por favor seleccione una opcion',
+                'tarjetaid.required' => 'Por favor seleccione una opcion',
+                'gponid.required' => 'Por favor seleccione una opcion',
+                'napid.required' => 'Por favor seleccione una opcion',
+                'clientegpon.required' => 'El numero de cliente es obligatorio',
+                'clientegpon.numeric' => 'El numero de cliente debe ser numérico',
+                'clientegpon.unique' => 'El numero de cliente ya está en uso',
+                'plan.required' => 'Por favor seleccione una opcion'
+            ]
+        );
+        if ($this->clienteid) {
+            Servicio::create([
+                'tiposervicio' => $this->tiposervicio,
+                'clientegpon' => $this->clientegpon,
+                'nap_id' => $this->napid,
+                'plan_id' => $this->plan,
+                'estado_id' => $this->estado,
+                'cliente_id' => $this->clienteid,
+            ]);
+        }
+        $this->vermodalcrearservicio = false;
+        $this->reset(['tiposervicio', 'napid', 'clientegpon', 'estado', 'plan', 'clienteid']);
+        $this->emit('alert', 'El Servicio se actualizo satisfactoriamente');
+    }
+    public function updateservicioantena()
+    {
         $this->validate([
             'tiposervicio' => 'required',
-            'napid' => 'required|numeric',
-            'clientegpon' => 'required|numeric',
-            'estado' => 'required',
-            'plannuevo' => 'required',
-            'IDClienteServicio' => 'required',
+            'condicionantena' => 'required',
+            'antena' => 'required|numeric',
+            'mac' => 'required|size:17',
+            'ip' => 'required|ipv4',
+            'frecuencia' => 'required|min:4|max:9',
+            'plan' => 'required|numeric',
+            'estado' => 'required|numeric',
+            'clienteid' => 'required|numeric'
         ]);
-
-        $nuevoServicio = Servicio::create([
-            'tiposervicio' => $this->tiposervicio,
-            'clientegpon' => $this->clientegpon, // 
-            'nap_id' => $this->napid, //
-            'estado_id' => $this->estado, //
-            'plan_id' => $this->plannuevo, //
-            'cliente_id' => $this->IDClienteServicio, //
-        ]);
-        $this->emit('cerrarModalCrearServicio');
-        $this->emit('alert', 'El Servicio se añadio satisfactoriamente');
+        if ($this->servicioid) {
+            $updAntena = Servicio::find($this->servicioid);
+            $updAntena->update([
+                'tiposervicio' => $this->tiposervicio,
+                'condicionAntena' => $this->condicionantena,
+                'antena_id' => $this->antena,
+                'mac' => $this->mac,
+                'ip' => $this->ip,
+                'frecuencia' => $this->frecuencia,
+                'estado_id' => $this->estado,
+                'plan_id' => $this->plan,
+                'cliente_id' => $this->clienteid,
+            ]);
+        }
+        $this->vermodalantena = false;
+        $this->emit('alert', 'El Servicio se actualizó satisfactoriamente');
     }
-    public function agregarservicio(Cliente $cliente)
+    public function updateserviciofibra()
     {
-        $this->AgregarServicio = $cliente;
-        $this->IDClienteServicio = $this->AgregarServicio->id;
-        $this->NombreClienteServicio = $this->AgregarServicio->nombre;
-        $this->ApellidoClienteServicio = $this->AgregarServicio->apellido;
-        $this->reset('antenaid', 'mac', 'ip', 'frecuencia', 'clientegpon', 'plannuevo');
-        $this->reset('tiposervicio', 'datacenterid', 'condicionantena', 'oltid', 'tarjetaid', 'gponid', 'napid');
-        $this->estado = '1';
+        if ($this->clientegpon != $this->clientegpon2) {
+            $this->validate(
+                [
+                    'clientegpon' => 'required|numeric|unique:servicios',
+                ],
+                [
+                    'clientegpon.required' => 'El numero de cliente es obligatorio',
+                    'clientegpon.numeric' => 'El numero de cliente debe ser numérico',
+                    'clientegpon.unique' => 'El numero de cliente ya está en uso',
+                ]
+            );
+        }
+        $this->validate(
+            [
+                'datacenterid' => 'required|numeric',
+                'oltid' => 'required|numeric',
+                'tarjetaid' => 'required|numeric',
+                'gponid' => 'required|numeric',
+                'tiposervicio' => 'required',
+                'clientegpon' => 'required|numeric',
+                'napid' => 'required|numeric',
+                'planid' => 'required|numeric',
+                'estado' => 'required|numeric',
+                'clienteid' => 'required|numeric'
+            ],
+            [
+                'datacenterid.required' => 'Por favor seleccione una opcion',
+                'oltid.required' => 'Por favor seleccione una opcion',
+                'tarjetaid.required' => 'Por favor seleccione una opcion',
+                'gponid.required' => 'Por favor seleccione una opcion',
+                'napid.required' => 'Por favor seleccione una opcion',
+                'clientegpon.required' => 'El numero de cliente es obligatorio',
+                'plan.required' => 'Por favor seleccione una opcion'
+            ]
+        );
+        if ($this->servicioid) {
+            $updfibra = Servicio::find($this->servicioid);
+            $updfibra->update([
+                'tiposervicio' => $this->tiposervicio,
+                'clientegpon' => $this->clientegpon,
+                'nap_id' => $this->napid,
+                'plan_id' => $this->planid,
+                'estado_id' => $this->estado,
+                'cliente_id' => $this->clienteid,
+            ]);
+        }
+        $this->vermodalfibra = false;
+        $this->emit('alert', 'El Servicio se actualizó satisfactoriamente');
     }
     public function verservicioantena(Cliente $cliente)
     {
+        $this->isDisabled = 'disabled';
+        $this->disabled2 = 1;
+        $this->reset(['checkbx', 'tiposervicio', 'condicionantena', 'antenaid', 'mac', 'ip', 'frecuencia', 'estado', 'plan']);
+        $this->vermodalantena = true;
         $this->VerServicio = $cliente;
-        $this->IDClienteServicio = $this->VerServicio->id;
-        $this->NombreClienteServicio = $this->VerServicio->nombre;
-        $this->ApellidoClienteServicio = $this->VerServicio->apellido;
+        $this->clienteid = $cliente->id;
+        $this->servicioid = $this->VerServicio->servicio->id;
+        $this->nombre = $this->VerServicio->nombre;
+        $this->apellido = $this->VerServicio->apellido;
         $this->tiposervicio = $this->VerServicio->servicio->tiposervicio;
         // DE ANTENA
-        $this->condicionAntena = $this->VerServicio->servicio->condicionAntena;
+        $this->condicionantena = $this->VerServicio->servicio->condicionAntena;
         $this->mac = $this->VerServicio->servicio->mac;
         $this->ip = $this->VerServicio->servicio->ip;
         $this->frecuencia = $this->VerServicio->servicio->frecuencia;
-        $this->antenaid = $this->VerServicio->servicio->antena->nombre;
+        $this->antena = $this->VerServicio->servicio->antena_id;
         //FIN
-        $this->planid = $this->VerServicio->servicio->plan->nombre;
-        $this->estado_id = $this->VerServicio->servicio->estado->nombre;
+        $this->plan = $this->VerServicio->servicio->plan_id;
+        $this->estado = $this->VerServicio->servicio->estado_id;
     }
     public function verserviciofibra(Cliente $cliente)
     {
+        $this->reset('datacenterselect', 'olttarjetarelacionado', 'checkbx', 'isDisabled', 'disabled2', 'tarjetagponrelacionado', 'gponnaprelacionado');
+        $this->vermodalcrearservicio = false;
+        $this->vermodalfibra = true;
         $this->VerServicio = $cliente;
-        $this->IDClienteServicio = $this->VerServicio->id;
-        $this->NombreClienteServicio = $this->VerServicio->nombre;
-        $this->ApellidoClienteServicio = $this->VerServicio->apellido;
+        $this->clienteid = $this->VerServicio->id;
+        $this->servicioid = $this->VerServicio->servicio->id;
+        $this->nombre = $this->VerServicio->nombre;
+        $this->apellido = $this->VerServicio->apellido;
         $this->tiposervicio = $this->VerServicio->servicio->tiposervicio;
+        $this->datacenterid = $this->VerServicio->servicio->nap->gpon->tarjeta->olt->centrodato->id;
+        $this->oltnombre = $this->VerServicio->servicio->nap->gpon->tarjeta->olt->nombre;
+        $this->oltid = $this->VerServicio->servicio->nap->gpon->tarjeta->olt->id;
+        $this->tarjetanombre = $this->VerServicio->servicio->nap->gpon->tarjeta->nombre;
+        $this->tarjetaid = $this->VerServicio->servicio->nap->gpon->tarjeta->id;
+        $this->gponnombre = $this->VerServicio->servicio->nap->gpon->nombre;
+        $this->gponid = $this->VerServicio->servicio->nap->gpon->id;
+        $this->napnombre = $this->VerServicio->servicio->nap->nombre;
+        $this->napid = $this->VerServicio->servicio->nap->id;
         // DE FIBRA
         $this->clientegpon = $this->VerServicio->servicio->clientegpon;
-        $this->nap_id = $this->VerServicio->servicio->nap->nombre;
-        $this->gponid = $this->VerServicio->servicio->nap->gpon->nombre;
-        $this->tarjetaid = $this->VerServicio->servicio->nap->gpon->tarjeta->nombre;
-        $this->oltid = $this->VerServicio->servicio->nap->gpon->tarjeta->olt->nombre;
-        $this->datacenterid = $this->VerServicio->servicio->nap->gpon->tarjeta->olt->centrodato->nombre;
+        $this->clientegpon2 = $this->VerServicio->servicio->clientegpon;
         //FIN
-        $this->planid = $this->VerServicio->servicio->plan->nombre;
-        $this->estado_id = $this->VerServicio->servicio->estado->nombre;
+        $this->planid = $this->VerServicio->servicio->plan->id;
+        $this->estado = $this->VerServicio->servicio->estado->id;
+    }
+    public function migracionantena(Cliente $cliente)
+    {
+        $this->vermodalmigrarantena = true;
+        $this->client = $cliente;
+        $this->clienteid = $this->client->id;
+        $this->servicioid = $this->client->servicio->id;
+    }
+    public function migracionfibra(Cliente $cliente)
+    {
+        $this->vermodalmigrarfibra = true;
+        $this->client = $cliente;
+        $this->clienteid = $this->client->id;
+        $this->servicioid = $this->client->servicio->id;
+    }
+    public function vermigracion(Cliente $cliente)
+    {
+        $this->reset(
+            'tarjetaid',
+            'telefono',
+            'tarjetanombre',
+            'oltnombre',
+            'oltid',
+            'napnombre',
+            'napid',
+            'gponnombre',
+            'gponid',
+            'dni',
+            'direccion',
+            'correo',
+            'clientegpon2',
+            'clientegpon',
+            'EditarID',
+            'antena',
+            'frecuencia',
+            'ip',
+            'mac',
+            'clientegpon',
+            'datacenterid',
+            'datacenterselect',
+            'olttarjetarelacionado',
+            'tarjetagponrelacionado',
+            'gponnaprelacionado',
+            'vermodalfibra',
+            'vermodalantena'
+        );
+        $this->vermodalmigracion = true;
+        $this->condicionantena = "";
+        $this->antenaid = "";
+        $this->client = $cliente;
+        $this->clienteid = $this->client->id;
+        $this->servicioid = $this->client->servicio->id;
+        $this->nombre = $this->client->nombre;
+        $this->apellido = $this->client->apellido;
+        $this->estado = $this->client->servicio->estado->id;
+        $this->plan = $this->client->servicio->plan->id;
+        $this->tiposervicio = $this->client->servicio->tiposervicio;
+        if ($this->tiposervicio == 'Antena') {
+            $this->tiposervicio = 'Fibra';
+        } else {
+            $this->tiposervicio = 'Antena';
+        }
+    }
+    public function savemigrarfibra()
+    {
+        $this->reset('condicionantena', 'mac', 'ip', 'frecuencia', 'antena');
+        $this->validate(
+            [
+                'datacenterid' => 'required|numeric',
+                'oltid' => 'required|numeric',
+                'tarjetaid' => 'required|numeric',
+                'gponid' => 'required|numeric',
+                'napid' => 'required|numeric',
+                'tiposervicio' => 'required',
+                'clientegpon' => 'required|numeric|unique:servicios',
+                'plan' => 'required|numeric',
+                'estado' => 'required|numeric',
+                'clienteid' => 'required|numeric',
+                'condicionantena' => 'nullable',
+                'mac' => 'nullable',
+                'ip' => 'nullable',
+                'frecuencia' => 'nullable',
+                'antena' => 'nullable'
+            ],
+            [
+                'datacenterid.required' => 'Por favor seleccione una opcion',
+                'oltid.required' => 'Por favor seleccione una opcion',
+                'tarjetaid.required' => 'Por favor seleccione una opcion',
+                'gponid.required' => 'Por favor seleccione una opcion',
+                'napid.required' => 'Por favor seleccione una opcion',
+                'clientegpon.required' => 'El numero de cliente es obligatorio',
+                'clientegpon.numeric' => 'El numero de cliente debe ser numérico',
+                'clientegpon.unique' => 'El numero de cliente ya está en uso',
+                'plan.required' => 'Por favor seleccione una opcion'
+            ]
+        );
+        if ($this->servicioid) {
+            $updfibra = Servicio::find($this->servicioid);
+            $updfibra->update([
+                'condicionAntena' => $this->condicionantena,
+                'mac' => $this->mac,
+                'ip' => $this->ip,
+                'frecuencia' => $this->frecuencia,
+                'antena_id' => $this->antena,
+                'tiposervicio' => $this->tiposervicio,
+                'clientegpon' => $this->clientegpon,
+                'nap_id' => $this->napid,
+                'plan_id' => $this->plan,
+                'estado_id' => $this->estado,
+                'cliente_id' => $this->clienteid,
+            ]);
+        }
+        $this->vermodalmigracion = false;
+        $this->emit('alert', 'El Servicio ha migrado satisfactoriamente');
+    }
+    public function savemigrarantena()
+    {
+        $this->reset('clientegpon', 'napid');
+        $this->validate([
+            'tiposervicio' => 'required',
+            'condicionantena' => 'required',
+            'antenaid' => 'required|numeric',
+            'mac' => 'required|size:17',
+            'ip' => 'required|ipv4',
+            'frecuencia' => 'required|min:4|max:9',
+            'plan' => 'required|numeric',
+            'estado' => 'required|numeric',
+            'clienteid' => 'required|numeric',
+            'clientegpon' => 'nullable',
+            'napid' => 'nullable'
+        ]);
+        if ($this->servicioid) {
+            $updAntena = Servicio::find($this->servicioid);
+            $updAntena->update([
+                'tiposervicio' => $this->tiposervicio,
+                'condicionAntena' => $this->condicionantena,
+                'antena_id' => $this->antenaid,
+                'mac' => $this->mac,
+                'ip' => $this->ip,
+                'frecuencia' => $this->frecuencia,
+                'estado_id' => $this->estado,
+                'plan_id' => $this->plan,
+                'cliente_id' => $this->clienteid,
+                'clientegpon' => $this->clientegpon,
+                'nap_id' => $this->napid
+            ]);
+        }
+        $this->vermodalmigracion = false;
+        $this->emit('alert', 'El Servicio ha migrado satisfactoriamente');
     }
     public function update()
     {
         $this->validate([
-            'EditarNombre' => 'required|min:5|max:50',
-            'EditarApellido' => 'required|min:5|max:50',
-            'EditarDNI' => 'required|size:8',
-            'EditarDireccion' => 'required|min:3|max:50',
-            'EditarTelefono' => 'required|min:7|max:20',
-            'EditarCorreo' => 'nullable|email|min:3|max:30',
+            'nombre' => 'required|min:5|max:50',
+            'apellido' => 'required|min:3|max:50',
+            'dni' => 'required|size:8',
+            'direccion' => 'required|min:3|max:60',
+            'telefono' => 'required|min:7|max:29',
+            'correo' => 'nullable|email|min:3|max:30',
         ]);
         if ($this->EditarID) {
             $updAntena = Cliente::find($this->EditarID);
             $updAntena->update([
-                'nombre' => $this->EditarNombre,
-                'apellido' => $this->EditarApellido,
-                'dni' => $this->EditarDNI,
-                'direccion' => $this->EditarDireccion,
-                'telefono' => $this->EditarTelefono,
-                'correo' => $this->EditarCorreo,
+                'nombre' => $this->nombre,
+                'apellido' => $this->apellido,
+                'dni' => $this->dni,
+                'direccion' => $this->direccion,
+                'telefono' => $this->telefono,
+                'correo' => $this->correo,
             ]);
         }
-        $this->totalcontar = Cliente::count();
-        $this->emit('cerrarModalEditar');
+        $this->vermodaleditarcliente = false;
+        $this->reset(['nombre', 'apellido', 'dni', 'direccion', 'telefono', 'estado']);
         $this->emit('alert', 'El Cliente se actualizo satisfactoriamente');
     }
-    public function save()
-    {
-        $this->validate();
-        $tower = Cliente::create([
-            'nombre' => $this->nombre,
-            'apellido' => $this->apellido,
-            'dni' => $this->dni,
-            'direccion' => $this->direccion,
-            'telefono' => $this->telefono,
-            'correo' => $this->correo,
-        ]);
 
-        $this->totalcontar = Cliente::count();
-        $this->reset(['nombre', 'apellido', 'dni', 'correo', 'direccion', 'telefono']);
-        $this->emit('cerrarModalCrear');
-        $this->emit('alert', 'El cliente se creo satisfactoriamente');
-    }
     public function generarolts()
     {
-        if (isset($this->datacenteride)) {
-            $this->datacenterid = $this->datacenteride;
-        }
         if (is_numeric($this->datacenterid)) {
             $this->datacenterselect = Centrodato::find($this->datacenterid);
-            $this->reset('tarjetaid', 'oltid', 'olttarjetarelacionado', 'tarjetagponrelacionado');
+            $this->reset('tarjetaid', 'olttarjetarelacionado', 'tarjetagponrelacionado');
+            $this->oltid = "";
         } else {
             $this->reset('oltid', 'tarjetaid', 'datacenterid', 'olttarjetarelacionado', 'tarjetagponrelacionado');
         }

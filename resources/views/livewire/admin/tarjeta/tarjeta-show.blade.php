@@ -1,8 +1,8 @@
 <div>
     <!-- Button trigger modala -->
-    <div class="container mx-auto">
+    <div class="w-full">
         <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-1 content-center">
-            <div class="px-4 mb-4">
+            <div class="pt-4 px-4 mb-2">
                 <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
                     <div class="flex flex-wrap border-b border-gray-200 undefined">
                         <div
@@ -26,7 +26,7 @@
     <div class=" max-w-7x1 mx-auto px-4 sm:px-6 lg:px-8 ">
         <div class="w-full">
             <div class="bg-white  rounded-2xl px-10 py-8 shadow-lg hover:shadow-2xl transition duration-500 w-full">
-                <div class="container w-full">
+                <div class="w-full">
                     <div class=w-full">
                         <h1 class="text-2xl font-semibold leading-tight mb-2">Gestionar Tarjeta</h1>
                         @include('livewire.admin.tarjeta.modalcrear')
@@ -100,16 +100,18 @@
                                                     Slots
                                                     <i class="fas fa-sort float-right mt-1"></i>
                                                 </th>
-                                                <th wire:click="order('olt_id')"
+                                                <th wire:click="order('oltnombre')"
                                                     class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                     Olt
                                                     <i class="fas fa-sort float-right mt-1"></i>
                                                 </th>
-                                                <th
+                                                <th wire:click="order('centrodatonombre')"
                                                     class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                     DataCenter
+                                                    <i class="fas fa-sort float-right mt-1"></i>
+
                                                 </th>
-                                                <th wire:click="order('estado_id')"
+                                                <th wire:click="order('estadonombre')"
                                                     class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                     Estado
                                                     <i class="fas fa-sort float-right mt-1"></i>
@@ -147,39 +149,33 @@
                                                     </td>
                                                     <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
                                                         <p class="text-gray-900 whitespace-no-wrap">
-                                                            {{ $tarjeta->olt->nombre }}
+                                                            {{ $tarjeta->oltnombre }}
                                                         </p>
                                                     </td>
                                                     <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
                                                         <p class="text-gray-900 whitespace-no-wrap">
-                                                            {{ $tarjeta->olt->centrodato->nombre }}
+                                                            {{ $tarjeta->centrodatonombre }}
                                                         </p>
                                                     </td>
                                                     <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
                                                         <p class="text-gray-900 whitespace-no-wrap">
-                                                            {{ $tarjeta->estado->nombre }}
+                                                            {{ $tarjeta->estadonombre }}
                                                         </p>
                                                     </td>
                                                     <td
-                                                        class="px-5 py-1 border-b border-gray-200 bg-white text-sm text-center">
-                                                        <button wire:click="edit({{ $tarjeta->id }})" type="button"
-                                                            class="btn btn-info rounded-pill mx-1" data-toggle="modal"
-                                                            data-target="#updateModal">
-                                                            Editar
-                                                        </button>
-                                                        @if ($tarjeta->estado->nombre != 'Activo')
-                                                            <button
-                                                                wire:click="$emit('cambiarestado', {{ $tarjeta->id }})"
-                                                                type="button" class="btn btn-danger rounded-pill mt-1">
-                                                                Activar
-                                                            </button>
-                                                        @else
-                                                            <button
-                                                                wire:click="$emit('cambiarestado', {{ $tarjeta->id }})"
-                                                                type="button" class="btn btn-danger rounded-pill mt-1">
-                                                                Deshabilitar
-                                                            </button>
-                                                        @endif
+                                                        class="px-5 py-1 border-b border-gray-200 text-sm text-center">
+                                                        <a wire:click="edit({{$tarjeta->id}})"
+                                                            class="btn2 btn-blue mb-1 py-2">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
+                                                        <a wire:click="$emit('cambiarestado', {{ $tarjeta->id }})"
+                                                            class="btn2 btn-red mb-1 py-2">
+                                                            @if ($tarjeta->estadoid == 2)
+                                                            <i class="fas fa-toggle-off"></i>
+                                                            @else
+                                                            <i class="fas fa-toggle-on"></i>
+                                                            @endif
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             @endforeach

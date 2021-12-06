@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\GponController;
 use App\Http\Controllers\Admin\NapController;
 use App\Http\Controllers\Admin\OltController;
 use App\Http\Controllers\Admin\PagoController;
+use App\Http\Controllers\Admin\ReporteClienteController;
+use App\Http\Controllers\Admin\ReportesController;
 use App\Http\Controllers\Admin\ServidorController;
 use App\Http\Controllers\Admin\TarjetaController;
 use App\Http\Controllers\Admin\TorreController;
@@ -37,3 +39,7 @@ Route::resource('tarjeta', TarjetaController::class);
 Route::resource('gpon', GponController::class);
 
 Route::resource('nap', NapController::class);
+
+Route::resource('reportecliente', ReporteClienteController::class);
+
+Route::resource('reportes', ReportesController::class);
