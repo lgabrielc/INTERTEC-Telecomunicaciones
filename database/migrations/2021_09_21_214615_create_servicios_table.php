@@ -19,6 +19,8 @@ class CreateServiciosTable extends Migration
             $table->date('fechavencimiento')->nullable();
             $table->date('fechacorte')->nullable();
             $table->date('fechacorteejecutado')->nullable();
+            $table->date('fechacongelado')->nullable();
+            // $table->date('fechaultimocorteejecutado')->nullable();
             $table->string('tiposervicio');
             //Por ver nullable
             $table->string('condicionAntena')->nullable();

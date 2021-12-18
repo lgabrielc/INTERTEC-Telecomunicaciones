@@ -8,8 +8,32 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Nombre del Cliente
                 </label>
-                <x-jet-input type="text" class="block w-full px-6" placeholder="Ejm: Arapa_Noveno_Eng"
-                    value="{{ $nombre }}&nbsp;{{ $apellido }}" disabled />
+                <x-jet-input type="text" class="block w-full px-6" value="{{ $nombre }}&nbsp;{{ $apellido }}"
+                    disabled />
+            </div>
+        </div>
+        <div class="flex flex-col w-full md:flex-row">
+            <div class="w-full p-2 ">
+                <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                    Fecha de Registro
+                </label>
+                <x-jet-input type="date" class="block w-full px-6" wire:model='fechainicio' />
+            </div>
+            <div class="w-full p-2 ">
+                <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                    Fecha de Pago
+                </label>
+                <x-jet-input type="date" class="block w-full px-6" wire:model='fechavencimiento'
+                    wire:change='changedatavencimiento' />
+            </div>
+        </div>
+        <div class="flex flex-col w-full md:flex-row">
+
+            <div class="w-full p-2 ">
+                <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                    Fecha de Corte
+                </label>
+                <x-jet-input type="date" class="block w-full px-6" wire:model='fechacorte' />
             </div>
             <div class="w-full p-2 ">
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
@@ -111,8 +135,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Caja Nap
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="napid"
-                    required>
+                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="napid" required>
                     <option value="" selected>-Escoja una Caja Nap-</option>
                     @foreach ($gponnaprelacionado->naps as $nap)
                     <option value="{{ $nap->id }}">{{ $nap->nombre }}&nbsp,&nbsp
@@ -130,8 +153,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Numero del Cliente
                 </label>
-                <x-jet-input type="text" class="block w-full px-6" placeholder="Ejm: 1001"
-                    wire:model='clientegpon' />
+                <x-jet-input type="text" class="block w-full px-6" placeholder="Ejm: 1001" wire:model='clientegpon' />
                 @error('clientegpon')
                 <div class="text-red-500">{{ $message }}</div>
                 @enderror
@@ -239,9 +261,8 @@
     </x-slot>
 
     <x-slot name="footer">
-        <x-jet-secondary-button wire:click="$set('vermodalcrearservicio',false)" wire:loading.attr="disabled"
-            class="float-left">
-            {{ __('Cancel') }}
+        <x-jet-secondary-button wire:click="$set('vermodalcrearservicio',false)" wire:loading.attr="disabled">
+            {{ __('Cancelar') }}
         </x-jet-secondary-button>
         @if ($this->tiposervicio == 'Fibra')
         <x-jet-danger-button wire:click="saveserviciofibra" wire:loading.attr="disabled">

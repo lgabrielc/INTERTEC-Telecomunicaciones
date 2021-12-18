@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index(){
-        return view('livewire.admin.servidor.index');
+    public function index()
+    {
+        return view('livewire.admin.cliente.index');
     }
 }

@@ -1,6 +1,6 @@
 <div>
     <div class="w-full mx-auto">
-        <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 content-center">
+        <div class="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 content-center">
             <div class="pt-4 px-4 mb-2">
                 <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
                     <div class="flex flex-wrap border-b border-gray-200 undefined">
@@ -9,9 +9,29 @@
                             <span class="material-icons text-white text-3xl leading-none">trending_up</span>
                         </div>
                         <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2 text-right undefined">
-                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">Numero de Clientes</h5>
+                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">Numero de Clientes registrados</h5>
                             <span class="text-3xl text-gray-900">
                                 {{ $totalcontar }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="text-sm text-gray-700 pt-4 flex items-center undefined"><span
+                            class="material-icons text-green-500 text-base leading-none">arrow_upward</span><span
+                            class="text-green-500 ml-1 mr-2"></span><span class="font-light whitespace-nowrap">En
+                            total</span></div>
+                </div>
+            </div>
+            <div class="pt-4 px-4 mb-2">
+                <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
+                    <div class="flex flex-wrap border-b border-gray-200 undefined">
+                        <div
+                            class="bg-gradient-to-tr from-pink-500 to-pink-700 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
+                            <span class="material-icons text-white text-3xl leading-none">trending_up</span>
+                        </div>
+                        <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2 text-right undefined">
+                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">Numero de Clientes con Servicio</h5>
+                            <span class="text-3xl text-gray-900">
+                                {{ $totalcontarservicios }}
                             </span>
                         </div>
                     </div>
@@ -32,9 +52,16 @@
                             <h5 class="text-gray-500 font-light tracking-wide text-base mb-1 text-right">Gestionar Nuevo
                                 Plan de Internet
                             </h5>
-                            <span class="">
-                                @include('livewire.admin.cliente.modalcrearplan')
-                            </span>
+                            <div class="flex justify-end">
+                                <span class="">
+                                    @include('livewire.admin.cliente.modalcrearplan')
+                                </span>
+                                <span class="">
+                                    @include('livewire.admin.cliente.modaleditarplan')
+                                </span>
+                            </div>
+
+
                         </div>
                     </div>
                     <div class="text-sm text-gray-700 pt-4 flex items-center undefined"><span
@@ -187,21 +214,21 @@
                                             </td>
                                             <td class="py-1 border-b border-gray-200 text-sm text-center">
                                                 @if ($cliente->servicio)
-                                                    @if ($cliente->servicio['tiposervicio']=='Antena')
-                                                    <a wire:click="verservicioantena({{$cliente->id}})"
-                                                        class="btn2 btn-green mb-1 py-2">
-                                                        <i class="fas fa-broadcast-tower"></i>
-                                                    </a>
-                                                    @elseif ($cliente->servicio['tiposervicio']=='Fibra')
-                                                    <a wire:click="verserviciofibra({{$cliente->id}})"
-                                                        class="btn2 btn-yellow mb-1 py-2">
-                                                        <i class="fas fa-code-branch px-1"></i>
-                                                    </a>
-                                                    @endif
-                                                    <a wire:click="vermigracion({{$cliente->id}})"
-                                                        class="btn2 btn-purple mb-1 py-2">
-                                                        <i class="fas fa-exchange-alt"></i>
-                                                    </a>
+                                                @if ($cliente->servicio['tiposervicio']=='Antena')
+                                                <a wire:click="verservicioantena({{$cliente->id}})"
+                                                    class="btn2 btn-green mb-1 py-2">
+                                                    <i class="fas fa-broadcast-tower"></i>
+                                                </a>
+                                                @elseif ($cliente->servicio['tiposervicio']=='Fibra')
+                                                <a wire:click="verserviciofibra({{$cliente->id}})"
+                                                    class="btn2 btn-yellow mb-1 py-2">
+                                                    <i class="fas fa-code-branch px-1"></i>
+                                                </a>
+                                                @endif
+                                                <a wire:click="vermigracion({{$cliente->id}})"
+                                                    class="btn2 btn-purple mb-1 py-2">
+                                                    <i class="fas fa-exchange-alt"></i>
+                                                </a>
                                                 @else
                                                 <a wire:click="activarmodalcrearservicio({{$cliente->id}})"
                                                     class="btn2 btn-red mb-1 py-2">

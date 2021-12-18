@@ -1,152 +1,140 @@
-<!-- Modal -->
-<div wire:ignore.self class="modal fade" id="modalpago" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Registrar Pago</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true close-btn">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @if ($this->servicio)
-                <div class="form-group">
-                    <label class="block text-blue-400 font-bold mb-1 md:mb-0 pr-4">Nombre del Cliente:</label>
-                    <input type="text" class="block text-sm py-2 px-4 rounded w-full border outline-none"
-                        value="{{$nombre ." ". $apellido}}" disabled>
-                </div>
-
-
-                {{-- <div class="form-group">
-                    <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Nombre del Cliente:</label>
-                    <input type="text" class="block text-sm py-2 px-4 rounded w-full border outline-none"
-                        value="{{ $nombre }}&nbsp;{{ $apellido }}" disabled>
-                </div> --}}
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="block text-blue-400 font-bold mb-1 md:mb-0 pr-4">Fecha de Pago</label>
-                            <input type="date" class="block text-sm py-2 px-4 rounded w-full border outline-none"
-                                value="{{ $this->servicio->fechavencimiento }}" disabled>
-                        </div>
-                    </div>
-                    {{-- <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Fecha de Pago</label>
-                            <input type="date" class="block text-sm py-2 px-4 rounded w-full border outline-none"
-                                value="{{ $fechapago }}" disabled>
-                        </div>
-                    </div> --}}
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="block text-blue-400 font-bold mb-1 md:mb-0 pr-4">Fecha de Corte
-                                Ejecutado</label>
-                            <input type="date" class="block text-sm py-2 px-4 rounded w-full border outline-none"
-                                value="{{ $this->servicio->fechacorteejecutado }}" disabled>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="block text-blue-400 font-bold mb-1 md:mb-0 pr-4">Fecha de Corte</label>
-                            <input type="date" class="block text-sm py-2 px-4 rounded w-full border outline-none"
-                                value="{{ $this->servicio->fechacorte }}" disabled>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="block text-blue-400 font-bold mb-1 md:mb-0 pr-4">Estado</label>
-                            <input type="text"
-                                class="block text-sm bg-success  py-2 px-4 rounded w-full border outline-none"
-                                value="{{ $this->servicio->estado->nombre }}" disabled>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="block text-blue-400 font-bold mb-1 md:mb-0 pr-4">Deuda</label>
-                            <input type="text" class="block text-sm py-2 px-4 rounded w-full border outline-none"
-                                value="{{ $this->servicio->deuda }}" disabled>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="block text-blue-400 font-bold mb-1 md:mb-0 pr-4">Mensualidad</label>
-                            <input type="text" class="block text-sm py-2 px-4 rounded w-full border outline-none"
-                                value="{{ $this->servicio->plan->precio }}" disabled>
-                        </div>
-                    </div>
-                    {{-- <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">Fecha de Pago
-                                Deuda</label>
-                            <input type="text" class="block text-sm py-2 px-4 rounded w-full border outline-none"
-                                value="{{ $nombre }}&nbsp;{{ $apellido }}" disabled>
-                        </div>
-                    </div> --}}
-                </div>
-
-
-                {{-- --------------------------------------------------------------------------------------- --}}
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="block text-blue-400 font-bold mb-1 md:mb-0 pr-4">Dias de Retraso</label>
-                            <input type="text" class="block text-sm py-2 px-4 rounded w-full border outline-none"
-                                value="{{ $diasretraso }}" disabled>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="block text-blue-400 font-bold mb-1 md:mb-0 pr-4">Dias en Corte</label>
-                            <input type="text" class="block text-sm py-2 px-4 rounded w-full border outline-none"
-                                value="{{ $diasencorte }}" disabled>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="block text-blue-400 font-bold mb-1 md:mb-0 pr-4">Proximo Pago</label>
-                            <input type="date" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                                wire:model="fechaproxpago" wire:change="actualizarfechas3($event.target.value)"
-                                value="{{ date('Y-m-d') }}">
-                            @error('fechainicio') <span class="text-danger error">{{ $message }}</span>@enderror
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="block text-blue-400 font-bold mb-1 md:mb-0 pr-4">Proximo Corte</label>
-                            <input type="date" class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                                wire:model="fechaproxcorte" disabled>
-                            @error('fechainicio') <span class="text-danger error">{{ $message }}</span>@enderror
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="block text-blue-400 font-bold mb-1 md:mb-0 pr-4">Periodo de Pago</label>
-                    <input disabled='false' type="text"
-                        class="block text-sm py-3 px-4 rounded w-full border outline-none"
-                        value="{{$fechaproxpago;}}   al   {{$fechaproxcorte}}" disabled>
-                </div>
-                @endif
-            </div>
-            <div class="modal-footer flex">
-                <div class="text-left">
-                    <button type="button" class="btn btn-info close-btn rounded-pill "
-                        data-dismiss="modal">Cancelar</button>
-                </div>
-                <div class="text-right">
-                    <button type="button" wire:click.prevent="savepago2" wire:loading.attr="disabled"
-                        class="btn btn-danger close-modal rounded-pill">Guardar
-                        Cambios</button>
-                </div>
+<x-jet-dialog-modal wire:model='vermodalpago'>
+    <x-slot name="title">
+        Registrar Pago
+    </x-slot>
+    <x-slot name="content">
+        <div class="flex flex-col w-full md:flex-row">
+            <div class="w-full p-2 ">
+                <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                    Cliente
+                </label>
+                <x-jet-input type="text" class="block w-full px-6" value="{{$nombrecompleto}}" disabled />
             </div>
         </div>
-    </div>
-</div>
+        <div class="flex flex-col w-full md:flex-row">
+            <div class="w-full p-2 ">
+                <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                    Fecha de Pago
+                </label>
+                <x-jet-input type="date" class="block w-full px-6" value="{{$fechapago}}" disabled />
+            </div>
+            <div class="w-full p-2 ">
+                <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                    Fecha de Corte Ejecutado
+                </label>
+                <x-jet-input type="text" class="block w-full px-6" value="{{$fechacorteejecutado}}" disabled />
+            </div>
+        </div>
+        <div class="flex flex-col w-full md:flex-row">
+            <div class="w-full p-2 ">
+                <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                    Fecha de Corte
+                </label>
+                <x-jet-input type="date" class="block w-full px-6" value="{{$fechacorte}}" disabled />
+
+            </div>
+
+            <div class="w-full p-2 ">
+                <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                    Deuda
+                </label>
+                <x-jet-input type="text" class="block w-full px-6" value="{{$deuda}}" disabled />
+            </div>
+        </div>
+        <div class="flex flex-col w-full md:flex-row">
+            <div class="w-full p-2 ">
+                <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                    Estado
+                </label>
+                @if ($estado == 'Activo')
+                <x-jet-input type="text" class="bg-gradient-to-tr from-green-300 to-green-600 block w-full px-6"
+                    value="{{$estado}}" disabled />
+                @elseif ($estado == 'Corte Sin Ejecutar')
+                <x-jet-input type="text" class="bg-gradient-to-r from-yellow-400 to-yellow-700 block w-full px-6"
+                    value="{{$estado}}" disabled />
+                @elseif ($estado == 'Deuda Vencida')
+                <x-jet-input type="text" class="bg-gradient-to-r from-yellow-200 to-yellow-300 block w-full px-6"
+                    value="{{$estado}}" disabled />
+                @elseif ($estado == 'Corte Ejecutado')
+                <x-jet-input type="text" class="bg-gradient-to-r from-red-300 to-red-700 block w-full px-6"
+                    value="{{$estado}}" disabled />
+                @elseif ($estado == 'Retiro de Equipos')
+                <x-jet-input type="text" class="bg-gradient-to-r from-red-300 to-red-700 block w-full px-6"
+                    value="{{$estado}}" disabled />
+                @endif
+            </div>
+
+            <div class="w-full p-2 ">
+                <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                    Mensualidad
+                </label>
+                <x-jet-input type="text" class="block w-full px-6" value="{{$mensualidad}}" disabled />
+            </div>
+        </div>
+
+        <div class="flex flex-col w-full md:flex-row">
+            <div class="w-full p-2 ">
+                <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                    N° Dias de Retraso
+                </label>
+                <x-jet-input type="text" class="block w-full px-6" value="{{$diasretraso}}" disabled />
+            </div>
+            <div class="w-full p-2 ">
+                <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                    N° Dias en Corte
+                </label>
+                <x-jet-input type="text" class="block w-full px-6" value="{{$diascorteejecutado}}" disabled />
+            </div>
+        </div>
+        <div class="flex flex-col w-full md:flex-row">
+            <div class="w-full p-2 ">
+                <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                    Próxima fecha de Pago
+                </label>
+                <x-jet-input type="date" class="block w-full px-6" wire:model="proximafechadepago"
+                    wire:change="changedata" />
+                @error('proximafechadepago')
+                <div class="text-red-500">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="w-full p-2 ">
+                <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                    Próxima fecha de Corte
+                </label>
+                <x-jet-input type="date" class="block w-full px-6" wire:model="proximafechadecorte" />
+                @error('proximafechadecorte')
+                <div class="text-red-500">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+        <div class="flex flex-col w-full md:flex-row">
+            <div class="w-full p-1 ">
+                <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                    Periodo
+                </label>
+                <x-jet-input type="text" class="block w-full pl-3" wire:model="periodo" disabled />
+                @error('periodo')
+                <div class="text-red-500">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="w-full p-2 ">
+                <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
+                    Total
+                </label>
+                <x-jet-input type="text" class="block w-full px-6" wire:model="monto" disabled />
+                @error('monto')
+                <div class="text-red-500">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+    </x-slot>
+
+    <x-slot name="footer">
+        <x-jet-secondary-button wire:click="$set('vermodalpago',false)" wire:loading.attr="disabled">
+            {{ __('Cancelar') }}
+        </x-jet-secondary-button>
+        <x-jet-danger-button wire:click="savepago" wire:loading.attr="disabled">
+            {{ __('Guardar Cambios') }}
+        </x-jet-danger-button>
+    </x-slot>
+</x-jet-dialog-modal>

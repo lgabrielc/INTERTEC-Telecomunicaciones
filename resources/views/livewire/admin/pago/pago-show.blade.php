@@ -1,15 +1,16 @@
 <div>
-    <div class="container mx-auto">
+    <div class="mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 content-center">
-            <div class="px-4 mb-4">
+            <div class="pt-4 px-4 mb-4">
                 <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
                     <div class="flex flex-wrap border-b border-gray-200 undefined">
                         <div
-                            class="bg-gradient-to-tr from-green-500 to-green-700 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
+                            class="bg-gradient-to-tr from-green-400 to-green-800 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
                             <span class="material-icons text-white text-3xl leading-none">trending_up</span>
                         </div>
                         <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2 text-right undefined">
-                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">N° de Clientes Activos
+                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">N° Total de Clientes
+                                Activos
                             </h5>
                             <span class="text-3xl text-gray-900">
                                 {{ $clientesactivos }}
@@ -22,7 +23,7 @@
                             total</span></div>
                 </div>
             </div>
-            <div class="px-4 mb-4">
+            <div class="pt-4 px-4 mb-4">
                 <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
                     <div class="flex flex-wrap border-b border-gray-200 undefined">
                         <div
@@ -43,7 +44,7 @@
                             total</span></div>
                 </div>
             </div>
-            <div class="px-4 mb-4">
+            <div class=" pt-4 px-4 mb-4">
                 <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
                     <div class="flex flex-wrap border-b border-gray-200 undefined">
                         <div
@@ -64,7 +65,7 @@
                             total</span></div>
                 </div>
             </div>
-            <div class="px-4 mb-4">
+            <div class="pt-4 px-4 mb-4">
                 <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
                     <div class="flex flex-wrap border-b border-gray-200 undefined">
                         <div
@@ -92,9 +93,9 @@
     <div class=" max-w-7x1 mx-auto px-4 sm:px-6 lg:px-8 ">
         <div class="w-full">
             <div class="bg-white  rounded-2xl px-10 py-8 shadow-lg hover:shadow-2xl transition duration-500 w-full">
-                <div class="container w-full">
+                <div class="w-full">
                     <div class=w-full">
-                        <h1 class="text-2xl font-semibold leading-tight mb-2">Gestionar Pagos</h1>
+                        <h1 class="text-2xl font-semibold leading-tight mb-2">Gestionar Pago</h1>
                         {{-- @include('livewire.admin.cliente.modalcrear') --}}
                         <div class="my-2 flex sm:flex-row flex-col">
                             <div class="pr-2 flex flex-row mb-1 sm:mb-0 content-center justify-center">
@@ -167,7 +168,7 @@
                                                 DNI
                                                 <i class="fas fa-sort float-right mt-1"></i>
                                             </th>
-                                            <th wire:click="order('servicio')"
+                                            <th wire:click="order('tiposervicio')"
                                                 class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 Servicio
                                                 <i class="fas fa-sort float-right mt-1"></i>
@@ -206,22 +207,11 @@
                                                     {{$cliente->tiposervicio}}
                                                 </p>
                                             </td>
-                                            <td class="py-1 border-b border-gray-200 bg-white text-sm text-center">
-
-                                                @if ($cliente->fechainicio ==null)
-                                                <button wire:click="registrarprimerpago({{ $cliente->id }})"
-                                                type="button" class="btn btn-warning rounded-pill mx-1 my-1"
-                                                data-toggle="modal" data-target="#modalnuevopago">
-                                                Realizar Primer pago
-                                                </button>
-                                                @else
-                                                <button wire:click="registrarpago({{ $cliente->id }})"
-                                                type="button"
-                                                class="btn btn-success rounded-pill mx-1 my-1" data-toggle="modal"
-                                                data-target="#modalpago">
-                                                Realizar Pago
-                                                </button>
-                                                @endif
+                                            <td class="py-1 border-b border-gray-200 text-sm text-center">
+                                                <a wire:click="abrirmodalpago({{ $cliente->id }})"
+                                                    class="btn2 btn-green mb-1 py-2">
+                                                    <i class="fas fa-hand-holding-usd"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -245,8 +235,6 @@
             </div>
         </div>
     </div>
-
-    @include('livewire.admin.pago.modalnuevopago')
     @include('livewire.admin.pago.modalpago')
     <script>
         livewire.on('deletthis', deletID => {

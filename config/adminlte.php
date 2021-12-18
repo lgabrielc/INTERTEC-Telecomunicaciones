@@ -242,90 +242,150 @@ return [
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
-        ['header' => ''],
-        
-        ['header' => 'GESTIONAR RECURSOS'],
-        [
-            'text' => 'Servidor',
-            'url'  => 'admin/servidor',
-            'icon' => 'fas fa-server',
-        ],
-        [
-            'text' => 'Torre',
-            'url'  => 'admin/torre',
-            'icon' => 'fas fa-broadcast-tower',
-        ],
-        [
-            'text' => 'Antena',
-            'url'  => 'admin/antena',
-            'icon' => 'fas fa-satellite-dish',
-        ],
+        ['header' => ' ---------------'],
+
+        // ['header' => 'GESTIONAR RECURSOS'],
+
         [
             'text' => 'Clientes',
             'url'  => 'admin/cliente',
             'icon' => 'fas fa-user-tag',
         ],
-        
+
         [
             'text' => 'Pago de Servicio',
             'url'  => 'admin/pago',
             'icon' => 'fas fa-hand-holding-usd',
         ],
-        
-        ['header' => 'RECURSOS FIBRA OPTICA'],
         [
-            'text' => 'Data Center',
-            'url'  => 'admin/datacenter',
-            'icon' => 'fas fa-warehouse',
-        ],
-        [
-            'text' => 'OLT',
-            'url'  => 'admin/olt',
-            'icon' => 'fas fa-digital-tachograph',
-        ],
-        [
-            'text' => 'Tarjeta',
-            'url'  => 'admin/tarjeta',
-            'icon' => 'fas fa-boxes',
-        ],
-        [
-            'text' => 'Gpon',
-            'url'  => 'admin/gpon',
-            'icon' => 'fas fa-calendar-alt',
-        ],
-        [
-            'text' => 'Cajas Nap',
-            'url'  => 'admin/nap',
-            'icon' => 'fas fa-inbox',
-        ],
-        ['header' => 'GESTIONAR REPORTES'],
-        [
-            'text' => 'Pago cliente',
-            'url'  => 'admin/reportecliente',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'Reporte Pagos',
-            'url'  => 'admin/reportes',
-            'icon' => 'fas fa-fw fa-lock',
+            'text' => 'Recursos Antena',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'Servidor',
+                    'url'  => 'admin/recursosantena/servidor',
+                    'icon' => 'fas fa-server',
+                ],
+                [
+                    'text' => 'Torre',
+                    'url'  => 'admin/recursosantena/torre',
+                    'icon' => 'fas fa-broadcast-tower',
+                ],
+                [
+                    'text' => 'Antena',
+                    'url'  => 'admin/recursosantena/antena',
+                    'icon' => 'fas fa-satellite-dish',
+                ],
+            ]
         ],
 
-        ['header' => 'labels'],
+        // ['header' => 'RECURSOS FIBRA OPTICA'],
         [
-            'text'       => 'important',
-            'icon_color' => 'red',
-            'url'        => '#',
+            'text' => 'Recursos Fibra Optica',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'Data Center',
+                    'url'  => 'admin/recursosfibra/datacenter',
+                    'icon' => 'fas fa-warehouse',
+                ],
+                [
+                    'text' => 'OLT',
+                    'url'  => 'admin/recursosfibra/olt',
+                    'icon' => 'fas fa-digital-tachograph',
+                ],
+                [
+                    'text' => 'Tarjeta',
+                    'url'  => 'admin/recursosfibra/tarjeta',
+                    'icon' => 'fas fa-boxes',
+                ],
+                [
+                    'text' => 'Gpon',
+                    'url'  => 'admin/recursosfibra/gpon',
+                    'icon' => 'fas fa-calendar-alt',
+                ],
+                [
+                    'text' => 'Cajas Nap',
+                    'url'  => 'admin/recursosfibra/nap',
+                    'icon' => 'fas fa-inbox',
+                ]
+            ]
+        ],
+        // ['header' => 'GESTIONAR REPORTES'],
+        [
+            'text' => 'Gestionar Reportes',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'Pago cliente',
+                    'url'  => 'admin/gestionarreportes/reportecliente',
+                    'icon' => 'fas fa-fw fa-user',
+                ],
+                [
+                    'text' => 'Reporte Pagos',
+                    'url'  => 'admin/gestionarreportes/reportes',
+                    'icon' => 'fas fa-fw fa-lock',
+                ]
+            ]
         ],
         [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-            'url'        => '#',
+            'text' => 'Gestionar Servicio',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'Cortar Servicio',
+                    'icon'    => 'fas fa-eye-dropper',
+                    'url'  => 'admin/gestionarservicio/cortarservicio',
+                ],
+                [
+                    'text' => 'Clientes por Activar',
+                    'icon'    => 'fab fa-creative-commons-sampling',
+                    'url'  => 'admin/gestionarservicio/activarcliente',
+                ],
+                [
+                    'text' => 'Deshabilitar/Habilitar Cliente',
+                    'icon'    => 'fas fa-igloo',
+                    'url'  => 'admin/gestionarservicio/habilitarservicio',
+                ],
+                [
+                    'text' => 'Congelar Servicio',
+                    'icon'    => 'fas fa-igloo',
+                    'url'  => 'admin/gestionarservicio/congelarservicio',
+                ],
+                [
+                    'text' => 'Descongelar Servicio',
+                    'icon'    => 'fas fa-fire',
+                    'url'  => 'admin/gestionarservicio/descongelarservicio',
+                ],
+                [
+                    'text' => 'Regresar a Corte sin Ejecutar',
+                    'icon'    => 'fas fa-undo-alt',
+                    'url'  => 'admin/gestionarservicio/regresarcorte',
+                ],
+            ]
         ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'cyan',
-            'url'        => '#',
-        ],
+
+
+        // [
+        //     'text'       => 'Cortar Servicio',
+        //     'url'        => '#',
+        // ],
+        // [
+        //     'text'       => 'Clientes por Activar',
+        //     'url'        => '#',
+        // ],
+        // [
+        //     'text'       => 'Congelar Servicio',
+        //     'url'        => '#',
+        // ],
+        // [
+        //     'text'       => 'Descongelar Servicio',
+        //     'url'        => '#',
+        // ],
+        // [
+        //     'text'       => 'Regresar a Corte sin Ejecutar',
+        //     'url'        => '#',
+        // ],
     ],
 
     /*

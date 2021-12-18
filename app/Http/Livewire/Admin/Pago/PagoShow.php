@@ -16,76 +16,91 @@ class PagoShow extends Component
     use WithPagination;
     public $sort = 'id';
     public $search, $totalestados, $totalplanes, $totalantenas, $totaldatacenters;
-    public $clientesactivos, $clientesvencidos, $clientescortesinejecutar, $clientesejecutados;
-    public $fechaproxpago, $fechaproxcorte, $fechapago, $cliente, $fechainicio, $fechavencimiento, $diasretraso, $diasencorte, $fechacorteejecutado,
-        $fechacorte, $monto, $nombre, $apellido, $clienteid, $periodo, $fecha, $user_id, $cliente_id, $servicioid, $servicio;
-    public $direction = 'desc';
-    public $cant = '5';
-    public $open = false;
-    public $disable = false;
-    // Commit
+    public $clientesactivos, $clientesvencidos, $clientescortesinejecutar, $clientesejecutados, $idcliente;
+    public $fechaproxpago, $fechaproxcorte, $mensualidad, $fechapago, $cliente, $fechainicio, $fechavencimiento, $diasretraso, $diasencorte, $fechacorteejecutado,
+        $fechacorte, $monto, $nombre, $diascorteejecutado, $estado, $fechadehoy, $apellido, $men, $clienteid, $periodo, $deuda, $nombrecompleto, $fecha, $user_id, $cliente_id, $servicioid, $servicio;
+    public $direction = 'desc', $cant = '5', $open = false, $disable = false, $vermodalpago = false;
+    public $proximafechadepago, $proximafechadecorte, $disabled2 = 1;
+
+    public function changedata()
+    {
+        $this->proximafechadecorte = date("Y-m-d", strtotime($this->proximafechadepago . "+ 3 days"));
+        $this->periodo = $this->fechapago . " al " . $this->proximafechadepago;
+    }
+    public function abrirmodalpago(Cliente $cliente)
+    {
+        $this->client = $cliente;
+        $this->nombre = $this->client->nombre;
+        $this->apellido = $this->client->apellido;
+        $this->nombrecompleto = $this->nombre . " " . $this->apellido;
+        $this->idcliente = $this->client->id;
+        $this->servicioid = $this->client->servicio->id;
+        $this->fechapago = $this->client->servicio->fechavencimiento;
+        $this->fechacorte = $this->client->servicio->fechacorte;
+        $this->fechacorteejecutado = $this->client->servicio->fechacorteejecutado;
+        $this->deuda = number_format($this->client->servicio->deuda, 2);
+        $this->estado = $this->client->servicio->estado->nombre;
+        $this->mensualidad = number_format($this->client->servicio->plan->precio, 2);
+        $this->proximafechadepago = Carbon::now();
+        $this->proximafechadepago->addMonth();
+        $this->proximafechadepago = date("Y-m-d", strtotime($this->fechapago . "+ 1 month"));
+        $this->fechadehoy = date('Y-m-d');
+        $pasefecha1 = Carbon::parse($this->fechadehoy);
+        $pasefecha2 = Carbon::parse($this->fechapago);
+        $pasefecha3 = Carbon::parse($this->fechacorteejecutado);
+        //Si ya paso su fecha de pago
+        if ($pasefecha1->gt($pasefecha2)) {
+            $this->diasretraso = $pasefecha1->diffInDays($pasefecha2);
+        } else {
+            $this->diasretraso = 0;
+        }
+        //Si ya paso dias de estar en corte ejecutado
+        if ($pasefecha1->gt($pasefecha3)) {
+            $this->diascorteejecutado = $pasefecha1->diffInDays($pasefecha3);
+            $a = Carbon::createFromFormat('Y-m-d', $this->proximafechadepago);
+            $a = $a->addDays($this->diascorteejecutado);
+            $this->proximafechadepago = $a->format('Y-m-d');
+            $this->diasretraso = $this->diasretraso - $this->diascorteejecutado;
+        } else {
+            $this->diascorteejecutado = 0;
+        }
+        $this->monto = number_format($this->mensualidad + $this->deuda, 2);
+        $this->proximafechadecorte = date("Y-m-d", strtotime($this->proximafechadepago . "+ 3 days"));
+        $this->periodo = $this->fechapago . " al " . $this->proximafechadepago;
+
+        $this->vermodalpago = true;
+    }
     public function savepago()
     {
         $this->user_id = auth()->user()->personal->id;
         $this->validate([
-            'fecha' => 'required|date_format:Y-m-d',
+            'fechadehoy' => 'required|date_format:Y-m-d',
             'monto' => 'required|numeric',
             'periodo' => 'required',
-            'cliente_id' => 'required|numeric',
+            'idcliente' => 'required|numeric',
             'user_id' => 'required|numeric',
-            'fechainicio' => 'required|date_format:Y-m-d',
-            'fechavencimiento' => 'required|date_format:Y-m-d|after:fechainicio',
-            'fechacorte' => 'required|date_format:Y-m-d|after:fechavencimiento',
+            'proximafechadepago' => 'required|date_format:Y-m-d|after:fechapago',
+            'proximafechadecorte' => 'required|date_format:Y-m-d|after:fechapago',
         ]);
         Pago::create([
-            'fecha' => $this->fecha,
+            'fecha' => $this->fechadehoy,
             'monto' => $this->monto,
             'periodo' => $this->periodo,
-            'cliente_id' => $this->cliente_id,
+            'cliente_id' => $this->idcliente,
             'user_id' => $this->user_id,
         ]);
         $servicioobj = Servicio::find($this->servicioid);
         $servicioobj->update([
-            'fechainicio' => $this->fechainicio,
-            'fechavencimiento' => $this->fechavencimiento,
-            'fechacorte' => $this->fechacorte,
+            'fechavencimiento' => $this->proximafechadepago,
+            'fechacorte' => $this->proximafechadecorte,
+            'fechacorteejecutado' => null,
         ]);
-        $this->emit('cerrarModalNuevoPago');
-        $this->emit('alert', 'El servidor se actualizo satisfactoriamente');
-    }
-    public function savepago2()
-    {
-        $this->user_id = auth()->user()->personal->id;
-        $this->validate([
-            'fecha' => 'required|date_format:Y-m-d',
-            'monto' => 'required|numeric',
-            'periodo' => 'required',
-            'cliente_id' => 'required|numeric',
-            'user_id' => 'required|numeric',
-            'fechainicio' => 'required|date_format:Y-m-d',
-            'fechavencimiento' => 'required|date_format:Y-m-d|after:fechainicio',
-            'fechacorte' => 'required|date_format:Y-m-d|after:fechavencimiento',
-        ]);
-        Pago::create([
-            'fecha' => $this->fecha,
-            'monto' => $this->monto,
-            'periodo' => $this->periodo,
-            'cliente_id' => $this->cliente_id,
-            'user_id' => $this->user_id,
-        ]);
-        $servicioobj = Servicio::find($this->servicioid);
-        $servicioobj->update([
-            'fechainicio' => $this->fechainicio,
-            'fechavencimiento' => $this->fechavencimiento,
-            'fechacorte' => $this->fechacorte,
-        ]);
-        $this->emit('cerrarModalNuevoPago');
-        $this->emit('alert', 'El servidor se actualizo satisfactoriamente');
-    }
-    // no sirve
-    public function doubleClick()
-    {
-        $this->disable = 'false';
+        $fechadehoy = date('Y-m-d');
+        Servicio::where('fechavencimiento', '>', $fechadehoy)
+            ->where('estado_id', '!=', '1')
+            ->update(['estado_id' => '1']);
+        $this->vermodalpago = false;
+        $this->emit('alert', 'El Pago se registro satisfactoriamente');
     }
     public function actualizarfechas($value)
     {
@@ -101,58 +116,6 @@ class PagoShow extends Component
     {
         // $this->fechaproxpago = date("Y-m-d", strtotime($value . "+ 1 month"));
         $this->fechaproxcorte = date("Y-m-d", strtotime($value . "+ 3 days"));
-    }
-    public function registrarprimerpago(Servicio $servicio)
-    {
-        $this->reset('fechainicio', 'fechavencimiento', 'fechacorte');
-        $this->fechainicio = date('Y-m-d');
-        $this->fechavencimiento = date("Y-m-d", strtotime($this->fechainicio . "+ 1 month"));
-        $this->fechacorte = date("Y-m-d", strtotime($this->fechavencimiento . "+ 3 days"));
-        $this->fecha = date('Y-m-d');
-        $this->periodo = $this->fechainicio . ' al ' . $this->fechacorte;
-        $this->servicio = $servicio;
-        $this->servicioid = $servicio->id;
-        $this->cliente_id = $this->servicio->cliente->id;
-        $this->nombre = $this->servicio->cliente->nombre;
-        $this->apellido = $this->servicio->cliente->apellido;
-        $this->monto = $this->servicio->plan->precio;
-        
-    }
-    public function registrarpago(Servicio $servicio)
-    {
-        $this->fecha = date('Y-m-d');
-        $this->servicio = $servicio;
-        if ($this->servicio->estado == 'Activo') {
-            # code...A
-        }
-        $this->cliente_id = $this->servicio->cliente->id;
-        $this->nombre = $this->servicio->cliente->nombre;
-        $this->apellido = $this->servicio->cliente->apellido;
-        $this->fechapago = $this->servicio->fechavencimiento;
-        $this->fechacorte = $this->servicio->fechacorte;
-        $this->fechacorteejecutado = $this->servicio->fechacorteejecutado;
-        $fechaactual = date('Y-m-d');
-        $finicio = Carbon::createFromFormat('Y-m-d', $fechaactual);
-        $ffinal = Carbon::createFromFormat('Y-m-d', $this->fechapago);
-        if ($this->fechacorteejecutado != null) {
-            $ffinal2 = Carbon::createFromFormat('Y-m-d', $this->fechacorteejecutado);
-            if ($finicio->gt($ffinal2)) {
-                $this->diasencorte = $ffinal2->diffInDays($finicio);
-            } else {
-                $this->diasencorte = '';
-            }
-        } else {
-            $this->diasencorte = '';
-        }
-        if ($finicio->gt($ffinal)) {
-            $this->diasretraso = $ffinal->diffInDays($finicio);
-        } else {
-            $this->diasretraso = '';
-        }
-        $this->fechaproxpago = date("Y-m-d", strtotime($this->servicio->fechavencimiento . "+ 1 month"));
-        $this->fechaproxcorte = date("Y-m-d", strtotime($this->fechaproxpago . "+ 3 days"));
-        $this->periodo = $this->fechaproxpago . ' al ' . $this->fechaproxcorte;
-
     }
     public function mount()
     {
@@ -177,17 +140,22 @@ class PagoShow extends Component
     }
     public function render()
     {
-        // $clientes = Cliente::join("servicios", "servicios.cliente_id", "=", "clientes.id")
-        //     ->select("clientes.nombre","clientes.apellido","servicios.tiposervicio", "servicios.id", "clientes.apellido", "clientes.dni")
-        //     ->paginate($this->cant);
-        // $clientes = Cliente::where('nombre', 'like', '%' . $this->search . '%')
-        //     ->orwhere('apellido', 'like', '%' . $this->search . '%')
-        //     ->orwhere('dni', 'like', '%' . $this->search . '%')
-        //     ->orwhere('correo', 'like', '%' . $this->search . '%')
-        //     ->orderBy($this->sort, $this->direction)
-        //     ->paginate($this->cant);
         $clientes = Cliente::join("servicios", "servicios.cliente_id", "=", "clientes.id")
-            ->where('clientes.nombre', 'like', '%' . $this->search . '%')
+            ->select('clientes.*', 'servicios.fechainicio', 'servicios.tiposervicio')
+            ->where(function ($q) {
+                $q->where('clientes.nombre', 'like', '%' . $this->search . '%')
+                    ->orwhere('clientes.apellido', 'like', '%' . $this->search . '%')
+                    ->orwhere('clientes.dni', 'like', '%' . $this->search . '%')
+                    ->orwhere('servicios.tiposervicio', 'like', '%' . $this->search . '%');
+            })
+            ->where(function ($q) {
+                $q->where('servicios.estado_id', '1')
+                    ->orWhere('servicios.estado_id', '3')
+                    ->orWhere('servicios.estado_id', '4')
+                    ->orWhere('servicios.estado_id', '5')
+                    ->orWhere('servicios.estado_id', '6');
+            })
+            ->orderBy($this->sort, $this->direction)
             ->paginate($this->cant);
         return view('livewire.admin.pago.pago-show', compact('clientes'));
     }

@@ -28,7 +28,7 @@ Route::get('contacto', function () {
     return "Mensaje enviado";
     
 });
-Route::resource('servidor', ServidorController::class);
+// Route::resource('servidor', ServidorController::class);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');

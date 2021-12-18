@@ -29,7 +29,7 @@ class EstadosSeeder extends Seeder
         $estado->nombre='Corte Ejecutado';
         $estado->save();
         $estado = new Estado;
-        $estado->nombre='Retiro de Antena';
+        $estado->nombre='Retiro de Equipos';
         $estado->save();
         $estado = new Estado;
         $estado->nombre='Retirado';

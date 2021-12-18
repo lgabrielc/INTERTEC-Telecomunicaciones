@@ -12,18 +12,20 @@ class Servicio extends Model
         'fechainicio',
         'fechavencimiento',
         'fechacorte',
+        'fechacorteejecutado',
+        'fechacongelado',
         'tiposervicio',
         'condicionAntena',
         'mac',
         'ip',
         'frecuencia',
+        'deuda',
         'clientegpon',
-        'nap_id',
-        //Este debería de ser gpon_id pero aún no hay la tabla gpon
-        'estado_id',
         'cliente_id',
         'antena_id',
         'plan_id',
+        'nap_id',
+        'estado_id',
     ];
     public $table = 'servicios';
     //Relacion uno a uno con cliente 
@@ -48,5 +50,4 @@ class Servicio extends Model
     {
         return $this->belongsTo('App\Models\Nap');
     }
-
 }

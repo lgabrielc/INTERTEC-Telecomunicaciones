@@ -18,18 +18,20 @@ class ShowCliente extends Component
 {
     use WithPagination;
     public $totalcontar, $totalplanes, $totalestados, $totaldatacenters, $oltnombre, $tarjetanombre, $napnombre, $gponnombre;
-    public $clienteid, $nombre, $apellido, $dni, $direccion, $telefono, $correo, $tiposervicio;
+    public $clienteid, $nombre, $apellido, $dni, $direccion, $telefono, $correo, $tiposervicio, $planusado;
     public $datacenterid, $oltid, $tarjetaid, $gponid, $napid, $gponrelacionado, $datacenterselect, $olttarjetarelacionado, $tarjetagponrelacionado, $gponnaprelacionado;
-    public $condicionantena, $clientegpon, $clientegpon2, $mac, $ip, $plan, $frecuencia, $antenaid, $antena, $checkbx, $servicioid, $EditarID;
+    public $condicionantena, $clientegpon, $clientegpon2, $mac, $ip, $plan, $frecuencia, $antenaid, $antena, $checkbx, $servicioid, $EditarID, $planid;
     public $descarga, $subida, $precio, $estado, $disabled2 = 1;
     public $sort = 'id', $search = '', $direction = 'desc', $cant = '5', $isDisabled = 'disabled';
     public $vermodalcrearcliente = false, $vermodaleditar = false, $vermodalcrearplan = false, $vermodaleditarcliente = false, $vermodalcrearservicio = false,
-        $vermodalantena = false, $vermodalfibra = false, $vermodalmigrarantena = false, $vermodalmigrarfibras = false, $vermodalmigracion = false;
-
+        $vermodalantena = false, $vermodalfibra = false, $vermodalmigrarantena = false, $vermodalmigrarfibras = false, $vermodalmigracion = false, $vermodaleditarplan = false, $vermodaleditarservicio = false;
+    public $fechainicio, $fechavencimiento, $fechacorte;
     public function mount()
     {
         $this->totalcontar = Cliente::count();
+        $this->totalcontarservicios = Servicio::count();
         $this->totalplanes = Plan::where('estado_id', "=", '1')->get();
+        $this->totaldeplanes = Plan::all();
         $this->totalestados = Estado::where('nombre', "=", 'Activo')->orwhere('nombre', "=", 'Deshabilitado')->get();
         $this->totalantenas = Antena::where('estado_id', "=", '1')->get();
         $this->totaldatacenters = Centrodato::where('estado_id', "=", '1')->get();
@@ -56,6 +58,14 @@ class ShowCliente extends Component
         $this->reset(['nombre', 'descarga', 'subida', 'precio', 'estado']);
         $this->estado = '1';
         $this->vermodalcrearplan = true;
+    }
+    public function activarmodaleditarplan()
+    {
+        $this->reset('isDisabled', 'planid', 'nombre', 'descarga', 'subida', 'precio', 'estado', 'planusado');
+        $this->vermodaleditarplan = true;
+        $this->plan = "";
+        $this->isDisabled = 'disabled';
+        $this->disabled2 = 1;
     }
     public function save()
     {
@@ -126,11 +136,18 @@ class ShowCliente extends Component
             $this->sort = $sort;
         }
     }
+    public function changedatavencimiento()
+    {
+        $this->fechacorte = date("Y-m-d", strtotime($this->fechavencimiento . "+ 3 days"));
+    }
     public function activarmodalcrearservicio(Cliente $cliente)
     {
         $this->vermodalfibra = false;
         $this->reset('gponrelacionado', 'clientegpon', 'gponrelacionado', 'datacenterid', 'oltid', 'tarjetaid', 'gponid', 'napid');
         $this->reset('condicionantena', 'mac', 'ip', 'frecuencia', 'antenaid');
+        $this->fechainicio = date('Y-m-d');
+        $this->fechavencimiento = date('Y-m-d');
+        $this->fechacorte = date("Y-m-d", strtotime($this->fechavencimiento . "+ 3 days"));
         $this->tiposervicio = "";
         $this->condicionantena = "";
         $this->plan = "";
@@ -156,6 +173,7 @@ class ShowCliente extends Component
     }
     public function saveplan()
     {
+        $this->precio=number_format($this->precio,2);
         $this->validate([
             'nombre' => 'required|min:5|max:50',
             'descarga' => 'required|min:3|max:15',
@@ -174,11 +192,56 @@ class ShowCliente extends Component
         $this->vermodalcrearplan = false;
         $this->emit('alert', 'El Plan se creo satisfactoriamente');
     }
-    // AGREGAR SERVICIO POR ANTENA
+    public function updateplan()
+    {
+        $this->precio=number_format($this->precio,2);
+        $this->validate([
+            'plan' => 'required|numeric',
+            'descarga' => 'required|min:3|max:15',
+            'nombre' => 'required|min:3|max:30',
+            'subida' => 'required|min:3|max:15',
+            'precio' => 'required|numeric',
+            'estado' => 'required|numeric'
+        ]);
+        if ($this->plan) {
+            $updAntena = Plan::find($this->plan);
+            $updAntena->update([
+                'nombre' => $this->nombre,
+                'descarga' => $this->descarga,
+                'subida' => $this->subida,
+                'precio' => $this->precio,
+                'estado_id' => $this->estado,
+            ]);
+        }
+        $this->vermodaleditarplan = false;
+        $this->reset(['plan', 'descarga', 'subida', 'precio', 'estado', 'nombre']);
+        $this->emit('alert', 'El Plan se actualizo satisfactoriamente');
+    }
+    public function changeplanselect()
+    {
+        if ($this->plan && is_numeric($this->plan)) {
+            $this->planid = Plan::find($this->plan);
+            $this->nombre = $this->planid->nombre;
+            $this->descarga = $this->planid->descarga;
+            $this->subida = $this->planid->subida;
+            $this->precio = $this->planid->precio;
+            $this->estado = $this->planid->estado->id;
+            $this->isDisabled = 'enabled';
+            $this->disabled2 = 0;
+            $this->planusado = Servicio::where('plan_id', $this->plan)->count();
+        } elseif ($this->plan == '') {
+            $this->reset(['descarga', 'subida', 'precio', 'estado', 'nombre', 'planusado', 'planid']);
+            $this->isDisabled = 'disabled';
+            $this->disabled2 = 1;
+        }
+    }
     public function saveservicioantena()
     {
         $this->validate(
             [
+                'fechainicio' => 'required|date',
+                'fechavencimiento' => 'required|date',
+                'fechacorte' => 'required|date',
                 'tiposervicio' => 'required',
                 'condicionantena' => 'required',
                 'antenaid' => 'required|numeric',
@@ -199,6 +262,9 @@ class ShowCliente extends Component
             ]
         );
         Servicio::create([
+            'fechainicio' => $this->fechainicio,
+            'fechavencimiento' => $this->fechavencimiento,
+            'fechacorte' => $this->fechacorte,
             'tiposervicio' => $this->tiposervicio,
             'condicionAntena' => $this->condicionantena,
             'antena_id' => $this->antenaid,
@@ -209,6 +275,8 @@ class ShowCliente extends Component
             'plan_id' => $this->plan,
             'cliente_id' => $this->clienteid,
         ]);
+        $this->totalcontarservicios = Servicio::count();
+
         $this->vermodalcrearservicio = false;
         $this->reset(['tiposervicio', 'condicionantena', 'antenaid', 'mac', 'ip', 'frecuencia', 'estado', 'plan']);
         $this->emit('alert', 'El Servicio ha sido actualizado con éxito satisfactoriamente');
@@ -218,6 +286,9 @@ class ShowCliente extends Component
     {
         $this->validate(
             [
+                'fechainicio' => 'required|date',
+                'fechavencimiento' => 'required|date',
+                'fechacorte' => 'required|date',
                 'datacenterid' => 'required|numeric',
                 'oltid' => 'required|numeric',
                 'tarjetaid' => 'required|numeric',
@@ -243,6 +314,9 @@ class ShowCliente extends Component
         );
         if ($this->clienteid) {
             Servicio::create([
+                'fechainicio' => $this->fechainicio,
+                'fechavencimiento' => $this->fechavencimiento,
+                'fechacorte' => $this->fechacorte,
                 'tiposervicio' => $this->tiposervicio,
                 'clientegpon' => $this->clientegpon,
                 'nap_id' => $this->napid,
@@ -251,6 +325,7 @@ class ShowCliente extends Component
                 'cliente_id' => $this->clienteid,
             ]);
         }
+        $this->totalcontarservicios = Servicio::count();
         $this->vermodalcrearservicio = false;
         $this->reset(['tiposervicio', 'napid', 'clientegpon', 'estado', 'plan', 'clienteid']);
         $this->emit('alert', 'El Servicio se actualizo satisfactoriamente');

@@ -1,4 +1,4 @@
-<div class="text-right">
+<div class="">
     <a wire:click="activarmodalcrearplan" class="btn2 btn-green mx-2 py-2">
         <i class="fas fa-plus"></i>
     </a>
