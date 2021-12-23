@@ -43,34 +43,4 @@ Route::prefix('gestionarservicio')->group(function () {
 Route::resource('cliente', ClienteController::class);
 Route::resource('pago', PagoController::class);
 
-// Route::resource('tipoantena', TipoAntenaController::class);
-
-// Route::resource('torre', TorreController::class);
-
-// Route::resource('datacenter', CentrodatosController::class);
-
-// Route::resource('servidor', ServidorController::class);
-
-// Route::resource('olt', OltController::class);
-
-// Route::resource('tarjeta', TarjetaController::class);
-
-// Route::resource('gpon', GponController::class);
-
-// Route::resource('nap', NapController::class);
-
-// Route::resource('reportecliente', ReporteClienteController::class);
-
-// Route::resource('reportes', ReportesController::class);
-
-Route::resource('herramienta', HerramientaController::class);
-
-// Route::get('cortarservicio', HerramientaController::class);
-// Route::get(
-//     '/gestionarservicio/cortarservicio',
-//     [UserProfileController::class, 'show']
-//     [UserProfileController::class, 'show']
-//     [UserProfileController::class, 'show']
-// );
-
-
+Route::resource('herramienta', HerramientaController::class)->parameters(["herramienta" => "herramienta"]);

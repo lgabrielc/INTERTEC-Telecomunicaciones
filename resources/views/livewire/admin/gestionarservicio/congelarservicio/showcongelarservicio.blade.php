@@ -227,9 +227,9 @@
                        'Éxito!',
                        'Corte Realizado.',
                        'success'
-                   )
-               }
-           })
-       });
+                       )
+                }
+            })
+        });
    </script>
 </div>

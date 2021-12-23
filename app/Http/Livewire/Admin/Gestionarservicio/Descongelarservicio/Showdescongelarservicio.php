@@ -6,11 +6,16 @@ use App\Models\Servicio;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Showdescongelarservicio extends Component
 {
-    public $direction = 'desc', $cant = '5', $search, $sort = 'id', $estado_id, $nombrecompleto, $fechavencimiento, $fechacorte, $mensualidad;
-    public $servicioid, $totalserviciocortejectuado, $totalserviciocortesinejecutar, $fechacorteejecutado, $saldoendias, $estado, $fechacongelacion;
+    use WithPagination;
+
+    public $direction = 'desc', $cant = '5', $search, $sort = 'id', $estado_id,
+        $nombrecompleto, $fechavencimiento, $fechacorte, $mensualidad, $periododesaldo;
+    public $servicioid, $totalserviciocortejectuado, $totalserviciocortesinejecutar,
+        $fechacorteejecutado, $saldoendias, $estado, $fechacongelado, $proximopago, $proximocorte;
     public $vermodaldescongelar = false;
 
     public function mount()
@@ -18,27 +23,48 @@ class Showdescongelarservicio extends Component
         $this->totalserviciosactivos = Servicio::where('estado_id', '1')->count();
         $this->totalservicioscongelados = Servicio::where('estado_id', '8')->count();
     }
-    public function abrirmodalcongelar(Servicio $servicio)
+    public function changefechainicio()
     {
-        $this->vermodalcongelar = true;
+        $this->proximopago = Carbon::parse($this->fechadeinicio)->addDays($this->saldoendias);
+        $this->proximopago = Carbon::parse($this->proximopago)->format('Y-m-d');
+        $this->proximocorte = date("Y-m-d", strtotime($this->proximopago . "+ 3 days"));
+    }
+    public function changeproximopago()
+    {
+        $this->proximocorte = date("Y-m-d", strtotime($this->proximopago . "+ 3 days"));
+    }
+    public function abrirmodaldescongelar(Servicio $servicio)
+    {
         $this->servicioid = $servicio->id;
         $this->nombrecompleto = $servicio->cliente->nombre . " " . $servicio->cliente->apellido;
         $this->fechavencimiento = $servicio->fechavencimiento;
         $this->fechacorte = $servicio->fechacorte;
+        $this->fechacongelado = $servicio->fechacongelado;
         $this->estado = $servicio->estado->nombre;
         $this->mensualidad = $servicio->plan->precio;
-        $this->saldoendias = Carbon::now()->diffInDays($servicio->fechavencimiento);
-        $this->fechacongelacion = Carbon::now()->format('Y-m-d');
+        $this->saldoendias = Carbon::parse($this->fechavencimiento)->diffInDays($servicio->fechacongelado);
+        $this->fechadeinicio = Carbon::now()->format('Y-m-d');
+        $this->proximopago = Carbon::parse($this->fechadeinicio)->addDays($this->saldoendias);
+        $this->proximopago = Carbon::parse($this->proximopago)->format('Y-m-d');
+        $this->proximocorte = date("Y-m-d", strtotime($this->proximopago . "+ 3 days"));
+        $this->periododesaldo = Carbon::parse($this->fechadeinicio)->format('d-m-Y') . '  al  ' . Carbon::parse($this->proximopago)->format('d-m-Y');
+        $this->vermodaldescongelar = true;
     }
-    public function congelarservicio()
+    public function descongelarserviciosave()
     {
-        Servicio::find($this->servicioid)->update([
-            'estado_id' => '8',
-            'fechacongelado' => $this->fechacongelacion,
+        $this->validate([
+            'fechadeinicio' => 'required|date',
+            'proximopago' => 'required|date_format:Y-m-d|after:fechadeinicio',
+            'proximocorte' => 'required|date_format:Y-m-d|after:proximopago',
         ]);
-        $this->vermodalcongelar = false;
-        $this->mount();
-        $this->emit('alert', 'El Servicio se congelo satisfactoriamente');
+        Servicio::find($this->servicioid)->update([
+            'estado_id' => '1',
+            'fechacongelado' => null,
+            'fechacorte' => $this->proximocorte,
+            'fechavencimiento' => $this->proximopago,
+        ]);
+        $this->vermodaldescongelar = false;
+
     }
     public function order($sort)
     {

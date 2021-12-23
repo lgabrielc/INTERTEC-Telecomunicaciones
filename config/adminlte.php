@@ -258,6 +258,11 @@ return [
             'icon' => 'fas fa-hand-holding-usd',
         ],
         [
+            'text' => 'Herramientas',
+            'url'  => 'admin/herramienta',
+            'icon' => 'fas fa-meteor',
+        ],
+        [
             'text' => 'Recursos Antena',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [

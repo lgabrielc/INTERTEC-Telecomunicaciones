@@ -6,12 +6,18 @@ use App\Models\Servicio;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Showcongelarservicio extends Component
 {
-    public $direction = 'desc', $cant = '5', $search, $sort = 'id', $estado_id, $nombrecompleto, $fechavencimiento, $fechacorte, $mensualidad;
-    public $servicioid, $totalserviciocortejectuado, $totalserviciocortesinejecutar, $fechacorteejecutado, $saldoendias, $estado, $fechacongelacion;
-    public $vermodalcongelar = false;
+    use WithPagination;
+
+    public $direction = 'desc', $cant = '5', $search, $sort = 'id', $estado_id, $nombrecompleto,
+        $fechavencimiento, $fechacorte, $mensualidad;
+    public $servicioid, $totalserviciocortejectuado, $totalserviciocortesinejecutar,
+        $fechacorteejecutado, $saldoendias, $estado;
+    public $fechacongelacion;
+    public $vermodalcongelar = false, $fechadeinicio;
 
     public function mount()
     {
@@ -55,9 +61,9 @@ class Showcongelarservicio extends Component
     public function render()
     {
         $clientes = DB::table('clientes')
+            // ->join('pagos', 'pagos.cliente_id', '=', 'clientes.id')
             ->join('servicios', 'servicios.cliente_id', '=', 'clientes.id')
             ->join('estados', 'estados.id', '=', 'servicios.estado_id')
-            ->join('pagos', 'pagos.cliente_id', '=', 'clientes.id')
             ->select(
                 'clientes.nombre as nombre',
                 'clientes.apellido as apellido',
@@ -73,12 +79,6 @@ class Showcongelarservicio extends Component
                     ->from('pagos')
                     ->whereColumn('pagos.cliente_id', 'clientes.id');
             })
-            // ->where(function ($query) {
-            //     $query->where('servicios.estado_id', '=', '1')
-            //         ->whereExists->select(DB::raw(1))
-            //         ->from('pagos')
-            //         ->whereColumn('pagos.cliente_id = clientes.id');
-            // })
             ->where(function ($query) {
                 $query->where('clientes.nombre', 'like', '%' . $this->search . '%')
                     ->orwhere('clientes.apellido', 'like', '%' . $this->search . '%');

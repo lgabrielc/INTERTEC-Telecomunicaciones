@@ -25,7 +25,9 @@ class PagoShow extends Component
     public function changedata()
     {
         $this->proximafechadecorte = date("Y-m-d", strtotime($this->proximafechadepago . "+ 3 days"));
-        $this->periodo = $this->fechapago . " al " . $this->proximafechadepago;
+        // $this->periodo = $this->fechapago . " al " . $this->proximafechadepago;
+        $this->periodo = Carbon::parse($this->fechapago)->format('d-m-Y') . '  al  ' . Carbon::parse($this->proximafechadepago)->format('d-m-Y');
+
     }
     public function abrirmodalpago(Cliente $cliente)
     {
@@ -66,7 +68,9 @@ class PagoShow extends Component
         }
         $this->monto = number_format($this->mensualidad + $this->deuda, 2);
         $this->proximafechadecorte = date("Y-m-d", strtotime($this->proximafechadepago . "+ 3 days"));
-        $this->periodo = $this->fechapago . " al " . $this->proximafechadepago;
+        // $this->periodo = $this->fechapago . " al " . $this->proximafechadepago;
+        $this->periodo = Carbon::parse($this->fechapago)->format('d-m-Y') . '  al  ' . Carbon::parse($this->proximafechadepago)->format('d-m-Y');
+
 
         $this->vermodalpago = true;
     }

@@ -8,10 +8,13 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 @section('content')
-
 {{-- @livewire('admin.datacenter.datacenter-show') --}}
+<a href="{{route('herramienta.create')}}">
+    <button type="button" class="btn btn-success mr-1 mt-2">Agregar producto</button>
+</a>
+
 <div class="pt-2">
-    <table class="table table-bordered w-75">
+    <table class="table table-bordered w-full">
         <thead class="thead-dark">
             <tr>
                 <th>Nombre</th>
@@ -29,20 +32,18 @@
                 <td>{{$herramienta->stock}}</td>
                 <td>{{$herramienta->precio}}</td>
                 <td class="d-flex flex-row">
-                    <button type="button" class="btn btn-success m-1">Agregar producto</button>
-                    <button type="button" class="btn btn-success m-1">Agregar producto</button>
+                    <form action="{{ route('herramienta.destroy', [$herramienta->id] ) }}" method="POST">
+                        <a class="btn btn-primary" href="{{ route('herramienta.edit',$herramienta->id) }}">Edit</a>
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
                 </td>
-
             </tr>
             @endforeach
         </tbody>
     </table>
 </div>
-{{-- {{dd($herramientas)}} --}}
-<button type="button" class="btn btn-success m-2">Agregar producto</button>
-
-
-
 @stop
 @livewireScripts
 <script>

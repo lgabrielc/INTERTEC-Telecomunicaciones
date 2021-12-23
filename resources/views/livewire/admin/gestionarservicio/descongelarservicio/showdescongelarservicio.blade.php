@@ -50,7 +50,7 @@
             <div class="bg-white  rounded-2xl px-10 py-8 shadow-lg hover:shadow-2xl transition duration-500 w-full">
                 <div class="w-full">
                     <div class=w-full">
-                        <h1 class="text-2xl font-semibold leading-tight mb-2">Congelar Servicio</h1>
+                        <h1 class="text-2xl font-semibold leading-tight mb-2">Descongelar Servicio</h1>
                         {{-- @include('livewire.admin.cliente.modalcrear') --}}
                         <div class="my-2 flex sm:flex-row flex-col">
                             <div class="pr-2 flex flex-row mb-1 sm:mb-0 content-center justify-center">
@@ -184,7 +184,7 @@
                                                     {{ $cliente->estado }}</p>
                                             </td>
                                             <td class="py-1 border-b border-gray-200 text-sm text-center">
-                                                <a wire:click="abrirmodalcongelar({{ $cliente->id }})"
+                                                <a wire:click="abrirmodaldescongelar({{ $cliente->id }})"
                                                     class="btn2 btn-yellow mb-1 py-2">
                                                     <i class="fas fa-code-branch px-1"></i>
                                                 </a>
@@ -211,7 +211,7 @@
             </div>
         </div>
     </div>
-    @include('livewire.admin.gestionarservicio.congelarservicio..modalcongelar')
+    @include('livewire.admin.gestionarservicio.descongelarservicio..modaldescongelar')
     <script>
         livewire.on('regresaracortesinejecutar', serviceid => {
             Swal.fire({
@@ -229,7 +229,7 @@
                         'Éxito!',
                         'Corte Realizado.',
                         'success'
-                    )
+                        )
                 }
             })
         });
