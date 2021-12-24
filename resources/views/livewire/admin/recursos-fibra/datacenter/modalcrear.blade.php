@@ -11,7 +11,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4" >
                 Nombre
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6"  placeholder="Ejm: Data Center Villa Red" wire:model.defer="nombre" />
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1"  placeholder="Ejm: Data Center Villa Red" wire:model.defer="nombre" />
             @error('nombre')
             <div class="text-red-500">{{ $message }}</div>
             @enderror
@@ -20,7 +20,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4" >
                 Ubicacion
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: Villa El Salvador" wire:model.defer="ubicacion" />
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" placeholder="Ejm: Villa El Salvador" wire:model.defer="ubicacion" />
             @error('ubicacion')
             <div class="text-red-500">{{ $message }}</div>
             @enderror
@@ -29,7 +29,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4" >
                 Direccion
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: Avenida 200 Millas Gr.4 Lt.4" wire:model.defer="direccion" />
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" placeholder="Ejm: Avenida 200 Millas Gr.4 Lt.4" wire:model.defer="direccion" />
             @error('direccion')
             <div class="text-red-500">{{ $message }}</div>
             @enderror
@@ -38,7 +38,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4" >
                 Encargado
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: Castiel Espinoza Rodriguez" wire:model.defer="encargado" />
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" placeholder="Ejm: Castiel Espinoza Rodriguez" wire:model.defer="encargado" />
             @error('encargado')
             <div class="text-red-500">{{ $message }}</div>
             @enderror

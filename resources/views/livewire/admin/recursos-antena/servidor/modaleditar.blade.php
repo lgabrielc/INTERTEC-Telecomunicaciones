@@ -7,7 +7,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4" for="inline-full-name">
                 Nombre
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="nombre" />
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" wire:model.defer="nombre" />
             @error('nombre')
             <div class="text-red-500">{{ $message }}</div>
             @enderror
@@ -16,7 +16,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4" for="inline-full-name">
                 IP Entrada
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="ipEntrada" />
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" wire:model.defer="ipEntrada" />
             @error('ipEntrada')
             <div class="text-red-500">{{ $message }}</div>
             @enderror
@@ -25,7 +25,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4" for="inline-full-name">
                 IP Salida
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="ipSalida" />
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" wire:model.defer="ipSalida" />
             @error('ipSalida')
             <div class="text-red-500">{{ $message }}</div>
             @enderror

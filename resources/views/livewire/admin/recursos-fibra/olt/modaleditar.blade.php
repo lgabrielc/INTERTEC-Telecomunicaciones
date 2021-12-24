@@ -32,7 +32,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Nombre
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: Olt 2"
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" placeholder="Ejm: Olt 2"
                 wire:model.defer="nombre" />
             @error('nombre')
             <div class="text-red-500">{{ $message }}</div>
@@ -42,7 +42,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Slots
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="slots"
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" wire:model.defer="slots"
                 placeholder="Ejm: 7" />
             @error('slots')
             <div class="text-red-500">{{ $message }}</div>
@@ -52,7 +52,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Marca
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="marca"
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" wire:model.defer="marca"
                 placeholder="Ejm: Huawei" />
             @error('marca')
             <div class="text-red-500">{{ $message }}</div>
@@ -62,7 +62,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Modelo
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="modelo"
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" wire:model.defer="modelo"
                 placeholder="Ejm: MA5800X7" />
             @error('modelo')
             <div class="text-red-500">{{ $message }}</div>

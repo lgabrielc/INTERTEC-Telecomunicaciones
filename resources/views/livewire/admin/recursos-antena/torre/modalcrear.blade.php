@@ -11,7 +11,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Nombre
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: Torre Oasis"
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" placeholder="Ejm: Torre Oasis"
                 wire:model.defer="nombre" />
             @error('nombre')
             <div class="text-red-500">{{ $message }}</div>
@@ -21,7 +21,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Dueño
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="dueño"
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" wire:model.defer="dueño"
                 placeholder="Ejm: Sr. Gomez Castro" />
             @error('dueño')
             <div class="text-red-500">{{ $message }}</div>
@@ -31,7 +31,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Direccion
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="direccion"
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" wire:model.defer="direccion"
                 placeholder="Ejm: Calle Oasis ST.10, GR.4, MZ.P, LT 4" />
             @error('direccion')
             <div class="text-red-500">{{ $message }}</div>
@@ -41,7 +41,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Telefono fijo o Celular
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="telefono"
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" wire:model.defer="telefono"
                 placeholder="Ejm: 990054887" />
             @error('telefono')
             <div class="text-red-500">{{ $message }}</div>
@@ -51,7 +51,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Mensualidad
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="mensualidad"
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" wire:model.defer="mensualidad"
                 placeholder="Ejm: 50.0" />
             @error('mensualidad')
             <div class="text-red-500">{{ $message }}</div>

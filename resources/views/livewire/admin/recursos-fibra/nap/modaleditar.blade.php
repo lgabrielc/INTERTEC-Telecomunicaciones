@@ -147,7 +147,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Olt
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="oltnombre" disabled />
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" wire:model.defer="oltnombre" disabled />
         </div>
         @endif
         @if (!$datacenterselect)
@@ -155,7 +155,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Tarjeta
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="tarjetanombre" disabled />
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" wire:model.defer="tarjetanombre" disabled />
         </div>
         @endif
         @if (!$datacenterselect)
@@ -163,7 +163,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Gpon
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="gponnombre" disabled />
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" wire:model.defer="gponnombre" disabled />
         </div>
         @endif
         @if (is_numeric($datacenterid) && isset($datacenterselect))
@@ -236,7 +236,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Nombre
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: Nap 0"
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" placeholder="Ejm: Nap 0"
                 wire:model.defer="nombre" />
             @error('nombre')
             <div class="text-red-500">{{ $message }}</div>
@@ -246,7 +246,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Slots
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="slots" placeholder="Ejm: 15" />
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" wire:model.defer="slots" placeholder="Ejm: 15" />
             @error('slots')
             <div class="text-red-500">{{ $message }}</div>
             @enderror

@@ -7,7 +7,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Cliente
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" value={{$nombrecompleto}} disabled/>
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" value={{$nombrecompleto}} disabled/>
             @error('nombre')
             <div class="text-red-500">{{ $message }}</div>
             @enderror
@@ -34,7 +34,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Estado
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="estado" disabled/>
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" wire:model.defer="estado" disabled/>
             @error('estado')
             <div class="text-red-500">{{ $message }}</div>
             @enderror
@@ -43,7 +43,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Mensualidad
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="mensualidad" disabled/>
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" wire:model.defer="mensualidad" disabled/>
             @error('mensualidad')
             <div class="text-red-500">{{ $message }}</div>
             @enderror
@@ -52,7 +52,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Saldo en dias
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="saldoendias" disabled />
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" wire:model.defer="saldoendias" disabled />
             @error('saldoendias')
             <div class="text-red-500">{{ $message }}</div>
             @enderror
