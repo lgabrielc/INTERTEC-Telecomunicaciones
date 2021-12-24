@@ -20,6 +20,7 @@ class Showservidor extends Component
     public $vermodaleditar = false;
     public $vermodalcrear = false;
     public $estado=1;
+    
 
     public function mount()
     {
