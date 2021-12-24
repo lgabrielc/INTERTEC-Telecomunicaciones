@@ -22,7 +22,7 @@ class ShowCliente extends Component
     public $datacenterid, $oltid, $tarjetaid, $gponid, $napid, $gponrelacionado, $datacenterselect, $olttarjetarelacionado, $tarjetagponrelacionado, $gponnaprelacionado;
     public $condicionantena, $clientegpon, $clientegpon2, $mac, $ip, $plan, $frecuencia, $antenaid, $antena, $checkbx, $servicioid, $EditarID, $planid;
     public $descarga, $subida, $precio, $estado, $disabled2 = 1;
-    public $sort = 'id', $search = '', $direction = 'desc', $cant = '5', $isDisabled = 'disabled';
+    public $sort = 'id', $search, $direction = 'desc', $cant = '5', $isDisabled = 'disabled';
     public $vermodalcrearcliente = false, $vermodaleditar = false, $vermodalcrearplan = false, $vermodaleditarcliente = false, $vermodalcrearservicio = false,
         $vermodalantena = false, $vermodalfibra = false, $vermodalmigrarantena = false, $vermodalmigrarfibras = false, $vermodalmigracion = false, $vermodaleditarplan = false, $vermodaleditarservicio = false;
     public $fechainicio, $fechavencimiento, $fechacorte;
