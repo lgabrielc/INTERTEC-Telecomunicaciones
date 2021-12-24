@@ -6,7 +6,7 @@
                 <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
                     <div class="flex flex-wrap border-b border-gray-200 undefined">
                         <div
-                            class="bg-gradient-to-tr from-pink-500 to-pink-700 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
+                            class="bg-gradient-to-tr from-green-200 via-green-300 to-blue-500 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
                             <span class="material-icons text-white text-3xl leading-none">trending_up</span>
                         </div>
                         <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2 text-right undefined">
@@ -28,7 +28,7 @@
             <div class="bg-white  rounded-2xl px-10 py-8 shadow-lg hover:shadow-2xl transition duration-500 w-full">
                 <div class="w-full">
                     <div class=w-full">
-                        <h1 class="text-2xl font-semibold leading-tight mb-2">Gestionar Servidor p</h1>
+                        <h1 class="text-2xl font-semibold leading-tight mb-2">Gestionar Servidor</h1>
                         @include('livewire.admin.recursos-antena.servidor.modalcrear')
                         <div class="my-2 flex sm:flex-row flex-col">
                             <div class="pr-2 flex flex-row mb-1 sm:mb-0 content-center justify-center">
@@ -70,109 +70,110 @@
                         <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-1 overflow-x-auto">
                             <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
                                 @if (count($servidores))
-                                    <table class="w-full leading-normal">
-                                        <thead>
-                                            <tr>
-                                                <th wire:click="order('id')"
-                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                    ID
-                                                    @if ($sort == 'id')
-                                                        @if ($direction == 'asc')
-                                                            <i class="fas fa-sort-numeric-up float-right"></i>
-                                                        @else
-                                                            <i class="fas fa-sort-numeric-up-alt float-right"></i>
-                                                        @endif
+                                <table class="w-full leading-normal">
+                                    <thead>
+                                        <tr>
+                                            <th wire:click="order('id')"
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                ID
+                                                @if ($sort == 'id')
+                                                @if ($direction == 'asc')
+                                                <i class="fas fa-sort-numeric-up float-right"></i>
+                                                @else
+                                                <i class="fas fa-sort-numeric-up-alt float-right"></i>
+                                                @endif
+                                                @else
+                                                <i class="fas fa-sort float-right mt-1"></i>
+                                                @endif
+                                            </th>
+                                            <th wire:click="order('nombre')"
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Nombre
+                                                <i class="fas fa-sort float-right mt-1"></i>
+                                            </th>
+                                            <th wire:click="order('ipEntrada')"
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                IP Entrada
+                                                <i class="fas fa-sort float-right mt-1"></i>
+                                            </th>
+                                            <th wire:click="order('ipSalida')"
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                IP Salida
+                                                <i class="fas fa-sort float-right mt-1"></i>
+                                            </th>
+                                            <th wire:click="order('estadonombre')"
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Estado
+                                                <i class="fas fa-sort float-right mt-1"></i>
+                                            </th>
+                                            <th
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Acciones
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($servidores as $servidor)
+                                        <tr class="">
+                                            <td class="px-5 py-3 border-b border-gray-200 bg-white text-base ">
+                                                <div class="flex items-center">
+                                                    <div class="ml-3">
+                                                        <p class="text-gray-900 whitespace-no-wrap">
+                                                            {{ $servidor->id }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-5 py-3 border-b border-gray-200 bg-white text-base">
+                                                <div class="flex items-center">
+                                                    <div class="ml-3">
+                                                        <p class="text-gray-900 whitespace-no-wrap">
+                                                            {{ $servidor->nombre }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="px-5 py-3 border-b border-gray-200 bg-white text-base">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $servidor->ipEntrada }}</p>
+                                            </td>
+                                            <td class="px-5 py-3 border-b border-gray-200 bg-white text-base">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $servidor->ipSalida }}
+                                                </p>
+                                            </td>
+                                            <td class="px-5 py-3 border-b border-gray-200 bg-white text-base">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $servidor->estadonombre }}
+                                                </p>
+                                            </td>
+                                            <td class="px-5 py-3 border-b border-gray-200 text-sm text-center">
+                                                <a wire:click="edit({{$servidor->id}})"
+                                                    class="bg-gradient-to-r from-blue-100 via-blue-500 to-blue-700 btn2 btn-blue mb-1 py-2">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a wire:click="$emit('cambiarestado', {{ $servidor->id }})"
+                                                    class="bg-gradient-to-r from-red-100 via-red-500 to-red-700 btn2 btn-red mb-1 py-2">
+                                                    @if ($servidor->estadoid == 2)
+                                                    <i class="fas fa-toggle-off"></i>
                                                     @else
-                                                        <i class="fas fa-sort float-right mt-1"></i>
+                                                    <i class="fas fa-toggle-on"></i>
                                                     @endif
-                                                </th>
-                                                <th wire:click="order('nombre')"
-                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                    Nombre
-                                                    <i class="fas fa-sort float-right mt-1"></i>
-                                                </th>
-                                                <th wire:click="order('ipEntrada')"
-                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                    IP Entrada
-                                                    <i class="fas fa-sort float-right mt-1"></i>
-                                                </th>
-                                                <th wire:click="order('ipSalida')"
-                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                    IP Salida
-                                                    <i class="fas fa-sort float-right mt-1"></i>
-                                                </th>
-                                                <th wire:click="order('estadonombre')"
-                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                    Estado
-                                                    <i class="fas fa-sort float-right mt-1"></i>
-                                                </th>
-                                                <th
-                                                    class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                    Acciones
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($servidores as $servidor)
-                                                <tr class="">
-                                                    <td class="px-5 py-3 border-b border-gray-200 bg-white text-base ">
-                                                        <div class="flex items-center">
-                                                            <div class="ml-3">
-                                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                                    {{ $servidor->id }}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="px-5 py-3 border-b border-gray-200 bg-white text-base">
-                                                        <div class="flex items-center">
-                                                            <div class="ml-3">
-                                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                                    {{ $servidor->nombre }}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="px-5 py-3 border-b border-gray-200 bg-white text-base">
-                                                        <p class="text-gray-900 whitespace-no-wrap">
-                                                            {{ $servidor->ipEntrada }}</p>
-                                                    </td>
-                                                    <td class="px-5 py-3 border-b border-gray-200 bg-white text-base">
-                                                        <p class="text-gray-900 whitespace-no-wrap">
-                                                            {{ $servidor->ipSalida }}
-                                                        </p>
-                                                    </td>
-                                                    <td class="px-5 py-3 border-b border-gray-200 bg-white text-base">
-                                                        <p class="text-gray-900 whitespace-no-wrap">
-                                                            {{ $servidor->estadonombre }}
-                                                        </p>
-                                                    </td>
-                                                    <td
-                                                        class="px-5 py-3 border-b border-gray-200 text-sm text-center">
-                                                        <a wire:click="edit({{$servidor->id}})" class="btn2 btn-blue mb-3 py-2">
-                                                            <i class="fas fa-edit"></i> 
-                                                        </a>
-                                                        <a wire:click="$emit('cambiarestado', {{ $servidor->id }})" class="btn2 btn-red mb-3 py-2">
-                                                            @if ($servidor->estadoid == 2)
-                                                                <i class="fas fa-toggle-off"></i>
-                                                            @else
-                                                            <i class="fas fa-toggle-on"></i>
-                                                            @endif
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                    @if ($servidores->hasPages())
-                                        <div class="px-6 py-3">
-                                            {{ $servidores->links() }}
-                                        </div>
-                                    @endif
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                @if ($servidores->hasPages())
+                                <div class="px-6 py-3">
+                                    {{ $servidores->links() }}
+                                </div>
+                                @endif
                                 @else
-                                    <div class="px-6 py-4">
-                                        No existe ningún registro coincidente
-                                    </div>
+                                <div class="px-6 py-4">
+                                    No existe ningún registro coincidente
+                                </div>
                                 @endif
                             </div>
                         </div>

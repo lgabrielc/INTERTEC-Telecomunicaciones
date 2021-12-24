@@ -1,4 +1,4 @@
-<a wire:click="activarmodalcrearcliente" class="btn2 btn-green mx-2 py-2">
+<a wire:click="activarmodalcrearcliente" class="bg-gradient-to-r from-green-200 via-green-400 to-green-500 btn2 btn-green mx-2 py-2">
     <i class="fas fa-plus"></i>
 </a>
 

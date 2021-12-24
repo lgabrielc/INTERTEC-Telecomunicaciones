@@ -6,7 +6,7 @@
                 <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
                     <div class="flex flex-wrap border-b border-gray-200 undefined">
                         <div
-                            class="bg-gradient-to-tr from-pink-500 to-pink-700 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
+                            class="bg-gradient-to-tr from-green-300 via-blue-500 to-purple-600 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
                             <span class="material-icons text-white text-3xl leading-none">trending_up</span>
                         </div>
                         <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2 text-right undefined">
@@ -28,7 +28,7 @@
             <div class="bg-white  rounded-2xl px-10 py-8 shadow-lg hover:shadow-2xl transition duration-500 w-full">
                 <div class="w-full">
                     <div class=w-full">
-                        <h1 class="text-2xl font-semibold leading-tight mb-2">Gestionar Torre p</h1>
+                        <h1 class="text-2xl font-semibold leading-tight mb-2">Gestionar Torre</h1>
                         @include('livewire.admin.recursos-antena.torre.modalcrear')
                         <div class="my-2 flex sm:flex-row flex-col">
                             <div class="pr-2 flex flex-row mb-1 sm:mb-0 content-center justify-center">
@@ -164,11 +164,12 @@
                                                 </p>
                                             </td>
                                             <td class="px-5 py-3 border-b border-gray-200 text-sm text-center">
-                                                <a wire:click="edit({{$torre->id}})" class="btn2 btn-blue mb-3 py-2">
+                                                <a wire:click="edit({{$torre->id}})"
+                                                    class="bg-gradient-to-r from-blue-100 via-blue-500 to-blue-700 btn2 btn-blue mb-1 py-2">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
                                                 <a wire:click="$emit('cambiarestado', {{ $torre->id }})"
-                                                    class="btn2 btn-red mb-3 py-2">
+                                                    class="bg-gradient-to-r from-red-100 via-red-500 to-red-700 btn2 btn-red mb-1 py-2">
                                                     @if ($torre->estadoid == 2)
                                                     <i class="fas fa-toggle-off"></i>
                                                     @else

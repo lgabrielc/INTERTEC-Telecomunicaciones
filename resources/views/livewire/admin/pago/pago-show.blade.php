@@ -27,7 +27,7 @@
                 <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
                     <div class="flex flex-wrap border-b border-gray-200 undefined">
                         <div
-                            class="bg-gradient-to-tr from-yellow-500 to-yellow-700 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
+                            class="bg-gradient-to-l from-red-800 via-yellow-600 to-yellow-500 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
                             <span class="material-icons text-white text-3xl leading-none">trending_up</span>
                         </div>
                         <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2 text-right undefined">
@@ -48,7 +48,7 @@
                 <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
                     <div class="flex flex-wrap border-b border-gray-200 undefined">
                         <div
-                            class="bg-gradient-to-tr from-red-500 to-red-700 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
+                            class="bg-gradient-to-l from-orange-500 to-yellow-300 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
                             <span class="material-icons text-white text-3xl leading-none">trending_up</span>
                         </div>
                         <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2 text-right undefined">
@@ -69,7 +69,7 @@
                 <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
                     <div class="flex flex-wrap border-b border-gray-200 undefined">
                         <div
-                            class="bg-gradient-to-tr from-red-500 to-red-700 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
+                            class="bg-gradient-to-l from-sky-400 to-sky-200 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
                             <span class="material-icons text-white text-3xl leading-none">trending_up</span>
                         </div>
                         <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2 text-right undefined">
@@ -209,7 +209,7 @@
                                             </td>
                                             <td class="py-1 border-b border-gray-200 text-sm text-center">
                                                 <a wire:click="abrirmodalpago({{ $cliente->id }})"
-                                                    class="btn2 btn-green mb-1 py-2">
+                                                    class="bg-gradient-to-r from-green-200 to-green-400 to-green-700 btn2 btn-green mb-1 py-2">
                                                     <i class="fas fa-hand-holding-usd"></i>
                                                 </a>
                                             </td>

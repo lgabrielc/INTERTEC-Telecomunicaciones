@@ -85,17 +85,17 @@
                                         </path>
                                     </svg>
                                 </span>
-                                <x-jet-input type="text" class="block w-full px-6" placeholder="Buscar .."
+                                <x-jet-input type="text" class="block w-full px-6 border py-1 py-2 " placeholder="Buscar .."
                                     wire:model="search" />
                             </div>
                             <div class="flex sm:flex-row flex-col content-center ">
-                                <x-jet-input type="date" class="block relative mx-2" wire:model="searchdate" />
+                                <x-jet-input type="date" class="block w-full px-6 border py-1 py-2 ml-2" wire:model="searchdate" />
                                 <div class="align-items-center">
-                                    <label class="py-1">
+                                    <label class="py-1 ml-3">
                                         Al
                                     </label>
                                 </div>
-                                <x-jet-input type="date" class="block relative mx-2" wire:model="searchdate2" />
+                                <x-jet-input type="date" class="block w-full px-6 border py-1 py-2 ml-3" wire:model="searchdate2" />
                             </div>
                         </div>
                         <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-1 overflow-x-auto">

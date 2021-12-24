@@ -74,7 +74,7 @@
                                     <thead>
                                         <tr>
                                             <th wire:click="order('id')"
-                                                class="cursor-pointer mx-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 ID
                                                 @if ($sort == 'id')
                                                 @if ($direction == 'asc')
@@ -91,32 +91,32 @@
                                                 @endif
                                             </th>
                                             <th wire:click="order('nombre')"
-                                                class="cursor-pointer mx-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 Nombre
                                                 <i class="fas fa-sort  mt-1"></i>
                                             </th>
                                             <th wire:click="order('ubicacion')"
-                                                class="cursor-pointer  py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 Ubicación
                                                 <i class="fas fa-sort  mt-1"></i>
                                             </th>
                                             <th wire:click="order('direccion')"
-                                                class="cursor-pointer  py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 Dirección
                                                 <i class="fas fa-sort  mt-1"></i>
                                             </th>
                                             <th wire:click="order('encargado')"
-                                                class="cursor-pointer  py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 Encargado
                                                 <i class="fas fa-sort  mt-1"></i>
                                             </th>
                                             <th wire:click="order('estado_id')"
-                                                class="cursor-pointer  py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 Estado
                                                 <i class="fas fa-sort  mt-1"></i>
                                             </th>
                                             <th
-                                                class="cursor-pointer  py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                class="cursor-pointer px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 Acciones
                                             </th>
                                         </tr>
@@ -124,36 +124,40 @@
                                     <tbody>
                                         @foreach ($datacenters as $datacenter)
                                         <tr class="">
-                                            <td class="py-2 border-b border-gray-200 bg-white text-center">
-                                                {{-- <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $datacenter->id }}</p> --}}
-                                                    {{ $datacenter->id }}
+                                            <td class="px-5 py-4 border-b border-gray-200 bg-white text-base ">
+                                                <div class="flex items-center">
+                                                    <div class="ml-3">
+                                                        <p class="text-gray-900 whitespace-no-wrap">
+                                                            {{ $datacenter->id }}
+                                                        </p>
+                                                    </div>
+                                                </div>
                                             </td>
-                                            <td class=" py-2 border-b border-gray-200 bg-white text-base">
-                                                {{-- <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $datacenter->nombre }}</p> --}}
-                                                    {{ $datacenter->nombre }}
+                                            <td class="px-5 py-4 border-b border-gray-200 bg-white text-base">
+                                                <div class="flex items-center">
+                                                    <div class="ml-3">
+                                                        <p class="text-gray-900 whitespace-no-wrap">
+                                                            {{ $datacenter->nombre }}
+                                                        </p>
+                                                    </div>
+                                                </div>
                                             </td>
-                                            <td class=" py-1 border-b border-gray-200 bg-white text-base">
-                                                {{-- <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $datacenter->ubicacion }}</p> --}}
-                                                    {{ $datacenter->ubicacion }}
+                                            <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ $datacenter->ubicacion }}</p>
                                             </td>
-                                            <td class=" py-1 border-b border-gray-200 bg-white text-base">
-                                                {{-- <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $datacenter->direccion }} --}}
+                                            <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
+                                                <p class="text-gray-900 whitespace-no-wrap">
                                                     {{ $datacenter->direccion }}
                                                 </p>
                                             </td>
-                                            <td class=" py-1 border-b border-gray-200 bg-white text-base">
-                                                {{-- <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $datacenter->encargado }} --}}
+                                            <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
+                                                <p class="text-gray-900 whitespace-no-wrap">
                                                     {{ $datacenter->encargado }}
                                                 </p>
                                             </td>
-                                            <td class=" py-1 border-b border-gray-200 bg-white text-base">
-                                                {{-- <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $datacenter->estado->nombre }} --}}
+                                            <td class="px-5 py-1 border-b border-gray-200 bg-white text-base">
+                                                <p class="text-gray-900 whitespace-no-wrap">
                                                     {{ $datacenter->estadonombre }}
                                                 </p>
                                             </td>
