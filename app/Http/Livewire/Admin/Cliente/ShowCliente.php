@@ -648,8 +648,8 @@ class ShowCliente extends Component
     }
     public function render()
     {
-        $clientes = Cliente::where('nombre', 'like', '%' . $this->search . '%')
-            ->orwhere('apellido', 'like', '%' . $this->search . '%')
+        $clientes = Cliente::where('nombre','like','%'.$this->search.'%')
+            ->orwhere('apellido','like','%'.$this->search.'%')
             ->orwhere('dni', 'like', '%' . $this->search . '%')
             ->orwhere('correo', 'like', '%' . $this->search . '%')
             ->orderBy($this->sort, $this->direction)
