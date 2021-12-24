@@ -13,7 +13,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Plan de Internet
             </label>
-            <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model='plan'
+            <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model='plan'
                 wire:change="changeplanselect" required>
                 <option value="" select>-Escoja una Plan de Internet-</option>
                 @foreach ($totaldeplanes as $plan)
@@ -29,7 +29,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Nombre *
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: Plan Premium" wire:model="nombre"
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" placeholder="Ejm: Plan Premium" wire:model="nombre"
                 disabled={{$disabled2}} />
             @error('nombre')
             <div class="text-red-500">{{ $message }}</div>
@@ -39,7 +39,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Velocidad de Descarga *
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: 10MB" wire:model="descarga"
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" placeholder="Ejm: 10MB" wire:model="descarga"
                 disabled={{$disabled2}} />
             @error('descarga')
             <div class="text-red-500">{{ $message }}</div>
@@ -49,7 +49,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Velocidad de Subida *
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: 10MB" wire:model="subida"
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" placeholder="Ejm: 10MB" wire:model="subida"
                 disabled={{$disabled2}} />
             @error('subida')
             <div class="text-red-500">{{ $message }}</div>
@@ -59,7 +59,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Precio *
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: 60.00" wire:model="precio"
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" placeholder="Ejm: 60.00" wire:model="precio"
                 disabled={{$disabled2}} />
             @error('precio')
             <div class="text-red-500">{{ $message }}</div>
@@ -78,7 +78,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Estado
             </label>
-            <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="estado"
+            <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model="estado"
               disabled>
                 @foreach ($totalestados as $estados)
                 <option value={{$estados->id}} selected >{{$estados->nombre}}</option>
@@ -93,7 +93,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Estado
             </label>
-            <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="estado"
+            <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model="estado"
                 {{$isDisabled}}>
                 @foreach ($totalestados as $estados)
                 <option value={{$estados->id}} selected >{{$estados->nombre}}</option>

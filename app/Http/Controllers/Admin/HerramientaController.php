@@ -60,11 +60,26 @@ class HerramientaController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $herramientaencontrada = $this->herramientaRepository->get($id);
-        $herramientaencontrada->fill($request->all());
-        $herramientaupdate = $this->herramientaRepository->save($herramientaencontrada);
-        $herramientas = $this->herramientaRepository->all();
-        return view("herramienta.herramientas")->with('herramientas', $herramientas);
+
+        try {
+            $this->validate($request, [
+                'nombre' => 'required',
+                'descripcion' => 'required',
+                'stock' => 'required',
+                'precio' => 'required',
+            ]);
+            $herramientaencontrada = $this->herramientaRepository->get($id);
+            $herramientaencontrada->fill($request->all());
+            $this->herramientaRepository->save($herramientaencontrada);
+            $herramientas = $this->herramientaRepository->all();
+            return view("herramienta.herramientas")->with('herramientas', $herramientas);
+        } catch (\Exception $e) {
+            $herramientas = $this->herramientaRepository->all();
+            return view("herramienta.herramientas")->with('herramientas', $herramientas)->with('message', 'Al editar todos los campos son obligatorios !');
+        }
+        // $herramientaupdate = $this->herramientaRepository->save($herramientaencontrada);
+        // $herramientas = $this->herramientaRepository->all();
+        // return view("herramienta.herramientas")->with('herramientas', $herramientas);
     }
     public function destroy($idherramienta)
     {

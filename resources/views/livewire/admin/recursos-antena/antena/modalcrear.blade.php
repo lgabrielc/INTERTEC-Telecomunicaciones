@@ -12,7 +12,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Nombre
                 </label>
-                <x-jet-input type="text" class="block w-full px-6" placeholder="Ejm: Arapa_Noveno_Eng"
+                <x-jet-input type="text" class="block w-full px-6 border py-1" placeholder="Ejm: Arapa_Noveno_Eng"
                     wire:model.defer="nombre" />
                 @error('nombre')
                 <div class="text-red-500">{{ $message }}</div>
@@ -22,7 +22,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     IP
                 </label>
-                <x-jet-input type="text" class="block w-full px-6" wire:model.defer="ip"
+                <x-jet-input type="text" class="block w-full px-6 border py-1" wire:model.defer="ip"
                     placeholder="Ejm: 192.168.10.123" />
                 @error('ip')
                 <div class="text-red-500">{{ $message }}</div>
@@ -34,7 +34,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Mac
                 </label>
-                <x-jet-input type="text" class="block w-full px-6" wire:model.defer="mac"
+                <x-jet-input type="text" class="block w-full px-6 border py-1" wire:model.defer="mac"
                     placeholder="Ejm: FG:GT:5T:6Y:4T:U7" />
                 @error('mac')
                 <div class="text-red-500">{{ $message }}</div>
@@ -44,7 +44,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Frecuencia
                 </label>
-                <x-jet-input type="text" class="block w-full px-6" wire:model.defer="frecuencia"
+                <x-jet-input type="text" class="block w-full px-6 border py-1" wire:model.defer="frecuencia"
                     placeholder="Ejm: 5.8 GHZ" />
                 @error('frecuencia')
                 <div class="text-red-500">{{ $message }}</div>
@@ -56,7 +56,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Canal
                 </label>
-                <x-jet-input type="text" class="block w-full px-6" wire:model.defer="canal" placeholder="Ejm: 5800" />
+                <x-jet-input type="text" class="block w-full px-6 border py-1" wire:model.defer="canal" placeholder="Ejm: 5800" />
                 @error('canal')
                 <div class="text-red-500">{{ $message }}</div>
                 @enderror
@@ -65,7 +65,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Marca
                 </label>
-                <x-jet-input type="text" class="block w-full px-6" wire:model.defer="marca" placeholder="Huawei" />
+                <x-jet-input type="text" class="block w-full px-6 border py-1" wire:model.defer="marca" placeholder="Huawei" />
                 @error('marca')
                 <div class="text-red-500">{{ $message }}</div>
                 @enderror
@@ -77,7 +77,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Torre
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model.defer='torre'
+                <select class="border rounded-lg block mt-1 w-full px-6 border py-1 py-1 py-1" wire:model.defer='torre'
                     required>
                     <option value="" selected>-Escoja una Torre-</option>
                     @foreach ($totaltorres as $torres)
@@ -92,7 +92,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Servidor
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model.defer='servidor'
+                <select class="border rounded-lg block mt-1 w-full px-6 border py-1 py-1" wire:model.defer='servidor'
                     required>
                     <option value="" selected>-Escoja un Servidor-</option>
                     @foreach ($totalservidores as $servidores)
@@ -109,7 +109,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Tipo de Antena
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model.defer='tipoantena'
+                <select class="border rounded-lg block mt-1 w-full px-6 border py-1" wire:model.defer='tipoantena'
                     required>
                     <option value="" selected>-Escoja un tipo de Antena-</option>
                     @foreach ($tipoantenas as $tipodeantena)
@@ -124,7 +124,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Estado
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model.defer='estado' required>
+                <select class="border rounded-lg block mt-1 w-full px-6 border py-1 py-1" wire:model.defer='estado' required>
                     @foreach ($totalestados as $estados)
                     <option value={{$estados->id}} selected >{{$estados->nombre}}</option>
                     @endforeach

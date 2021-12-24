@@ -142,6 +142,7 @@ class ShowCliente extends Component
     }
     public function activarmodalcrearservicio(Cliente $cliente)
     {
+        $this->totalplanes = Plan::where('estado_id', "=", '1')->get();
         $this->vermodalfibra = false;
         $this->reset('gponrelacionado', 'clientegpon', 'gponrelacionado', 'datacenterid', 'oltid', 'tarjetaid', 'gponid', 'napid');
         $this->reset('condicionantena', 'mac', 'ip', 'frecuencia', 'antenaid');
@@ -173,7 +174,7 @@ class ShowCliente extends Component
     }
     public function saveplan()
     {
-        $this->precio=number_format($this->precio,2);
+        $this->precio = number_format($this->precio, 2);
         $this->validate([
             'nombre' => 'required|min:5|max:50',
             'descarga' => 'required|min:3|max:15',
@@ -194,7 +195,7 @@ class ShowCliente extends Component
     }
     public function updateplan()
     {
-        $this->precio=number_format($this->precio,2);
+        $this->precio = number_format($this->precio, 2);
         $this->validate([
             'plan' => 'required|numeric',
             'descarga' => 'required|min:3|max:15',

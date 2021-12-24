@@ -30,7 +30,9 @@
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+@if ($message)
 {{$message}}
+@endif
 @stop
 @livewireScripts
 <script>

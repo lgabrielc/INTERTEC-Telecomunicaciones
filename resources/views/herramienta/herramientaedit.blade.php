@@ -11,6 +11,7 @@
 
 {{-- <form method="POST" action="{{route(" herramienta.update")}}">
     @csrf --}}
+    <label for="">EDITAR HERRAMIENTA</label>
     <form method="POST" action="{{route("herramienta.update", [$herramienta->id])}}">
         @method("PUT")
         @csrf
@@ -35,7 +36,6 @@
                 id="exampleInputPassword1" placeholder="20.00">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
-
     </form>
     @stop
     @livewireScripts

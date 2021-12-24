@@ -9,10 +9,10 @@ class GestionarReportesController extends Controller
 {
     public function pagocliente()
     {
-        // return view('admin.reportes.pagocliente');
+        return view('livewire.admin.gestionar-reportes.pagocliente.index');
     }
     public function reportepagos()
     {
-        // return view('admin.reportes.reportepagos');
+        return view('livewire.admin.gestionar-reportes.reportepagos.index');
     }
 }

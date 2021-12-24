@@ -5,11 +5,12 @@
                 <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
                     <div class="flex flex-wrap border-b border-gray-200 undefined">
                         <div
-                            class="bg-gradient-to-tr from-pink-500 to-pink-700 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
-                            <span class="material-icons text-white text-3xl leading-none">trending_up</span>
+                            class="bg-gradient-to-br from-sky-400 to-sky-200 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
+                            <span class="material-icons text-white text-3xl leading-none">check</span>
                         </div>
                         <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2 text-right undefined">
-                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">Numero de Clientes registrados</h5>
+                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">Numero de Clientes
+                                registrados</h5>
                             <span class="text-3xl text-gray-900">
                                 {{ $totalcontar }}
                             </span>
@@ -25,11 +26,12 @@
                 <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
                     <div class="flex flex-wrap border-b border-gray-200 undefined">
                         <div
-                            class="bg-gradient-to-tr from-pink-500 to-pink-700 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
-                            <span class="material-icons text-white text-3xl leading-none">trending_up</span>
+                            class="bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-700 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
+                            <span class="material-icons text-white text-3xl leading-none">folder_special</span>
                         </div>
                         <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2 text-right undefined">
-                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">Numero de Clientes con Servicio</h5>
+                            <h5 class="text-gray-500 font-light tracking-wide text-base mb-1">Numero de Clientes con
+                                Servicio</h5>
                             <span class="text-3xl text-gray-900">
                                 {{ $totalcontarservicios }}
                             </span>
@@ -45,8 +47,9 @@
                 <div class="w-full bg-white rounded-xl overflow-hdden shadow-md p-4 undefined">
                     <div class="flex flex-wrap border-b border-gray-200 undefined">
                         <div
-                            class="bg-gradient-to-tr from-pink-500 to-pink-700 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
-                            <span class="material-icons text-white text-3xl leading-none">trending_up</span>
+                            class="bg-gradient-to-r from-gray-200 via-gray-400 to-gray-600 -mt-10 mb-4 rounded-xl text-white grid items-center w-24 h-24 py-4 px-4 justify-center shadow-lg-pink mb-0">
+                            <span class="material-icons text-white text-3xl leading-none">
+                                library_add</span>
                         </div>
                         <div class="w-full pl-4 max-w-full flex-grow flex-1 mb-2  undefined">
                             <h5 class="text-gray-500 font-light tracking-wide text-base mb-1 text-right">Gestionar Nuevo
@@ -216,26 +219,26 @@
                                                 @if ($cliente->servicio)
                                                 @if ($cliente->servicio['tiposervicio']=='Antena')
                                                 <a wire:click="verservicioantena({{$cliente->id}})"
-                                                    class="btn2 btn-green mb-1 py-2">
+                                                    class="bg-gradient-to-r from-green-200 to-green-600 btn2 btn-green mb-1 py-2">
                                                     <i class="fas fa-broadcast-tower"></i>
                                                 </a>
                                                 @elseif ($cliente->servicio['tiposervicio']=='Fibra')
                                                 <a wire:click="verserviciofibra({{$cliente->id}})"
-                                                    class="btn2 btn-yellow mb-1 py-2">
+                                                    class="bg-gradient-to-r from-yellow-200 to-yellow-600 btn2 btn-yellow mb-1 py-2">
                                                     <i class="fas fa-code-branch px-1"></i>
                                                 </a>
                                                 @endif
                                                 <a wire:click="vermigracion({{$cliente->id}})"
-                                                    class="btn2 btn-purple mb-1 py-2">
+                                                    class="bg-gradient-to-r from-purple-200 to-purple-600 btn2 btn-purple mb-1 py-2">
                                                     <i class="fas fa-exchange-alt"></i>
                                                 </a>
                                                 @else
                                                 <a wire:click="activarmodalcrearservicio({{$cliente->id}})"
-                                                    class="btn2 btn-red mb-1 py-2">
+                                                    class="bg-gradient-to-r from-red-200 to-red-600 btn2 btn-red mb-1 py-2">
                                                     <i class="fas fa-plus-square"></i>
                                                 </a>
                                                 @endif
-                                                <a wire:click="edit({{$cliente->id}})" class="btn2 btn-blue mb-1 py-2">
+                                                <a wire:click="edit({{$cliente->id}})" class="bg-gradient-to-r from-blue-200 to-blue-600 btn2 btn-blue mb-1 py-2">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
                                             </td>
@@ -286,29 +289,6 @@
                     )
                 }
             })
-        });
-    </script>
-    <script>
-        window.livewire.on('cerrarModalCrear', () => {
-            $('#exampleModal').modal('hide');
-        });
-        window.livewire.on('cerrarModalCrearPlan', () => {
-            $('#modalcrearplan').modal('hide');
-        });
-        window.livewire.on('cerrarModalCrearServicio', () => {
-            $('#modalcrearservicio').modal('hide');
-        });
-        window.livewire.on('cerrarModalCrearTipoAntena', () => {
-            $('#modalcreartipoantena').modal('hide');
-        });
-        window.livewire.on('cerrarModalVerServicioAntena', () => {
-            $('#updateModal').modal('hide');
-        });
-        window.livewire.on('cerrarModalVerServicioFibra', () => {
-            $('#updateModal').modal('hide');
-        });
-        window.livewire.on('cerrarModalEditar', () => {
-            $('#updateModal').modal('hide');
         });
     </script>
 </div>

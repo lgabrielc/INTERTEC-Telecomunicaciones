@@ -9,13 +9,13 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Nombre
                 </label>
-                <x-jet-input type="text" class="block w-full px-6" wire:model.defer="nombre" disabled />
+                <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1" wire:model.defer="nombre" disabled />
             </div>
             <div class="w-full p-2 ">
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Apellidos
                 </label>
-                <x-jet-input type="text" class="block w-full px-6" wire:model.defer="apellido" disabled />
+                <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1" wire:model.defer="apellido" disabled />
             </div>
         </div>
         <div class="flex flex-col w-full md:flex-row">
@@ -23,13 +23,13 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Tipo de Servicio
                 </label>
-                <x-jet-input type="text" class="block w-full px-6" wire:model.defer="tiposervicio" disabled />
+                <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1" wire:model.defer="tiposervicio" disabled />
             </div>
             <div class="w-full p-2 ">
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Condicion Antena
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="condicionantena"
+                <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model="condicionantena"
                     {{$isDisabled}}>
                     <option value="Propia">Propia</option>
                     <option value="Alquilada">Alquilada</option>
@@ -44,7 +44,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Mac
                 </label>
-                <x-jet-input type="text" class="block w-full px-6" wire:model.defer="mac" disabled={{$disabled2}} />
+                <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1" wire:model.defer="mac" disabled={{$disabled2}} />
                 @error('mac')
                 <div class="text-red-500">{{ $message }}</div>
                 @enderror
@@ -53,7 +53,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     IP
                 </label>
-                <x-jet-input type="text" class="block w-full px-6" wire:model.defer="ip" disabled={{$disabled2}} />
+                <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1" wire:model.defer="ip" disabled={{$disabled2}} />
                 @error('ip')
                 <div class="text-red-500">{{ $message }}</div>
                 @enderror
@@ -64,7 +64,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Frecuencia
                 </label>
-                <x-jet-input type="text" class="block w-full px-6" wire:model="frecuencia" disabled={{$disabled2}} />
+                <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1 border py-1 mt-1" wire:model="frecuencia" disabled={{$disabled2}} />
                 @error('frecuencia')
                 <div class="text-red-500">{{ $message }}</div>
                 @enderror
@@ -73,7 +73,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Antena
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model.defer="antena"
+                <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model.defer="antena"
                     {{$isDisabled}}>
                     @foreach ($totalantenas as $antena)
                     <option value="{{ $antena->id }}" selected>{{ $antena->nombre }}</option>
@@ -89,7 +89,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Plan
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model.defer="plan"
+                <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model.defer="plan"
                     {{$isDisabled}}>
                     @foreach ($totalplanes as $plan)
                     <option value="{{ $plan->id }}">
@@ -101,7 +101,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Estado
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model.defer="estado"
+                <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model.defer="estado"
                     {{$isDisabled}}>
                     @foreach ($totalestados as $estados)
                     <option value={{$estados->id}} selected >{{$estados->nombre}}</option>

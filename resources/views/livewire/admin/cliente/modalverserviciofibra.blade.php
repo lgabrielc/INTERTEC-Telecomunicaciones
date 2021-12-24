@@ -9,13 +9,13 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Nombre
                 </label>
-                <x-jet-input type="text" class="block w-full px-6" value="{{$nombre}} {{$apellido}}" disabled />
+                <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" value="{{$nombre}} {{$apellido}}" disabled />
             </div>
             <div class="w-full p-2 ">
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Tipo de Servicio
                 </label>
-                <x-jet-input type="text" class="block w-full px-6" value="{{$tiposervicio}}" disabled />
+                <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" value="{{$tiposervicio}}" disabled />
                 @error('tiposervicio')
                 <div class="text-red-500">{{ $message }}</div>
                 @enderror
@@ -27,7 +27,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     DataCenter
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="datacenterid"
+                <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model="datacenterid"
                     wire:change='generarolts' {{$isDisabled}}>
                     @foreach ($totaldatacenters as $datacenter)
                     <option value="{{ $datacenter->id }}">{{ $datacenter->nombre }}</option>
@@ -42,9 +42,9 @@
                     Olt
                 </label>
                 @if (!$datacenterselect)
-                <x-jet-input type="text" class="block w-full px-6" value="{{$oltnombre}}" disabled />
+                <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" value="{{$oltnombre}}" disabled />
                 @else
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="oltid"
+                <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model="oltid"
                     wire:change="olttarjetarelacion" {{$isDisabled}}>
                     <option value="" selected>-Escoja una Olt-</option>
                     @foreach ($datacenterselect->olts as $olt)
@@ -65,9 +65,9 @@
                     Tarjeta
                 </label>
                 @if (!$olttarjetarelacionado)
-                <x-jet-input type="text" class="block w-full px-6" value="{{$tarjetanombre}}" disabled />
+                <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" value="{{$tarjetanombre}}" disabled />
                 @else
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="tarjetaid"
+                <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model="tarjetaid"
                     wire:change='tarjetagponrelacion' {{$isDisabled}}>
                     <option value="" selected>-Escoja una Tarjeta-</option>
                     @foreach ($olttarjetarelacionado->tarjetas as $tarjeta)
@@ -85,9 +85,9 @@
                     Gpon
                 </label>
                 @if (!$tarjetagponrelacionado)
-                <x-jet-input type="text" class="block w-full px-6" value="{{$gponnombre}}" disabled />
+                <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" value="{{$gponnombre}}" disabled />
                 @else
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="gponid"
+                <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model="gponid"
                     wire:change='gponnaprelacion' {{$isDisabled}}>
                     <option value="" selected>-Escoja un Gpon-</option>
 
@@ -110,9 +110,9 @@
                     Nap
                 </label>
                 @if (!$gponnaprelacionado)
-                <x-jet-input type="text" class="block w-full px-6" value="{{$napnombre}}" disabled />
+                <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" value="{{$napnombre}}" disabled />
                 @else
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="napid"
+                <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model="napid"
                     {{$isDisabled}}>
                     <option value="" selected>-Escoja una Caja Nap-</option>
                     @foreach ($gponnaprelacionado->naps as $nap)
@@ -129,7 +129,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Numero del Cliente
                 </label>
-                <x-jet-input type="text" class="block w-full px-6" placeholder="Ejm: 1001"
+                <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" placeholder="Ejm: 1001"
                     wire:model.defer='clientegpon' disabled={{$disabled2}} />
                 @error('clientegpon')
                 <div class="text-red-500">{{ $message }}</div>
@@ -142,7 +142,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Plan
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model.defer="planid"
+                <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model.defer="planid"
                     {{$isDisabled}}>
                     @foreach ($totalplanes as $plan)
                     <option value="{{ $plan->id }}">
@@ -157,7 +157,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Estado
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="estado"
+                <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model="estado"
                     {{$isDisabled}}>
                     @foreach ($totalestados as $estados)
                     <option value={{$estados->id}} selected >{{$estados->nombre}}</option>

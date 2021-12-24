@@ -323,12 +323,12 @@ return [
             'submenu' => [
                 [
                     'text' => 'Pago cliente',
-                    'url'  => 'admin/gestionarreportes/reportecliente',
+                    'url'  => 'admin/gestionreportes/pagocliente',
                     'icon' => 'fas fa-fw fa-user',
                 ],
                 [
                     'text' => 'Reporte Pagos',
-                    'url'  => 'admin/gestionarreportes/reportes',
+                    'url'  => 'admin/gestionreportes/reportepagos',
                     'icon' => 'fas fa-fw fa-lock',
                 ]
             ]

@@ -13,7 +13,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Nombre del Plan*
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: Plan Básico"
+            <x-jet-input type="text" class="block w-full px-6 border py-1" placeholder="Ejm: Plan Básico"
                 wire:model.defer="nombre" />
             @error('nombre')
             <div class="text-red-500">{{ $message }}</div>
@@ -23,7 +23,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Velocidad de Descarga *
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: 10MB"
+            <x-jet-input type="text" class="block w-full px-6 border py-1" placeholder="Ejm: 10MB"
                 wire:model.defer="descarga" />
             @error('descarga')
             <div class="text-red-500">{{ $message }}</div>
@@ -33,7 +33,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Velocidad de Subida *
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: 10MB" 
+            <x-jet-input type="text" class="block w-full px-6 border py-1" placeholder="Ejm: 10MB" 
             wire:model.defer="subida"  />
             @error('subida')
             <div class="text-red-500">{{ $message }}</div>
@@ -43,7 +43,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Precio *
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: 60.00"
+            <x-jet-input type="text" class="block w-full px-6 border py-1" placeholder="Ejm: 60.00"
                 wire:model.defer="precio" />
             @error('precio')
             <div class="text-red-500">{{ $message }}</div>

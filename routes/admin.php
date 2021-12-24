@@ -11,6 +11,10 @@ use App\Http\Controllers\Admin\RecursosAntenaController;
 use App\Http\Controllers\Admin\RecursosFibraController;
 
 Route::get('', [HomeController::class, 'index']);
+Route::get('/cliente', [ClienteController::class, 'index']);
+Route::get('/pago', [PagoController::class, 'index']);
+
+Route::resource('herramienta', HerramientaController::class)->parameters(["herramienta" => "herramienta"]);
 
 Route::prefix('recursosantena')->group(function () {
     Route::get('/servidor', [RecursosAntenaController::class, 'servidor']);
@@ -25,7 +29,7 @@ Route::prefix('recursosfibra')->group(function () {
     Route::get('/gpon', [RecursosFibraController::class, 'gpon']);
     Route::get('/nap', [RecursosFibraController::class, 'nap']);
 });
-Route::prefix('gestionarreportes')->group(function () {
+Route::prefix('gestionreportes')->group(function () {
     Route::get('/pagocliente', [GestionarReportesController::class, 'pagocliente']);
     Route::get('/reportepagos', [GestionarReportesController::class, 'reportepagos']);
 });
@@ -38,9 +42,3 @@ Route::prefix('gestionarservicio')->group(function () {
     Route::get('/descongelarservicio', [GestionarservicioController::class, 'descongelarservicio']);
     Route::get('/regresarcorte', [GestionarservicioController::class, 'regresaracorte']);
 });
-// Route::resource('antena', AntenaController::class);
-
-Route::resource('cliente', ClienteController::class);
-Route::resource('pago', PagoController::class);
-
-Route::resource('herramienta', HerramientaController::class)->parameters(["herramienta" => "herramienta"]);

@@ -7,7 +7,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Nombre *
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" 
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" 
                 wire:model.defer="nombre" />
             @error('nombre')
             <div class="text-red-500">{{ $message }}</div>
@@ -17,7 +17,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Apellido *
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6"  wire:model.defer="apellido" />
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1"  wire:model.defer="apellido" />
             @error('apellido')
             <div class="text-red-500">{{ $message }}</div>
             @enderror
@@ -26,7 +26,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 DNI *
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6"  wire:model.defer="dni" />
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1"  wire:model.defer="dni" />
             @error('dni')
             <div class="text-red-500">{{ $message }}</div>
             @enderror
@@ -35,7 +35,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Direccion *
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6"  wire:model.defer="direccion" />
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1"  wire:model.defer="direccion" />
             @error('direccion')
             <div class="text-red-500">{{ $message }}</div>
             @enderror
@@ -44,7 +44,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Telefono *
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="telefono" />
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" wire:model.defer="telefono" />
             @error('telefono')
             <div class="text-red-500">{{ $message }}</div>
             @enderror
@@ -53,7 +53,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Correo (Opcional)
             </label>
-            <x-jet-input type="text" class="block mt-1 w-full px-6" wire:model.defer="correo" />
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" wire:model.defer="correo" />
             @error('correo')
             <div class="text-red-500">{{ $message }}</div>
             @enderror

@@ -2,11 +2,14 @@
 @section('title', 'Modulo Servidor')
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script src="https://cdn.tailwindcss.com/" defer></script>
+
 <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 @livewireStyles
 <script src="{{ mix('js/app.js') }}"defer></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+<script src="https://cdn.tailwindcss.com" defer></script>
 @section('content')
 @livewire('admin.recursos-antena.servidor.showservidor')
 @stop

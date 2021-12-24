@@ -12,7 +12,9 @@
 <a href="{{route('herramienta.create')}}">
     <button type="button" class="btn btn-success mr-1 mt-2">Agregar producto</button>
 </a>
-
+@if (isset($message))
+<div class="alert-danger mt-1">{{$message}} </div>
+@endif
 <div class="pt-2">
     <table class="table table-bordered w-full">
         <thead class="thead-dark">

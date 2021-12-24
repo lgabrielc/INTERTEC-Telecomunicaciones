@@ -8,14 +8,14 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Nombre del Cliente
                 </label>
-                <x-jet-input type="text" class="block w-full px-6" placeholder="Ejm: Arapa_Noveno_Eng"
+                <x-jet-input type="text" class="block w-full px-6 border py-1 border py-1" placeholder="Ejm: Arapa_Noveno_Eng"
                     value="{{ $nombre }}&nbsp;{{ $apellido }}" disabled />
             </div>
             <div class="w-full p-2 ">
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Tipo de Servicio
                 </label>
-                <x-jet-input type="text" class="block w-full px-6" value="{{ $tiposervicio }}" disabled />
+                <x-jet-input type="text" class="block w-full px-6 border py-1 border py-1" value="{{ $tiposervicio }}" disabled />
                 @error('tiposervicio')
                 <div class="text-red-500">{{ $message }}</div>
                 @enderror
@@ -27,7 +27,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     DataCenter
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="datacenterid"
+                <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model="datacenterid"
                     wire:change='generarolts' required>
                     <option value="" selected>-Escoja una DataCenter-</option>
                     @foreach ($totaldatacenters as $datacenter)
@@ -44,7 +44,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Olt
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="oltid"
+                <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model="oltid"
                     wire:change="olttarjetarelacion" required>
                     <option value="" selected>-Escoja una Olt-</option>
                     @foreach ($datacenterselect->olts as $olt)
@@ -64,7 +64,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Tarjeta
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="tarjetaid"
+                <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model="tarjetaid"
                     wire:change='tarjetagponrelacion'>
                     <option value="" selected>-Escoja una Tarjeta-</option>
                     @foreach ($olttarjetarelacionado->tarjetas as $tarjeta)
@@ -83,7 +83,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Gpon
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="gponid"
+                <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model="gponid"
                     wire:change='gponnaprelacion' required>
                     <option value="" selected>-Escoja un Gpon-</option>
                     @foreach ($tarjetagponrelacionado->gpons as $gpon)
@@ -106,7 +106,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Caja Nap
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="napid" required>
+                <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model="napid" required>
                     <option value="" selected>-Escoja una Caja Nap-</option>
                     @foreach ($gponnaprelacionado->naps as $nap)
                     <option value="{{ $nap->id }}">{{ $nap->nombre }}&nbsp,&nbsp
@@ -124,7 +124,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Numero del Cliente
                 </label>
-                <x-jet-input type="text" class="block w-full px-6" placeholder="Ejm: 1001" wire:model='clientegpon' />
+                <x-jet-input type="text" class="block w-full px-6 border py-1 border py-1" placeholder="Ejm: 1001" wire:model.defer='clientegpon' />
                 @error('clientegpon')
                 <div class="text-red-500">{{ $message }}</div>
                 @enderror
@@ -137,7 +137,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Antena
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model.defer="antenaid">
+                <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model.defer="antenaid">
                     <option value="" select>-Escoja una Antena-</option>
                     @foreach ($totalantenas as $antena)
                     <option value="{{ $antena->id }}">{{ $antena->nombre }}</option>
@@ -151,7 +151,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Condición de la Antena:
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary"
+                <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary"
                     wire:model.defer="condicionantena">
                     <option value="">-Escoja una opción-</option>
                     <option value="Propia">Propia</option>
@@ -167,7 +167,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Frecuencia
                 </label>
-                <x-jet-input type="text" class="block mt-1 w-full px-6" placeholder="Ejm: 5.8 GHZ"
+                <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" placeholder="Ejm: 5.8 GHZ"
                     wire:model.defer="frecuencia" />
                 @error('frecuencia')
                 <div class="text-red-500">{{ $message }}</div>
@@ -177,7 +177,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     IP
                 </label>
-                <x-jet-input type="text" class="block w-full px-6" placeholder="Ejm: 192.168.60.123"
+                <x-jet-input type="text" class="block w-full px-6 border py-1 border py-1" placeholder="Ejm: 192.168.60.123"
                     wire:model.defer='ip' />
                 @error('ip')
                 <div class="text-red-500">{{ $message }}</div>
@@ -189,7 +189,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Mac
                 </label>
-                <x-jet-input type="text" class="block w-full px-6" placeholder="Ejm: 80:2A:A8:B8:38:BC"
+                <x-jet-input type="text" class="block w-full px-6 border py-1 border py-1" placeholder="Ejm: 80:2A:A8:B8:38:BC"
                     wire:model.defer='mac' />
                 @error('mac')
                 <div class="text-red-500">{{ $message }}</div>
@@ -202,7 +202,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Estado:
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model.defer='estado'
+                <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model.defer='estado'
                     required>
                     @foreach ($totalestados as $estados)
                     <option value={{$estados->id}} selected >{{$estados->nombre}}</option>
@@ -216,7 +216,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Plan de Internet
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model.defer='plan'
+                <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model.defer='plan'
                     required>
                     @foreach ($totalplanes as $plan)
                     <option value="{{ $plan->id }}">
