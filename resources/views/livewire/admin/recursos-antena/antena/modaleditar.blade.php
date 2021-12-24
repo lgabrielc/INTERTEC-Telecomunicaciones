@@ -73,7 +73,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Torre
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model.defer='torre'
+                <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model.defer='torre'
                     required>
                     @foreach ($totaltorres as $torres)
                     <option value={{$torres->id}} selected >{{$torres->nombre}}</option>
@@ -87,7 +87,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Servidor
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model.defer='servidor'
+                <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model.defer='servidor'
                     required>
                     @foreach ($totalservidores as $servidores)
                     <option value={{$servidores->id}} selected>{{$servidores->nombre}}</option>
@@ -103,7 +103,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Tipo de Antena
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model.defer='tipoantena'
+                <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model.defer='tipoantena'
                     required>
                     @foreach ($tipoantenas as $tipodeantena)
                     <option value={{$tipodeantena->id}} selected>{{$tipodeantena->nombre}}</option>
@@ -117,7 +117,7 @@
                 <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                     Estado
                 </label>
-                <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model.defer='estado' required>
+                <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model.defer='estado' required>
                     @foreach ($totalestados as $estados)
                     <option value={{$estados->id}} selected >{{$estados->nombre}}</option>
                     @endforeach

@@ -11,7 +11,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Nombre
             </label>
-            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" wire:model.defer="nombre" />
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" placeholder='Ejm: Servidor Arapa' wire:model.defer="nombre" />
             @error('nombre')
             <div class="text-red-500">{{ $message }}</div>
             @enderror
@@ -20,7 +20,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 IP Entrada
             </label>
-            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" wire:model.defer="ipEntrada" />
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" placeholder='Ejm: 192.168.10.123' wire:model.defer="ipEntrada" />
             @error('ipEntrada')
             <div class="text-red-500">{{ $message }}</div>
             @enderror
@@ -29,7 +29,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 IP Salida
             </label>
-            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" wire:model.defer="ipSalida" />
+            <x-jet-input type="text" class="block w-full px-6 border py-1 mt-1" placeholder='Ejm: 192.168.10.124' wire:model.defer="ipSalida" />
             @error('ipSalida')
             <div class="text-red-500">{{ $message }}</div>
             @enderror
@@ -38,7 +38,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Estado
             </label>
-            <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model='estado' required>
+            <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model='estado' required>
                 @foreach ($totalestados as $estados)
                 <option value={{$estados->id}} selected >{{$estados->nombre}}</option>
                 @endforeach

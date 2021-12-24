@@ -7,7 +7,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 DataCenter
             </label>
-            <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="datacenterid"
+            <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model="datacenterid"
                 wire:change='generarolts'>
                 @foreach ($totaldatacenters as $datacenter)
                 <option value="{{ $datacenter->id }}">{{ $datacenter->nombre }}</option>
@@ -30,7 +30,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Olts
             </label>
-            <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="oltid"
+            <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model="oltid"
                 wire:change='olttarjetarelacion'>
                 <option value="">-Escoja una Olt-</option>
                 @foreach ($datacenterselect->olts as $olt)
@@ -75,7 +75,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Estado
             </label>
-            <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model='estado' required>
+            <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model='estado' required>
                 @foreach ($totalestados as $estados)
                 <option value={{$estados->id}} selected >{{$estados->nombre}}</option>
                 @endforeach

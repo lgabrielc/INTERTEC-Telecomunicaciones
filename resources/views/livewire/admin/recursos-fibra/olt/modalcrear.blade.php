@@ -11,7 +11,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 DataCenter
             </label>
-            <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model="datacenterid"
+            <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model="datacenterid"
                 wire:change='dataoltrelacionado'>
                 <option value="">-Escoja una DataCenter-</option>
                 @foreach ($totaldatacenters as $datacenter)
@@ -77,7 +77,7 @@
             <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4">
                 Estado
             </label>
-            <select class="border rounded-lg block mt-1 w-full px-6 border-secondary" wire:model='estado' required>
+            <select class="border rounded-lg block w-full px-6 border py-1 mt-1 border-secondary" wire:model='estado' required>
                 @foreach ($totalestados as $estados)
                 <option value={{$estados->id}} selected >{{$estados->nombre}}</option>
                 @endforeach
